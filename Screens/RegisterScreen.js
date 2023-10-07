@@ -79,7 +79,7 @@ import {
               alert("Register successfully 🎉!");
               setEmail("");
               setPassword("");
-              navigation.replace("Main");
+              navigation.navigate("Home");
             }
           })
           .catch((error) => {
@@ -212,7 +212,7 @@ import {
             </Pressable>
   
             <Pressable
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate("Login")}
               style={{ marginTop: 15 }}
             >
               <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>

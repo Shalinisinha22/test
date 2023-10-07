@@ -4,7 +4,7 @@ import React from 'react'
 const Refer = () => {
   return (
     <View style={{flex:1, alignItems:"center"}}>
-      <Text>Refer Screen</Text>
+      <Text>Refer </Text>
     </View>
   )
 }

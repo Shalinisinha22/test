@@ -70,7 +70,7 @@ const Consultation = ({navigation}) => {
           style={{
             alignItems: "center",
             flexDirection: "row",
-            gap: 60,
+            gap: 52,
             padding: 2,
        
           }}

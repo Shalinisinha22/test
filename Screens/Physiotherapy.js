@@ -51,7 +51,7 @@ const Physiotherapy = ({navigation}) => {
           style={{
             alignItems: "center",
             flexDirection: "row",
-            gap: 60,
+            gap: 52,
             padding: 2,
        
           }}
@@ -61,7 +61,7 @@ const Physiotherapy = ({navigation}) => {
             size={34}
             color="black"
             onPress={() => navigation.openDrawer()}
-            style={{ marginLeft: 20 }}
+            style={{ marginLeft: 14 }}
           />
 
           <Image

@@ -1,5 +1,13 @@
-import { View, Text, Button, Pressable, FlatList } from "react-native";
-import React, { useState, UseEffect } from "react";
+import {
+  View,
+  Text,
+  Button,
+  Pressable,
+  FlatList,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
+import React, { useState, UseEffect, useMemo, useRef } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -23,79 +31,87 @@ import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createAppContainer } from "@react-navigation/native";
 import Refund from "../Screens/Refund";
-import { Foundation } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import { Foundation } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import Refer from "../Screens/Refer";
 import Share from "../Screens/Share";
 import Consultation from "../Screens/Consultation";
 import Surgery from "../Screens/Surgery";
 import Physiotherapy from "../Screens/Physiotherapy";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
-  const [active, setActive] = useState("");
-
-
   const drawerMenu = [
     {
       id: 0,
-      name: "Our Presence",
-      url:"PresenceScreen",
-      icon: <Entypo name="location" size={24} color="#1e272e" />
-    
+      name: "Our Services",
+      submenu: [
+        {id:0, name: "Doctor Consultation", url: "Consultation" },
+        {id:1, name: "Surgery Appointment", url: "Surgery" },
+        {id:2, name: "Physiotherapy At Home", url: "Physiotherapy" },
+      ],
+      icon: <MaterialIcons name="medical-services" size={24} color="white" />,
+      dropdownIcon: <AntDesign name="down" size={20} color="white" />,
+      url: "Consulation",
     },
     {
       id: 1,
-      name: "Terms & Conditions",
-      url:"TermScreen",
-      icon:<Foundation name="clipboard-pencil" size={24} color="#1e272e" />
- 
+      name: "Our Presence",
+      url: "PresenceScreen",
+      icon: <Entypo name="location" size={24} color="white" />,
     },
     {
       id: 2,
-      name: "Privacy Policy",
-      url:"PrivacyScreen",
-      icon:<MaterialIcons name="security" size={24} color="#1e272e" />
- 
+      name: "Terms & Conditions",
+      url: "TermScreen",
+      icon: <Foundation name="clipboard-pencil" size={24} color="white" />,
     },
     {
       id: 3,
-      name: "FAQ",
-      url:"FaqScreen",
-      icon:<MaterialCommunityIcons name="comment-question-outline" size={24} color="#1e272e" />
-   
+      name: "Privacy Policy",
+      url: "PrivacyScreen",
+      icon: <MaterialIcons name="security" size={24} color="white" />,
     },
     {
       id: 4,
-      name: "Refund Policy",
-      url:"RefundScreen",
-      icon:<MaterialCommunityIcons name="cash-refund" size={24} color="#1e272e" />
- 
+      name: "FAQ",
+      url: "FaqScreen",
+      icon: (
+        <MaterialCommunityIcons
+          name="comment-question-outline"
+          size={24}
+          color="white"
+        />
+      ),
     },
     {
       id: 5,
-      name: "Refer a friend",
-      url:"ReferScreen",
-      icon:<FontAwesome name="slideshare" size={24} color="#1e272e" />
- 
+      name: "Refund Policy",
+      url: "RefundScreen",
+      icon: (
+        <MaterialCommunityIcons name="cash-refund" size={24} color="white" />
+      ),
     },
     {
       id: 6,
-      name: "Share",
-      url:"ShareScreen",
-      icon:<Entypo name="share" size={24} color="#1e272e" />
- 
+      name: "Refer a friend",
+      url: "ReferScreen",
+      icon: <FontAwesome name="slideshare" size={24} color="white" />,
     },
- 
- 
+    {
+      id: 7,
+      name: "Share",
+      url: "ShareScreen",
+      icon: <Entypo name="share" size={24} color="white" />,
+    },
   ];
 
-
-  
+  // #1e272e
 
   function StackNavigator() {
     return (
@@ -112,9 +128,26 @@ const AppNavigator = () => {
         <Stack.Screen name="RefundScreen" component={Refund} />
         <Stack.Screen name="ReferScreen" component={Refer} />
         <Stack.Screen name="ShareScreen" component={Share} />
-        <Stack.Screen name="Consultation" component={Consultation} options={{headerShown:false}}/>
-        <Stack.Screen name="Surgery" component={Surgery} options={{headerShown:false}} />
-        <Stack.Screen name="Physiotherapy" component={Physiotherapy} options={{headerShown:false}}/>
+        <Stack.Screen
+          name="Consultation"
+          component={Consultation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Surgery"
+          component={Surgery}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Physiotherapy"
+          component={Physiotherapy}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
@@ -124,41 +157,108 @@ const AppNavigator = () => {
     );
   }
 
-  const DrawerContent = ({ navigation }) => (
-    <View style={{ flex: 1, paddingTop: 5 }}>
-      <Entypo
-        name="cross"
-        size={34}
-        color="#1e272e"
-        onPress={() => navigation.closeDrawer()}
-        style={{ marginLeft: 10 }}
-      />
-      <View style={{ alignItems: "center", marginTop: 30 }}>
+  const DrawerContent = ({ navigation }) => {
+    const [submenuVisible, setSubmenuVisible] = useState(false);
 
-        <FlatList
-          data={drawerMenu}
-          renderItem={({item}) => <View style={{ marginTop: 20 }}>
-          <Pressable
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              padding: 15,
-              gap:12
-            }}
-            onPress={() => navigation.navigate(item.url)}
-          >
-              {item.icon}
-            <Text style={{ fontSize: 17, color: "white" }}>{item.name}</Text>
-          </Pressable>
-        </View>}
-          scrollEnabled
-          keyExtractor={(item) => item.id}
+    const toggleSubmenu = () => {
+      setSubmenuVisible(!submenuVisible);
+    };
+    return (
+      <ScrollView style={{ flex: 1, paddingTop: 5 }}>
+        <Entypo
+          name="cross"
+          size={35}
+          color="white"
+          onPress={() => navigation.closeDrawer()}
+          style={{ marginLeft: 10 }}
         />
-      </View>
+        <View style={{ alignItems: "center", marginTop: 30 }}>
+          <FlatList
+            data={drawerMenu}
+            scrollEnabled={false}
+            renderItem={({ item }) => (
+              <View
+                key={item.id}
+                style={{ justifyContent: "center", gap: 5, padding: 5 }}
+              >
+                {item.submenu ? (
+                  <>
+                    <TouchableOpacity
+                      onPress={toggleSubmenu}
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        padding: 15,
+                        gap: 12,
+                      }}
+                    >
+                      {item.icon}
+                      <Text style={{ fontSize: 17, color: "white" }}>
+                        {item.name}
+                      </Text>
+                      <View style={{ marginLeft: 10 }}>
+                        {item.dropdownIcon}
+                      </View>
+                    </TouchableOpacity>
+                    {submenuVisible && (
+                      <View style={styles.submenu}>
+                        {item.submenu.map((subitem) => (
+                          <TouchableOpacity
+                             key={subitem.id}
+                            onPress={() => navigation.navigate(subitem.url)}
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              padding: 15,
+                              gap: 12,
+                            }}
+                          >
+                            <AntDesign
+                              name="arrowright"
+                              size={24}
+                              color="white"
+                            />
+                            <Text style={{ fontSize: 15, color: "white" }}>
+                              {subitem.name}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    )}
+                  </>
+                ) : (
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      padding: 15,
+                      gap: 12,
+                    }}
+                    onPress={() => navigation.navigate(item.url)}
+                  >
+                    {item.icon}
+                    <Text style={{ fontSize: 17, color: "white" }}>
+                      {item.name}
+                    </Text>
+                  </TouchableOpacity>
+                )}
 
-
-    </View>
-  );
+                <Text
+                  style={{
+                    height: 1,
+                    borderColor: "#ffe4c4",
+                    borderWidth: 0.2,
+                    marginTop: 0,
+                  }}
+                />
+              </View>
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
+      </ScrollView>
+    );
+  };
 
   const BottomNavigator = () => (
     <Tab.Navigator>
@@ -181,7 +281,6 @@ const AppNavigator = () => {
         name="About"
         component={AboutScreen}
         options={{
-       
           tabBarLabel: "About",
           tabBarLabelStyle: { color: "black" },
           tabBarIcon: ({ focused }) =>
@@ -260,7 +359,7 @@ const AppNavigator = () => {
           drawerStyle: {
             backgroundColor: "#f08080",
             width: 240,
-            opacity:0.9
+            opacity: 1,
           },
         }}
         drawerContent={(props) => <DrawerContent {...props} />}
@@ -274,5 +373,22 @@ const AppNavigator = () => {
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  drawerItem: {
+    padding: 10,
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#ccc",
+  },
+  submenu: {
+    borderColor: "#ffe4c4",
+    borderTopWidth: 0.2,
+  },
+  submenuItem: {
+    padding: 10,
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#ccc",
+  },
+});
 
 export default AppNavigator;

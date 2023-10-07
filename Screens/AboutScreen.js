@@ -29,9 +29,11 @@ const AboutScreen = ({ navigation }) => {
     },
   ];
   return (
-    <ScrollView>
+    <View style={{alignItems:"center", justifyContent:"center"}}>
 
-      <ImageBackground
+    {/* <Text>About Screen</Text> */}
+
+      {/* <ImageBackground
         source={require("../assets/Banner/cbanner1.png")}
         style={{ width: 410, height: 145, resizeMode: "contain" }}
       ></ImageBackground>
@@ -78,10 +80,10 @@ const AboutScreen = ({ navigation }) => {
           services. through our Offline centeres pateint can interact with
           specialist Doctors saving money and Time.
         </Text>
-      </View>
+      </View> */}
 
     
-    </ScrollView>
+    </View>
   );
 };
 

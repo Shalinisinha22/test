@@ -8,6 +8,7 @@ import {
   TextInput,
   Pressable,
   ScrollView,
+  TouchableOpacity
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -59,7 +60,7 @@ const LoginScreen = () => {
             alert("Login successfully 🎉!");
             setEmail("");
             setPassword("");
-            navigation.replace("Main");
+            navigation.navigate("Home");
           }
         })
         .catch((error) => {
@@ -146,7 +147,7 @@ const LoginScreen = () => {
 
           <View style={{ marginTop: 85 }} />
 
-          <Pressable style={styles.button} onPress={handleSubmit}>
+          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text
               style={{
                 textAlign: "center",
@@ -157,7 +158,7 @@ const LoginScreen = () => {
             >
               Login
             </Text>
-          </Pressable>
+          </TouchableOpacity>
 
           {/* <Pressable
           

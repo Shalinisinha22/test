@@ -4,7 +4,7 @@ import React from 'react'
 const Share = () => {
   return (
     <View style={{flex:1, alignItems:"center"}}>
-      <Text>Share Screen</Text>
+      <Text>Share</Text>
     </View>
   )
 }
