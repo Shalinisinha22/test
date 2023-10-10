@@ -33,9 +33,10 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Avatar } from "@rneui/themed";
-
+import { FontAwesome } from "@expo/vector-icons";
 import * as SplashScreen from "expo-splash-screen";
 import { resizeMode } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
+import Elevations from "react-native-elevation";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -74,24 +75,12 @@ const Home = ({ navigation }) => {
       url: "Surgery",
     },
     {
-      id: "2",
-      image: require("../assets/Services/cs4.png"),
-      name: "Physiotherapy At Home",
-      url: "Physiotherapy",
+      id: "8",
+      image: require("../assets/Services/labtest1.png"),
+      name: "Lab Test",
+      url: "Home",
     },
 
-    {
-      id: "3",
-      image: require("../assets/Services/care1.png"),
-      name: "CureoFine Care",
-      url: "Home",
-    },
-    {
-      id: "4",
-      image: require("../assets/Services/ambulance.png"),
-      name: "Ambulance",
-      url: "Home",
-    },
     {
       id: "5",
       image: require("../assets/Services/stress1.png"),
@@ -99,27 +88,36 @@ const Home = ({ navigation }) => {
       url: "Home",
     },
     {
-      id: "6",
-      image: require("../assets/Services/blood12.png"),
-      name: "Blood Availability",
+      id: "2",
+      image: require("../assets/Services/cs4.png"),
+      name: "Physiotherapy At Home",
+      url: "Physiotherapy",
+    },
+
+    {
+      id: "9",
+      image: require("../assets/Services/pharmacy1.png"),
+      name: "Pharmacy",
+      url: "Home",
+    },
+
+    {
+      id: "3",
+      image: require("../assets/Services/cs1.png"),
+      name: "CureoFine Care",
       url: "Home",
     },
     {
       id: "7",
       image: require("../assets/Services/weight.png"),
-      name: "Weight loss Program",
+      name: "  Weight loss Program   ",
       url: "Home",
     },
+
     {
-      id: "8",
-      image: require("../assets/Services/labtest1.png"),
-      name: "Lab Test",
-      url: "Home",
-    },
-    {
-      id: "9",
-      image: require("../assets/Services/pharmacy1.png"),
-      name: "Pharmacy",
+      id: "4",
+      image: require("../assets/Services/ambulance.png"),
+      name: "Ambulance",
       url: "Home",
     },
   ];
@@ -404,13 +402,13 @@ const Home = ({ navigation }) => {
   ];
 
   const footerBanner = [
-    {
-      coverImageUri: require("../assets/Banner/consult1.png"),
-    },
+    // {
+    //   coverImageUri: require("../assets/Banner/consult1.png"),
+    // },
 
-    {
-      coverImageUri: require("../assets/physiotherapy.png"),
-    },
+    // {
+    //   coverImageUri: require("../assets/physiotherapy.png"),
+    // },
     {
       coverImageUri: require("../assets/surgery1.png"),
     },
@@ -480,27 +478,77 @@ const Home = ({ navigation }) => {
           <Text
             style={{
               paddingTop: 10,
-              fontSize: 18,
+              fontSize: 12,
               fontWeight: "bold",
               paddingLeft: 7,
               fontFamily: "OpenSans",
+              color: "#eb3b5a",
             }}
           >
-            Our Services
+            EXPLORE IN
           </Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {list.map((item, index) => (
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <Text
+              style={{
+                // paddingTop: 10,
+                fontSize: 18,
+                fontWeight: "bold",
+                paddingLeft: 7,
+                fontFamily: "OpenSans",
+              }}
+            >
+              Our Services
+            </Text>
+
+            <View>
+              <FontAwesome
+                name="stethoscope"
+                size={20}
+                color="#f08080"
+                style={{ marginLeft: 7, marginTop: -2 }}
+              />
+            </View>
+          </View>
+
+          <Text
+            style={{
+              height: 1.5,
+              borderColor: "#eb3b5a",
+              borderWidth: 1.5,
+              marginTop: 10,
+              width: width * 0.4,
+              marginLeft: 7,
+              borderRadius: 5,
+            }}
+          />
+
+          <FlatList
+            data={list}
+            numColumns={3}
+            columnWrapperStyle={{
+              flex: 1,
+              justifyContent: "space-between",
+            }}
+            renderItem={({ item, index }) => (
               <TouchableOpacity
                 key={item.id}
                 style={{
                   margin: 8,
-                  justifyContent: "center",
                   alignItems: "center",
+                  marginTop: 10,
+                  padding: 2,
                 }}
                 onPress={() => navigation.navigate(item.url)}
               >
                 <Image
-                  style={{ width: 102, height: 100, resizeMode: "contain" }}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    resizeMode: "contain",
+                    backgroundColor: "whitesmoke",
+                    borderRadius: 50,
+                    borderWidth: 2,
+                  }}
                   source={item.image}
                 />
 
@@ -516,156 +564,250 @@ const Home = ({ navigation }) => {
                   {item?.name}
                 </Text>
               </TouchableOpacity>
-            ))}
-          </ScrollView>
+            )}
+          ></FlatList>
 
           {/* products */}
-          <Text
+
+          <View
             style={{
-              height: 1,
-              borderColor: "#D0D0D0",
-              borderWidth: 0.2,
-              marginTop: 15,
+              backgroundColor: "whitesmoke",
+              marginTop: 10,
+              borderTopLeftRadius: 15,
+              borderTopRightRadius: 15,
+              paddingBottom: 10,
+              paddingTop: 5,
             }}
-          />
-          <Text
-            style={{
-              padding: 10,
-              fontSize: 18,
-              fontWeight: "bold",
-              fontFamily: "OpenSans",
-            }}
-          >
-            Our Products
-          </Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {products.map((item, index) => (
-              <TouchableOpacity
-                key={item.id}
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginRight: 3,
-                  marginLeft: 3,
-                }}
-              >
-                <Image
-                  style={{ width: 150, height: 150, resizeMode: "contain" }}
-                  source={item.image}
-                />
-                <View>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontFamily: "OpenSans",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 12,
-                      fontFamily: "OpenSans",
-                      marginTop: 2,
-                      color: "#f08080",
-                    }}
-                  >
-                    Session: {item.session}
-                  </Text>
-
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontWeight: 400,
-                      fontFamily: "OpenSans",
-                      marginTop: 2,
-                    }}
-                  >
-                    {item.price}
-                  </Text>
-                </View>
-
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: "#f08080",
-                    paddingVertical: 5,
-                    width: 100,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 5,
-                    borderRadius: 4,
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: "white",
-                      fontSize: 14,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    VIEW
-                  </Text>
-                </TouchableOpacity>
-
-                <View
-                  style={{
-                    backgroundColor: "black",
-                    paddingVertical: 3,
-                    width: "auto",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 1,
-                    borderRadius: 2,
-                    position: "absolute",
-                    top: 20,
-                    left: 0,
-                    paddingHorizontal: 8,
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: "white",
-                      fontSize: 13,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Trending
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-
-    
-
-          <Text
-            style={{
-              height: 1,
-              borderColor: "#D0D0D0",
-              borderWidth: 0.5,
-              marginTop: 15,
-            }}
-          />
-             {/* most booked services */}
-
-             <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text
               style={{
-                padding: 10,
+                paddingTop: 10,
+                fontSize: 12,
+                fontWeight: "bold",
+                paddingLeft: 7,
+                fontFamily: "OpenSans",
+                color: "#eb3b5a",
+              }}
+            >
+              EXPLORE IN
+            </Text>
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text
+                style={{
+                  // paddingTop: 10,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  paddingLeft: 7,
+                  fontFamily: "OpenSans",
+                }}
+              >
+                Our Products
+              </Text>
+
+              <View>
+                <FontAwesome
+                  name="stethoscope"
+                  size={20}
+                  color="#f08080"
+                  style={{ marginLeft: 7, marginTop: -2 }}
+                />
+              </View>
+            </View>
+
+            <Text
+              style={{
+                height: 1.5,
+                borderColor: "#eb3b5a",
+                borderWidth: 1.5,
+                marginTop: 10,
+                width: width * 0.4,
+                marginLeft: 7,
+                borderRadius: 5,
+              }}
+            />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {products.map((item, index) => (
+                <TouchableOpacity
+                  key={item.id}
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginRight: 3,
+                    marginLeft: 3,
+                    //backgroundColor:"white",
+                  }}
+                >
+                  <Image
+                    style={{ width: 150, height: 150, resizeMode: "contain" }}
+                    source={item.image}
+                  />
+                  <View>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontFamily: "OpenSans",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {item.name}
+                    </Text>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 12,
+                        fontFamily: "OpenSans",
+                        marginTop: 2,
+                        color: "#f08080",
+                      }}
+                    >
+                      Session: {item.session}
+                    </Text>
+
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontWeight: 400,
+                        fontFamily: "OpenSans",
+                        marginTop: 2,
+                      }}
+                    >
+                      {item.price}
+                    </Text>
+                  </View>
+
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "#f08080",
+                      paddingVertical: 5,
+                      width: 100,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: 5,
+                      borderRadius: 4,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "white",
+                        fontSize: 14,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      VIEW
+                    </Text>
+                  </TouchableOpacity>
+
+                  <View
+                    style={{
+                      backgroundColor: "black",
+                      paddingVertical: 3,
+                      width: "auto",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: 1,
+                      borderRadius: 2,
+                      position: "absolute",
+                      top: 20,
+                      left: 0,
+                      paddingHorizontal: 8,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "white",
+                        fontSize: 13,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Trending
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 18,
+            }}
+          />
+
+          {/* offers & deals */}
+
+          <View style={styles.container}>
+            <Carousel
+              pagination={PaginationLight}
+              renderItem={renderItem}
+              data={banner2}
+              loop
+              autoplay
+            />
+          </View>
+
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 18,
+            }}
+          />
+
+          {/* most booked services */}
+
+          <Text
+            style={{
+              paddingTop: 20,
+              fontSize: 12,
+              fontWeight: "bold",
+              paddingLeft: 7,
+              fontFamily: "OpenSans",
+              color: "#eb3b5a",
+            }}
+          >
+            EXPLORE IN
+          </Text>
+
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <Text
+              style={{
+                // paddingTop: 10,
                 fontSize: 18,
                 fontWeight: "bold",
+                paddingLeft: 7,
                 fontFamily: "OpenSans",
               }}
             >
               Most Booked Services
             </Text>
+
+            <View>
+              <FontAwesome
+                name="stethoscope"
+                size={20}
+                color="#f08080"
+                style={{ marginLeft: 7, marginTop: -2 }}
+              />
+            </View>
           </View>
+
+          <Text
+            style={{
+              height: 1.5,
+              borderColor: "#eb3b5a",
+              borderWidth: 1.5,
+              marginTop: 10,
+              width: width * 0.6,
+              marginLeft: 7,
+              borderRadius: 5,
+            }}
+          />
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {mostBook.map((item, index) => (
@@ -717,194 +859,74 @@ const Home = ({ navigation }) => {
               </TouchableOpacity>
             ))}
           </ScrollView>
-       
 
-          {/* offers & deals */}
-
-          <View style={styles.container}>
-            <Carousel
-              pagination={PaginationLight}
-              renderItem={renderItem}
-              data={banner2}
-              loop
-              autoplay
-            />
-          </View>
-
-
-
-           {/* shop by category */}
-
-       
           <Text
             style={{
-              padding: 10,
-              fontSize: 18,
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 15,
+            }}
+          />
+
+          {/* shop by category */}
+
+          <Text
+            style={{
+              paddingTop: 10,
+              fontSize: 12,
               fontWeight: "bold",
+              paddingLeft: 7,
               fontFamily: "OpenSans",
+              color: "#eb3b5a",
             }}
           >
-            Shop By Category
+            EXPLORE IN
           </Text>
+
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <Text
+              style={{
+                // paddingTop: 10,
+                fontSize: 18,
+                fontWeight: "bold",
+                paddingLeft: 7,
+                fontFamily: "OpenSans",
+              }}
+            >
+              Shop By Category
+            </Text>
+
+            <View>
+              <FontAwesome
+                name="stethoscope"
+                size={20}
+                color="#f08080"
+                style={{ marginLeft: 7, marginTop: -2 }}
+              />
+            </View>
+          </View>
+
+          <Text
+            style={{
+              height: 1.5,
+              borderColor: "#eb3b5a",
+              borderWidth: 1.5,
+              marginTop: 10,
+              width: width * 0.6,
+              marginLeft: 7,
+              borderRadius: 5,
+            }}
+          />
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {category.map((item, index) => (
               <TouchableOpacity
                 key={item.id}
                 style={{
-                  margin: 8,
+                  margin: 10,
                   justifyContent: "center",
                   alignItems: "center",
-                }}
-              >
-                {/* <Avatar size={130} rounded source={item.image} imageProps={"resizeMode"} /> */}
-                <Image
-                  style={{
-                    width: 95,
-                    height: 100,
-                    resizeMode: "contain",
-                    // borderRadius: 60,
-                    // borderColor:"black",
-                    // backgroundColor:"black"
-                  }}
-                  source={item.image}
-                />
-
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 12,
-                    fontWeight: "600",
-                    marginTop: 5,
-                    fontFamily: "OpenSans",
-                  }}
-                >
-                  {item?.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-       
-      {/* specialization */}
-
-      <Text
-            style={{
-              height: 1,
-              borderColor: "#D0D0D0",
-              borderWidth: 0.5,
-              marginTop: 15,
-            }}
-          />
-
-          <Text
-            style={{
-              padding: 10,
-              fontSize: 18,
-              fontWeight: "bold",
-              fontFamily: "OpenSans",
-            }}
-          >
-            Our Specialization
-          </Text>
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {specialization.map((item, index) => (
-              <Card
-                key={item.id}
-                style={{
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  paddingBottom: 0,
-                }}
-              >
-                <Card.Title style={{ fontSize: 15 }}>{item.name}</Card.Title>
-
-                <Card.Divider />
-                <View style={{ alignItems: "center" }}>
-                  <Image
-                    style={{ width: 180, height: 130, resizeMode: "contain" }}
-                    resizeMode="contain"
-                    source={item.image}
-                  />
-                </View>
-              </Card>
-            ))}
-          </ScrollView>
-
-        
-
-          {/* brands */}
-
-          <Text
-            style={{
-              height: 1,
-              borderColor: "#D0D0D0",
-              borderWidth: 0.5,
-              marginTop: 18,
-            }}
-          />
-          <Text
-            style={{
-              padding: 10,
-              fontSize: 18,
-              fontWeight: "bold",
-              fontFamily: "OpenSans",
-              marginTop: 5,
-            }}
-          >
-            Our Brands & Partners
-          </Text>
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {brands.map((item, index) => (
-              <TouchableOpacity
-                key={item.id}
-                style={{
-                  margin: 8,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  style={{ width: 100, height: 80, resizeMode: "contain" }}
-                  source={item.img}
-                />
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-
-
-          
-          {/* teams */}
-
-          <Text
-            style={{
-              height: 1,
-              borderColor: "#D0D0D0",
-              borderWidth: 0.5,
-              marginTop: 15,
-            }}
-           />
-          <Text
-            style={{
-              padding: 10,
-              fontSize: 18,
-              fontWeight: "bold",
-              fontFamily: "OpenSans",
-              marginTop: 5,
-            }}
-          >
-            Our Top Doctors
-          </Text>
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {teams.map((item, index) => (
-              <TouchableOpacity
-                key={item.id}
-                style={{
-                  margin: 8,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  marginTop: 15,
                 }}
               >
                 <Image
@@ -913,6 +935,8 @@ const Home = ({ navigation }) => {
                     height: 95,
                     resizeMode: "contain",
                     borderRadius: 60,
+                    // borderColor:"black",
+                    backgroundColor: "whitesmoke",
                   }}
                   source={item.image}
                 />
@@ -920,7 +944,7 @@ const Home = ({ navigation }) => {
                 <Text
                   style={{
                     textAlign: "center",
-                    fontSize: 16,
+                    fontSize: 12,
                     fontWeight: "600",
                     marginTop: 5,
                     fontFamily: "OpenSans",
@@ -928,23 +952,318 @@ const Home = ({ navigation }) => {
                 >
                   {item?.name}
                 </Text>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 12,
-                    fontWeight: "600",
-                    marginTop: 5,
-                    fontFamily: "OpenSans",
-                    color: "#f08080",
-                  }}
-                >
-                  {item.occupation}
-                </Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
 
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 15,
+            }}
+          />
 
+          {/* specialization */}
+
+          <ImageBackground
+            source={require("../assets/bg8.png")}
+            style={{
+              width: "100%",
+              height: "auto",
+              resizeMode: "cover",
+              marginTop: 15,
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+            }}
+          >
+            <Text
+              style={{
+                paddingTop: 10,
+                fontSize: 12,
+                fontWeight: "bold",
+                paddingLeft: 10,
+                fontFamily: "OpenSans",
+                color: "white",
+              }}
+            >
+              EXPLORE IN
+            </Text>
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text
+                style={{
+                  // paddingTop: 10,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  paddingLeft: 10,
+                  fontFamily: "OpenSans",
+                }}
+              >
+                Our Specialization
+              </Text>
+
+              <View>
+                <FontAwesome
+                  name="stethoscope"
+                  size={20}
+                  color="white"
+                  style={{ marginLeft: 7, marginTop: -2 }}
+                />
+              </View>
+            </View>
+
+            <Text
+              style={{
+                height: 1.5,
+                borderColor: "#eb3b5a",
+                borderWidth: 1.5,
+                marginTop: 10,
+                width: width * 0.6,
+                marginLeft: 7,
+                borderRadius: 5,
+              }}
+            />
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {specialization.map((item, index) => (
+                <Card
+                  key={item.id}
+                  style={{
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                  }}
+                >
+                  <Card.Title style={{ fontSize: 15 }}>{item.name}</Card.Title>
+
+                  <Card.Divider />
+                  <View style={{ alignItems: "center" }}>
+                    <Image
+                      style={{ width: 180, height: 130, resizeMode: "contain" }}
+                      resizeMode="contain"
+                      source={item.image}
+                    />
+                  </View>
+                </Card>
+              ))}
+            </ScrollView>
+          </ImageBackground>
+
+          {/* brands */}
+
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 18,
+            }}
+          />
+
+          <View style={{ flexDirection: "row", marginTop: 14 }}>
+            <Text
+              style={{
+                // paddingTop: 10,
+                fontSize: 18,
+                fontWeight: "bold",
+                paddingLeft: 7,
+                fontFamily: "OpenSans",
+              }}
+            >
+              Our Brands and Partners
+            </Text>
+
+            <View>
+              <FontAwesome
+                name="stethoscope"
+                size={20}
+                color="#f08080"
+                style={{ marginLeft: 7, marginTop: -2 }}
+              />
+            </View>
+          </View>
+
+          <Text
+            style={{
+              height: 1.5,
+              borderColor: "#eb3b5a",
+              borderWidth: 1.5,
+              marginTop: 10,
+              width: width * 0.7,
+              marginLeft: 7,
+              borderRadius: 5,
+            }}
+          />
+
+          <FlatList
+            data={brands}
+            numColumns={3}
+            columnWrapperStyle={{
+              flex: 1,
+              justifyContent: "space-between",
+            }}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                key={item.id}
+                style={{
+                  margin: 10,
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  backgroundColor: "whitesmoke",
+                  borderRadius: 20,
+                  padding: 8,
+                }}
+              >
+                <Image
+                  style={{ width: 80, height: 80, resizeMode: "contain" }}
+                  source={item.img}
+                />
+              </TouchableOpacity>
+            )}
+          ></FlatList>
+
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 15,
+            }}
+          />
+
+          <FlatList
+            data={footerBanner}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <Image
+                source={item.coverImageUri}
+                style={{
+                  width: Dimensions.get("screen").width * 1,
+                  height: 180,
+                  borderRadius: 10,
+
+                  resizeMode: "contain",
+                }}
+              ></Image>
+            )}
+          ></FlatList>
+
+          {/* teams */}
+
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 10,
+            }}
+          />
+
+          <View
+            style={{
+              backgroundColor: "whitesmoke",
+              marginTop: 15,
+              paddingTop: 4,
+              paddingBottom: 10,
+              borderTopRightRadius: 20,
+              borderTopEndRadius: 20,
+            }}
+          >
+            <View style={{ flexDirection: "row", marginTop: 15 }}>
+              <Text
+                style={{
+                  // paddingTop: 10,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  paddingLeft: 7,
+                  fontFamily: "OpenSans",
+                }}
+              >
+                Our Top Doctors
+              </Text>
+
+              <View>
+                <FontAwesome
+                  name="stethoscope"
+                  size={20}
+                  color="#f08080"
+                  style={{ marginLeft: 7, marginTop: -2 }}
+                />
+              </View>
+            </View>
+
+            <Text
+              style={{
+                height: 1.5,
+                borderColor: "#eb3b5a",
+                borderWidth: 1.5,
+                marginTop: 10,
+                width: width * 0.5,
+                marginLeft: 7,
+                borderRadius: 5,
+              }}
+            />
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {teams.map((item, index) => (
+                <TouchableOpacity
+                  key={item.id}
+                  style={{
+                    margin: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 15,
+                  }}
+                >
+                  <Image
+                    style={{
+                      width: 95,
+                      height: 95,
+                      resizeMode: "contain",
+                      borderRadius: 60,
+                    }}
+                    source={item.image}
+                  />
+
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 16,
+                      fontWeight: "600",
+                      marginTop: 5,
+                      fontFamily: "OpenSans",
+                    }}
+                  >
+                    {item?.name}
+                  </Text>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 12,
+                      fontWeight: "600",
+                      marginTop: 5,
+                      fontFamily: "OpenSans",
+                      color: "#f08080",
+                    }}
+                  >
+                    {item.occupation}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 18,
+            }}
+          />
           {/* banner */}
           <ImageBackground
             source={require("../assets/cure.jpg")}
@@ -952,7 +1271,7 @@ const Home = ({ navigation }) => {
               width: "100%",
               height: 200,
               resizeMode: "cover",
-              marginTop: 10,
+              marginTop: 15,
             }}
           >
             <View
@@ -989,22 +1308,51 @@ const Home = ({ navigation }) => {
             </View>
           </ImageBackground>
 
+          <Text
+            style={{
+              height: 3,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 15,
+            }}
+          />
 
-        
           {/* our presence */}
 
-         
+          <View style={{ flexDirection: "row", marginTop: 10 }}>
+            <Text
+              style={{
+                // paddingTop: 10,
+                fontSize: 18,
+                fontWeight: "bold",
+                paddingLeft: 7,
+                fontFamily: "OpenSans",
+              }}
+            >
+              Our Presence
+            </Text>
+
+            <View>
+              <FontAwesome
+                name="stethoscope"
+                size={20}
+                color="#f08080"
+                style={{ marginLeft: 7, marginTop: -2 }}
+              />
+            </View>
+          </View>
 
           <Text
             style={{
-              padding: 10,
-              fontSize: 18,
-              fontWeight: "bold",
-              fontFamily: "OpenSans",
+              height: 1.5,
+              borderColor: "#eb3b5a",
+              borderWidth: 1.5,
+              marginTop: 10,
+              width: width * 0.4,
+              marginLeft: 7,
+              borderRadius: 5,
             }}
-          >
-            Our Presence
-          </Text>
+          />
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {clinic.map((item, index) => (
@@ -1015,6 +1363,7 @@ const Home = ({ navigation }) => {
                   paddingRight: 0,
                   paddingTop: 0,
                   paddingBottom: 0,
+                  borderColor: "white",
                 }}
               >
                 <Ionicons
@@ -1040,10 +1389,9 @@ const Home = ({ navigation }) => {
               </Card>
             ))}
           </ScrollView>
+          {/* </ImageBackground> */}
 
           {/* footer banner */}
-
-         
 
           {/* <View style={styles.container}>
             <Carousel
@@ -1054,76 +1402,118 @@ const Home = ({ navigation }) => {
               autoplay
             />
           </View> */}
-
-          {/* contact */}
-
           <Text
             style={{
-              padding: 10,
-              fontSize: 18,
-              fontWeight: "bold",
-              fontFamily: "OpenSans",
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 15,
+            }}
+          />
+
+          <ImageBackground
+            source={require("../assets/bg8.png")}
+            style={{
+              width: "100%",
+              height: "auto",
+              resizeMode: "cover",
+              marginTop: 15,
             }}
           >
-            Contact Us
-          </Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {contact.map((item, index) => (
-              <TouchableOpacity
-                key={item.id}
+            {/* contact */}
+
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text
                 style={{
-                  margin: 8,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: 150,
-                  borderWidth: 0.5,
-                  padding: 8,
-                  borderRadius: 8,
-                  backgroundColor: "white",
-                  borderColor: "#D0D0D0",
-                  marginTop: 12,
+                  // paddingTop: 10,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  paddingLeft: 7,
+                  fontFamily: "OpenSans",
                 }}
               >
-                {item.icon}
+                Contact Us
+              </Text>
 
-                <Text
+              <View>
+                <FontAwesome
+                  name="stethoscope"
+                  size={20}
+                  color="white"
+                  style={{ marginLeft: 7, marginTop: -2 }}
+                />
+              </View>
+            </View>
+
+            <Text
+              style={{
+                height: 1.5,
+                borderColor: "#eb3b5a",
+                borderWidth: 1.5,
+                marginTop: 10,
+                width: width * 0.5,
+                marginLeft: 7,
+                borderRadius: 5,
+              }}
+            />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {contact.map((item, index) => (
+                <TouchableOpacity
+                  key={item.id}
                   style={{
-                    textAlign: "center",
-                    fontSize: 12,
-                    fontWeight: "500",
-                    marginTop: 5,
+                    margin: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: 150,
+                    borderWidth: 0.5,
+                    padding: 8,
+                    borderRadius: 8,
+                    backgroundColor: "white",
+                    borderColor: "#D0D0D0",
+                    marginTop: 12,
                   }}
                 >
-                  {item.title}
-                </Text>
+                  {item.icon}
 
-                {item.text && (
                   <Text
                     style={{
                       textAlign: "center",
-                      fontSize: 10,
+                      fontSize: 12,
                       fontWeight: "500",
                       marginTop: 5,
                     }}
                   >
-                    {item.text}
+                    {item.title}
                   </Text>
-                )}
 
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 8,
-                    fontWeight: "500",
-                    marginTop: 5,
-                    color: "#f08080",
-                  }}
-                >
-                  {item.subtitle}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+                  {item.text && (
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 10,
+                        fontWeight: "500",
+                        marginTop: 5,
+                      }}
+                    >
+                      {item.text}
+                    </Text>
+                  )}
+
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 8,
+                      fontWeight: "500",
+                      marginTop: 5,
+                      color: "#f08080",
+                    }}
+                  >
+                    {item.subtitle}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </ImageBackground>
         </ScrollView>
       </SafeAreaView>
     </>
