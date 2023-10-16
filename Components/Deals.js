@@ -1,40 +1,17 @@
 import {
-  View,
-  Text,
-  ScrollView,
-  Dimensions,
-  StyleSheet,
-  Image,
-  Pressable,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
-import React from "react";
-import Carousel, { PaginationLight } from "react-native-x-carousel";
-const { width } = Dimensions.get("window");
-import { AntDesign } from "@expo/vector-icons";
-import { Card } from "@rneui/themed";
-import { Ionicons } from "@expo/vector-icons";
-import Header from "../Components/Header";
-import { FontAwesome } from "@expo/vector-icons";
-import Contact from "../Components/Contact";
-import Footer from "../Components/Footer";
-import { isNewBackTitleImplementation } from "react-native-screens";
+    Text,
+    View,
+    ScrollView,
+    Image,
+    TouchableOpacity,
+  } from "react-native";
+  import React from "react";
+  import { Dimensions } from "react-native";
+  const { width } = Dimensions.get("window");
+  import { FontAwesome } from "@expo/vector-icons";
 
-const Physiotherapy = ({ navigation }) => {
-  const DATA = [
-    {
-      coverImageUri: require("../assets/physiotherapy.png"),
-    },
-  ];
 
-  const renderItem = (data) => (
-    <View key={data.coverImageUri} style={styles.cardContainer}>
-      <View style={styles.cardWrapper}>
-        <Image style={styles.card} source={data.coverImageUri} />
-      </View>
-    </View>
-  );
+const Deals = ({navigation}) => {
 
   const products = [
     {
@@ -169,245 +146,178 @@ const Physiotherapy = ({ navigation }) => {
     },
   ];
 
+
   return (
-    <ScrollView style={{ backgroundColor: "white" }}>
-      <Header navigation={navigation}></Header>
-      <View style={styles.container}>
-        <Carousel
-          pagination={PaginationLight}
-          renderItem={renderItem}
-          data={DATA}
-          loop
-          autoplay
-        />
-      </View>
-
-      <View
-        style={{
-          backgroundColor: "white",
-          borderTopLeftRadius: 15,
-          borderTopRightRadius: 15,
-          paddingBottom: 10,
-        }}
-      >
-        <Text
-          style={{
-            paddingTop: 1,
-            fontSize: 12,
-            fontWeight: "bold",
-            paddingLeft: 7,
-            fontFamily: "OpenSans",
-            color: "gray",
-          }}
-        >
-          Quality Physiotherapy in the Comfort of Your Home
-        </Text>
-
-        <View style={{ flexDirection: "row", marginTop: 2 }}>
-          <Text
+    <>
+            <View
             style={{
-              paddingTop: 10,
-              fontSize: 15,
-              fontWeight: "bold",
-              paddingLeft: 7,
-              fontFamily: "OpenSans",
+              backgroundColor: "white",
+              marginTop: 10,
+              borderTopLeftRadius: 15,
+              borderTopRightRadius: 15,
+              paddingBottom: 10,
+              paddingTop: 5,
             }}
           >
-            Discover Our Outstanding Products
-          </Text>
-        </View>
-
-        <Text
-          style={{
-            height: 1.5,
-            borderColor: "#eb3b5a",
-            borderWidth: 1.5,
-            marginTop: 10,
-            width: width * 0.7,
-            marginLeft: 7,
-            borderRadius: 5,
-            marginBottom: 8,
-          }}
-        />
-
-        <FlatList
-          data={products}
-          numColumns={2}
-          scrollEnabled={false}
-          columnWrapperStyle={{
-            flex: 1,
-            justifyContent: "center",
-          }}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              key={item.id}
-              style={{
-                alignItems: "center",
-                marginRight: 3,
-                marginLeft: 3,
-                marginBottom: 5,
-                borderWidth: 2,
-                borderColor: "whitesmoke",
-                paddingBottom: 5,
-                //backgroundColor:"white",
-              }}
-              onPress={() =>
-                navigation.navigate("ProductInfo", {
-                  id: item.id,
-                  name: item.name,
-                  price: item?.price,
-                  carouselImages: item.carouselImages,
-                  session: item.session,
-                  desc:item.desc,
-                  item: item,
-                })
-              }
-            >
-              <Image
-                style={{ width: 180, height: 150, resizeMode: "contain" }}
-                source={item.image}
-              />
-              <View>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontFamily: "OpenSans",
-                    fontWeight: 500,
-                  }}
-                >
-                  {item.name}
-                </Text>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 12,
-                    fontFamily: "OpenSans",
-                    marginTop: 2,
-                    color: "#f08080",
-                  }}
-                >
-                  Session: {item.session}
-                </Text>
-
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontWeight: 400,
-                    fontFamily: "OpenSans",
-                    marginTop: 2,
-                  }}
-                >
-                  {item.price}
-                </Text>
-              </View>
-
-              <TouchableOpacity
+            
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text
                 style={{
-                  backgroundColor: "#f08080",
-                  paddingVertical: 5,
-                  width: 100,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 5,
-                  borderRadius: 4,
+                  // paddingTop: 10,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  paddingLeft: 7,
+                  fontFamily: "OpenSans",
                 }}
-                onPress={() =>
-                  navigation.navigate("ProductInfo", {
-                    id: item.id,
+              >
+                Deals of the day
+              </Text>
+
+              <View>
+                <FontAwesome
+                  name="stethoscope"
+                  size={20}
+                  color="#f08080"
+                  style={{ marginLeft: 7, marginTop: -2 }}
+                />
+              </View>
+            </View>
+
+            <Text
+              style={{
+                height: 1.5,
+                borderColor: "#eb3b5a",
+                borderWidth: 1.5,
+                marginTop: 10,
+                width: width * 0.4,
+                marginLeft: 7,
+                borderRadius: 5,
+              }}
+            />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {products.map((item, index) => (
+                <TouchableOpacity
+                  key={item.id}
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginRight: 3,
+                    marginLeft: 3,
+                    //backgroundColor:"white",
+                  }}
+
+                  onPress={()=>navigation.navigate("ProductInfo", {  id: item.id,
                     name: item.name,
                     price: item?.price,
                     carouselImages: item.carouselImages,
-                    session: item.session,
+                    session:item.session,
                     item: item,
-                  })
-                }
-              >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "white",
-                    fontSize: 14,
-                    fontWeight: "bold",
-                  }}
+                 
+                  })}
                 >
-                  VIEW
-                </Text>
-              </TouchableOpacity>
+                  <Image
+                    style={{ width: 150, height: 150, resizeMode: "contain" }}
+                    source={item.image}
+                  />
+                  <View>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontFamily: "OpenSans",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {item.name}
+                    </Text>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 12,
+                        fontFamily: "OpenSans",
+                        marginTop: 2,
+                        color: "#f08080",
+                      }}
+                    >
+                      Session: {item.session}
+                    </Text>
 
-              <View
-                style={{
-                  backgroundColor: "black",
-                  paddingVertical: 3,
-                  width: "auto",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 1,
-                  borderRadius: 2,
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  paddingHorizontal: 8,
-                }}
-              >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "white",
-                    fontSize: 13,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Trending
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        ></FlatList>
-      </View>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontWeight: 400,
+                        fontFamily: "OpenSans",
+                        marginTop: 2,
+                      }}
+                    >
+                      {item.price}
+                    </Text>
+                  </View>
 
-      <Text
-        style={{
-          height: 1,
-          borderColor: "#D0D0D0",
-          borderWidth: 2,
-          marginTop: 10,
-        }}
-      />
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: "#f08080",
+                      paddingVertical: 5,
+                      width: 100,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: 5,
+                      borderRadius: 4,
+                    }}
+                    onPress={()=>navigation.navigate("ProductInfo", {  id: item.id,
+                      name: item.name,
+                      price: item?.price,
+                      carouselImages: item.carouselImages,
+                      session:item.session,
+                      item: item,
+                   
+                    })}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "white",
+                        fontSize: 14,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      VIEW
+                    </Text>
+                  </TouchableOpacity>
 
-      <Contact></Contact>
-      <Footer></Footer>
-    </ScrollView>
-  );
-};
+                  <View
+                    style={{
+                      backgroundColor: "black",
+                      paddingVertical: 3,
+                      width: "auto",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: 1,
+                      borderRadius: 2,
+                      position: "absolute",
+                      top: 20,
+                      left: 0,
+                      paddingHorizontal: 8,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "white",
+                        fontSize: 13,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Trending
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    width: "100%",
-    marginTop: 1,
-  },
+        
+    </>
+  )
+}
 
-  cardContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cardWrapper: {
-    overflow: "hidden",
-  },
-  card: {
-    height: width * 0.5,
-    width: width,
-    resizeMode: "contain",
-  },
-
-  imgContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-});
-
-export default Physiotherapy;
+export default Deals

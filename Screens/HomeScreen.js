@@ -5,47 +5,236 @@ import {
   SafeAreaView,
   Platform,
   ScrollView,
-  Pressable,
-  TextInput,
   Image,
   StatusBar,
   ImageBackground,
   FlatList,
-  TouchableHighlight,
   TouchableOpacity,
+  Pressable,
+  Alert,
+  TextInput,
 } from "react-native";
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import React, { useCallback, useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { SliderBox } from "react-native-image-slider-box";
-import DropDownPicker from "react-native-dropdown-picker";
-import { useNavigation } from "@react-navigation/native";
-import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
+import { Ionicons } from "@expo/vector-icons";
 import { Dimensions } from "react-native";
 import Carousel, { PaginationLight } from "react-native-x-carousel";
 const { width } = Dimensions.get("window");
-import { Foundation } from "@expo/vector-icons";
-import { Card } from "@rneui/themed";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Avatar } from "@rneui/themed";
-import { FontAwesome } from "@expo/vector-icons";
 import * as SplashScreen from "expo-splash-screen";
-import { resizeMode } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
-import Elevations from "react-native-elevation";
-
+import Header from "../Components/Header";
+import Services from "../Components/Services";
+import Products from "../Components/Products";
+import MostBooked from "../Components/MostBooked";
+import Categories from "../Components/Categories";
+import Specialization from "../Components/Specialization";
+import Brands from "../Components/Brands";
+import Teams from "../Components/Teams";
+import Location1 from "../Components/Location";
+import Contact from "../Components/Contact";
+import Footer from "../Components/Footer";
+import GetLocation from "./GetLocation";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
+import * as Location from "expo-location";
+import { Entypo } from "@expo/vector-icons";
+import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
+import SelectDropdown from "react-native-select-dropdown";
+import { SelectList } from "react-native-dropdown-select-list";
+import { Foundation } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useToast } from 'native-base';
 SplashScreen.preventAutoHideAsync();
 
 const Home = ({ navigation }) => {
-  const [color, setColor] = useState("white");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [address, setAdd] = useState("");
 
-  const handleColor = () => {
-    setColor("#f08080");
+  const toast = useToast();
+
+  const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
+
+  const [selected, setSelected] = React.useState("");
+
+  const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
+    "Wait, we are fetching you location..."
+  );
+
+  const handleAddress = async (address) => {
+    setModalVisible(!modalVisible);
+    if (address.length > 0) {
+      setDisplayCurrentAddress(address);
+      const res = await AsyncStorage.setItem("user", JSON.stringify(address));
+    } else {
+      toast.show({
+        description: "Please Enter Your Address"
+    })
+
+   
   };
+}
+
+  const data = [
+    { key: "1", value: "Andhra Pradesh" },
+    { key: "2", value: "Arunachal Pradesh" },
+    { key: "3", value: "Assam" },
+    { key: "4", value: "Bihar" },
+    { key: "5", value: "Chandigarh (UT)" },
+    { key: "6", value: "Chhattisgarh" },
+    { key: "7", value: "Dadra and Nagar Haveli (UT)" },
+    { key: "8", value: "Daman and Diu (UT)" },
+    { key: "9", value: "Delhi (NCT)" },
+    { key: "10", value: "Goa" },
+    { key: "11", value: "Gujarat" },
+    { key: "12", value: "Haryana" },
+    { key: "13", value: "Himachal Pradesh" },
+    { key: "14", value: "Jammu and Kashmir" },
+    { key: "15", value: "Jharkhand" },
+    { key: "16", value: "Karnataka" },
+    { key: "17", value: "Kerala" },
+    { key: "18", value: "Lakshadweep (UT)" },
+    { key: "19", value: "Madhya Pradesh" },
+    { key: "20", value: "Maharashtra" },
+    { key: "21", value: "Manipur" },
+    { key: "22", value: "Meghalaya" },
+    { key: "23", value: "Mizoram" },
+    { key: "24", value: "Nagaland" },
+    { key: "25", value: "Odisha" },
+    { key: "26", value: "Puducherry (UT)" },
+    { key: "27", value: "Punjab" },
+    { key: "28", value: "Rajasthan" },
+    { key: "29", value: "Sikkim" },
+    { key: "30", value: "Tamil Nadu" },
+    { key: "31", value: "Telangana" },
+    { key: "32", value: "Tripura" },
+    { key: "33", value: "Uttarakhand" },
+    { key: "34", value: "Uttar Pradesh" },
+    { key: "35", value: "West Bengal" },
+  ];
+
+  const district = [
+    // {Arwal,	 Patna,	 Nalanda,
+    //   Rohtas,	 Bhabhua,	 Bhojpur,	 Buxar,	 Gaya,	 Jehanabad,	 Nawada,	 Siwan,	 Gopalganj,
+    //   Sitamarhi,	 Muzaffarpur,	 Shivahar,	 West	 Champaran,	 East	 Champaran,	 Vaishali,
+    //   Darbhanga,	 Madhubani,	 Samastipur,	 Saharsa,	 Supaul,	 Madhepura,	 Purnia,	 Araria,
+    //   Kishanganj,	 Katihar,	 Banka,	 Bhagalpur,	 Munger,	 Lakhisarai,	 Aurangabad,	 Saran,
+    //   Shekhpura,	Jamui,	Khagaria	and,	Begusarai}
+
+    { key: "1", value: "Arwal" },
+    { key: "2", value: "Patna" },
+    { key: "3", value: "Nalanda" },
+    { key: "4", value: "Rohtas" },
+    { key: "5", value: "Bhabhua" },
+    { key: "6", value: "Bhojpur" },
+    { key: "7", value: "Buxar" },
+    { key: "8", value: "Gaya" },
+    { key: "9", value: "Jehanabad" },
+    { key: "10", value: "Nawada" },
+    { key: "11", value: "Siwan" },
+    { key: "12", value: "Gopalganj" },
+    { key: "13", value: "Sitamarhi" },
+    { key: "14", value: "Muzaffarpur" },
+    { key: "15", value: "Shivahar" },
+    { key: "16", value: "West Champaran" },
+    { key: "17", value: "East Champaran" },
+    { key: "18", value: "vaishali" },
+    { key: "19", value: "Darbhanga" },
+    { key: "20", value: "Madhubani" },
+    { key: "21", value: "Samastipur" },
+    { key: "22", value: "Saharsa" },
+    { key: "23", value: "Supaul" },
+    { key: "24", value: "Madhepura" },
+    { key: "25", value: "Purnia" },
+    { key: "26", value: "Araria" },
+    { key: "27", value: "Kishanganj" },
+    { key: "28", value: "Katihar" },
+    { key: "29", value: "Banka" },
+    { key: "30", value: "Bhagalpur" },
+    { key: "31", value: "Munger" },
+    { key: "32", value: "Lakhisarai" },
+    { key: "33", value: "Aurangabad" },
+    { key: "34", value: "Saran" },
+    { key: "35", value: "Shekhpura" },
+    { key: "36", value: "Jamui" },
+    { key: "37", value: "Khagaria" },
+    { key: "38", value: "Begusarai" },
+    { key: "39", value: "Lucknow" },
+    { key: "40", value: "Ranchi" },
+    { key: "41", value: "Jhansi" },
+    { key: "42", value: "North Goa" },
+    { key: "43", value: "South Goa" },
+  ];
+
+  const getAddress = async () => {
+    try {
+      const userData = JSON.parse(await AsyncStorage.getItem("user"));
+      if (!userData) {
+        CheckIfLocationEnabled();
+        GetCurrentLocation();
+      } else {
+        setDisplayCurrentAddress(userData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(async() => {
+  await  getAddress();
+  }, []);
+
+  const CheckIfLocationEnabled = async () => {
+    let enabled = await Location.hasServicesEnabledAsync();
+
+    if (!enabled) {
+      Alert.alert(
+        "Location Service not enabled",
+        "Please enable your location services to continue",
+        [{ text: "OK" }],
+        { cancelable: false }
+      );
+    } else {
+      setLocationServiceEnabled(enabled);
+    }
+  };
+
+  const GetCurrentLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission not granted",
+        "Allow the app to use location service.",
+        [{ text: "OK" }],
+        { cancelable: false }
+      );
+    }
+
+    let { coords } = await Location.getCurrentPositionAsync();
+
+    if (coords) {
+      const { latitude, longitude } = coords;
+      let response = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude,
+      });
+
+      for (let item of response) {
+        // console.log(item)
+        let address = ` ${item.street}, ${item.postalCode}, ${item.city}`;
+
+        setDisplayCurrentAddress(address);
+
+        // if (address.length > 0) {
+        //   setTimeout(() => {
+        //     navigation.navigate('Home', { item: address });
+        //   }, 2000);
+        // }
+      }
+    }
+  };
+
+  const route = useRoute();
 
   const [fontsLoaded] = useFonts({
     OpenSans: require("../assets/fonts/openSans.ttf"),
@@ -60,96 +249,6 @@ const Home = ({ navigation }) => {
   if (!fontsLoaded) {
     return null;
   }
-
-  const list = [
-    {
-      id: "0",
-      image: require("../assets/Services/cs1.png"),
-      name: "Doctor Consultation",
-      url: "Consultation",
-    },
-    {
-      id: "1",
-      image: require("../assets/Services/cs2.png"),
-      name: "Surgery Appointment",
-      url: "Surgery",
-    },
-    {
-      id: "8",
-      image: require("../assets/Services/labtest1.png"),
-      name: "Lab Test",
-      url: "Home",
-    },
-
-    {
-      id: "5",
-      image: require("../assets/Services/stress1.png"),
-      name: "Stress & Anxiety",
-      url: "Home",
-    },
-    {
-      id: "2",
-      image: require("../assets/Services/cs4.png"),
-      name: "Physiotherapy At Home",
-      url: "Physiotherapy",
-    },
-
-    {
-      id: "9",
-      image: require("../assets/Services/pharmacy1.png"),
-      name: "Pharmacy",
-      url: "Home",
-    },
-
-    {
-      id: "3",
-      image: require("../assets/Services/cs1.png"),
-      name: "CureoFine Care",
-      url: "Home",
-    },
-    {
-      id: "7",
-      image: require("../assets/Services/weight.png"),
-      name: "  Weight loss Program   ",
-      url: "Home",
-    },
-
-    {
-      id: "4",
-      image: require("../assets/Services/ambulance.png"),
-      name: "Ambulance",
-      url: "Home",
-    },
-  ];
-
-  const mostBook = [
-    {
-      id: "1",
-      image: require("../assets/MostBook/mostBook2.png"),
-      name: "Stress & Anxiety",
-    },
-    {
-      id: "2",
-      image: require("../assets/MostBook/mostBook3.png"),
-      name: "Weight loss Program",
-    },
-
-    {
-      id: "3",
-      image: require("../assets/MostBook/mostBook4.png"),
-      name: "Ambulance",
-    },
-    {
-      id: "4",
-      image: require("../assets/MostBook/mostBook5.png"),
-      name: "Lab Test",
-    },
-    {
-      id: "5",
-      image: require("../assets/MostBook/mostBook1.png"),
-      name: "Doctor Consultation",
-    },
-  ];
 
   const DATA = [
     {
@@ -169,131 +268,6 @@ const Home = ({ navigation }) => {
     },
   ];
 
-  const brands = [
-    {
-      id: 0,
-      img: require("../assets/Brands/p1.png"),
-    },
-    {
-      id: 1,
-      img: require("../assets/Brands/p2.png"),
-    },
-    {
-      id: 2,
-      img: require("../assets/Brands/p3.png"),
-    },
-    {
-      id: 3,
-      img: require("../assets/Brands/p4.png"),
-    },
-    {
-      id: 4,
-      img: require("../assets/Brands/p5.png"),
-    },
-    {
-      id: 5,
-      img: require("../assets/Brands/p6.png"),
-    },
-  ];
-
-  const products = [
-    {
-      id: 1,
-      name: "Test",
-      price: "Rs 50",
-      image: require("../assets/Product/product1.png"),
-      session: "45 minutes",
-    },
-    {
-      id: 2,
-      name: "Neurological Condition",
-      price: "Rs 350",
-      image: require("../assets/Product/product2.png"),
-      session: "45 minutes",
-    },
-    {
-      id: 3,
-      name: "Ligament injuries",
-      price: "Rs 350",
-      image: require("../assets/Product/product3.png"),
-      session: "45 minutes",
-    },
-    {
-      id: 4,
-      name: "Foot Massage",
-      price: "Rs 350",
-      image: require("../assets/Product/product4.png"),
-      session: "45 minutes",
-    },
-    {
-      id: 5,
-      name: "Sports Massage",
-      price: "Rs 999",
-      image: require("../assets/Product/product5.png"),
-      session: "45 minutes",
-    },
-    {
-      id: 6,
-      name: "Muscles Strain",
-      price: "Rs 350",
-      image: require("../assets/Product/product6.png"),
-      session: "45 minutes",
-    },
-    {
-      id: 7,
-      name: "Sciatica",
-      price: "Rs 350",
-      image: require("../assets/Product/product7.png"),
-      session: "45 minutes",
-    },
-    {
-      id: 8,
-      name: "Disc Problem",
-      price: "Rs 350",
-      image: require("../assets/Product/product8.png"),
-      session: "45 minutes",
-    },
-    {
-      id: 9,
-      name: "Frozen Shoulder",
-      price: "Rs 350",
-      image: require("../assets/Product/product9.png"),
-      session: "45 minutes",
-    },
-    {
-      id: 10,
-      name: "Joint Pain",
-      price: "Rs 350",
-      image: require("../assets/Product/product1.png"),
-      session: "45 minutes",
-    },
-  ];
-
-  const contact = [
-    {
-      // #f08080
-      id: 1,
-      icon: <Feather name="phone-call" size={24} color="#f08080" />,
-      title: "7250446555",
-      subtitle: "Have a question?",
-      text: "Call Us Now",
-    },
-    {
-      id: 2,
-      icon: <Feather name="mail" size={24} color="#f08080" />,
-      title: "cureofine@gmail.com",
-      subtitle: " Need support?",
-      text: " Drop us an email",
-    },
-    {
-      id: 3,
-      icon: <Ionicons name="alarm-outline" size={24} color="#f08080" />,
-      title: "Mon - Sat",
-      subtitle: "10.00AM - 06.00PM",
-      text: " We are open on",
-    },
-  ];
-
   const renderItem = (data) => (
     <View key={data.coverImageUri} style={styles.cardContainer}>
       <View style={styles.cardWrapper}>
@@ -301,105 +275,6 @@ const Home = ({ navigation }) => {
       </View>
     </View>
   );
-
-  const clinic = [
-    {
-      id: 0,
-      image: require("../assets/clinic/b14.png"),
-      heading: "Cureofine Telemedicine center",
-      location: "GAYA",
-    },
-    {
-      id: 1,
-      image: require("../assets/clinic/b14.png"),
-      heading: "Cureofine Telemedicine center",
-      location: "JHAJHA , JAMUI",
-    },
-    {
-      id: 2,
-      image: require("../assets/clinic/b14.png"),
-      heading: "Cureofine Telemedicine center",
-      location: "PATNA",
-    },
-  ];
-
-  const teams = [
-    {
-      id: 0,
-      name: "Dr Namcy",
-      occupation: "General Physician",
-      image: require("../assets/team1.jpg"),
-    },
-    {
-      id: 1,
-      name: "Dr Namcy",
-      occupation: "General Physician",
-      image: require("../assets/team1.jpg"),
-    },
-    {
-      id: 2,
-      name: "Dr Namcy",
-      occupation: "General Physician",
-      image: require("../assets/team1.jpg"),
-    },
-    {
-      id: 3,
-      name: "Dr Namcy",
-      occupation: "General Physician",
-      image: require("../assets/team1.jpg"),
-    },
-  ];
-
-  const specialization = [
-    {
-      id: 0,
-      image: require("../assets/physician.png"),
-      name: "General Physician",
-    },
-    {
-      id: 1,
-      image: require("../assets/dental.png"),
-      name: "Dental",
-    },
-    {
-      id: 2,
-      image: require("../assets/ortho.png"),
-      name: "Ortho",
-    },
-  ];
-
-  const category = [
-    {
-      id: 0,
-      image: require("../assets/shop/pc1.png"),
-      name: "Personal Care",
-    },
-    {
-      id: 1,
-      image: require("../assets/shop/diabetes1.png"),
-      name: "Diabetes",
-    },
-    {
-      id: 2,
-      image: require("../assets/shop/healthcare1.png"),
-      name: "Heathcare Devices",
-    },
-    {
-      id: 3,
-      image: require("../assets/shop/healthcare1.png"),
-      name: "Healthcare Conditions",
-    },
-    {
-      id: 4,
-      image: require("../assets/shop/logo.png"),
-      name: "CureoFine Featured Products",
-    },
-    {
-      id: 5,
-      image: require("../assets/shop/covid1.png"),
-      name: "Covid Essentials",
-    },
-  ];
 
   const footerBanner = [
     // {
@@ -414,13 +289,6 @@ const Home = ({ navigation }) => {
     },
   ];
 
-  const footerRenderItem = (data) => (
-    <View key={data.coverImageUri} style={styles.cardContainer1}>
-      <View style={styles.cardWrapper1}>
-        <Image source={data.coverImageUri} style={styles.card1} />
-      </View>
-    </View>
-  );
   return (
     <>
       <SafeAreaView
@@ -438,32 +306,35 @@ const Home = ({ navigation }) => {
           translucent={false}
         />
 
-        {/* logo */}
-        <View
-          style={{
-            alignItems: "center",
-            // justifyContent:"center",
-            flexDirection: "row",
-            gap: 53,
-            padding: 2,
-          }}
-        >
-          <AntDesign
-            name="menu-fold"
-            size={34}
-            color="black"
-            onPress={() => navigation.openDrawer()}
-            style={{ marginLeft: 18 }}
-          />
+        {/* header */}
+        <Header navigation={navigation}></Header>
+        {/* header */}
 
-          <Image
-            style={{ width: 160, height: 50, resizeMode: "contain" }}
-            source={require("../assets/logo.png")}
-          />
-        </View>
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 3,
+            padding: 10,
+            backgroundColor: "#ffe4e1",
+            paddingLeft: 15,
+            flexWrap: "wrap",
+          }}
+          onPress={() => setModalVisible(!modalVisible)}
+        >
+          <Ionicons name="location-outline" size={20} color="gray" />
+
+          <Pressable onPress={() => setModalVisible(!modalVisible)}>
+            <Text style={{ color: "black", fontSize: 12, textAlign: "center" }}>
+              {displayCurrentAddress}
+            </Text>
+          </Pressable>
+
+          <MaterialIcons name="keyboard-arrow-down" size={24} color="gray" />
+        </TouchableOpacity>
 
         <ScrollView>
-          {/* banner slider */}
+          {/* banner slider start */}
           <View style={styles.container}>
             <Carousel
               pagination={PaginationLight}
@@ -473,262 +344,17 @@ const Home = ({ navigation }) => {
               autoplay
             />
           </View>
+          {/* banner slider end */}
 
-          {/* service slider */}
-          <Text
-            style={{
-              paddingTop: 10,
-              fontSize: 12,
-              fontWeight: "bold",
-              paddingLeft: 7,
-              fontFamily: "OpenSans",
-              color: "#eb3b5a",
-            }}
-          >
-            EXPLORE IN
-          </Text>
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <Text
-              style={{
-                // paddingTop: 10,
-                fontSize: 18,
-                fontWeight: "bold",
-                paddingLeft: 7,
-                fontFamily: "OpenSans",
-              }}
-            >
-              Our Services
-            </Text>
+          {/* service section start */}
+          <Services navigation={navigation}></Services>
+          {/* service section end */}
 
-            <View>
-              <FontAwesome
-                name="stethoscope"
-                size={20}
-                color="#f08080"
-                style={{ marginLeft: 7, marginTop: -2 }}
-              />
-            </View>
-          </View>
+          {/* products section start */}
+          <Products navigation={navigation}></Products>
+          {/* products section end */}
 
-          <Text
-            style={{
-              height: 1.5,
-              borderColor: "#eb3b5a",
-              borderWidth: 1.5,
-              marginTop: 10,
-              width: width * 0.4,
-              marginLeft: 7,
-              borderRadius: 5,
-            }}
-          />
-
-          <FlatList
-            data={list}
-            numColumns={3}
-            columnWrapperStyle={{
-              flex: 1,
-              justifyContent: "space-between",
-            }}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                key={item.id}
-                style={{
-                  margin: 8,
-                  alignItems: "center",
-                  marginTop: 10,
-                  padding: 2,
-                }}
-                onPress={() => navigation.navigate(item.url)}
-              >
-                <Image
-                  style={{
-                    width: 80,
-                    height: 80,
-                    resizeMode: "contain",
-                    backgroundColor: "whitesmoke",
-                    borderRadius: 50,
-                    borderWidth: 2,
-                  }}
-                  source={item.image}
-                />
-
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 12,
-                    fontWeight: "600",
-                    marginTop: 5,
-                    fontFamily: "OpenSans",
-                  }}
-                >
-                  {item?.name}
-                </Text>
-              </TouchableOpacity>
-            )}
-          ></FlatList>
-
-          {/* products */}
-
-          <View
-            style={{
-              backgroundColor: "whitesmoke",
-              marginTop: 10,
-              borderTopLeftRadius: 15,
-              borderTopRightRadius: 15,
-              paddingBottom: 10,
-              paddingTop: 5,
-            }}
-          >
-            <Text
-              style={{
-                paddingTop: 10,
-                fontSize: 12,
-                fontWeight: "bold",
-                paddingLeft: 7,
-                fontFamily: "OpenSans",
-                color: "#eb3b5a",
-              }}
-            >
-              EXPLORE IN
-            </Text>
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
-              <Text
-                style={{
-                  // paddingTop: 10,
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  paddingLeft: 7,
-                  fontFamily: "OpenSans",
-                }}
-              >
-                Our Products
-              </Text>
-
-              <View>
-                <FontAwesome
-                  name="stethoscope"
-                  size={20}
-                  color="#f08080"
-                  style={{ marginLeft: 7, marginTop: -2 }}
-                />
-              </View>
-            </View>
-
-            <Text
-              style={{
-                height: 1.5,
-                borderColor: "#eb3b5a",
-                borderWidth: 1.5,
-                marginTop: 10,
-                width: width * 0.4,
-                marginLeft: 7,
-                borderRadius: 5,
-              }}
-            />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {products.map((item, index) => (
-                <TouchableOpacity
-                  key={item.id}
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginRight: 3,
-                    marginLeft: 3,
-                    //backgroundColor:"white",
-                  }}
-                >
-                  <Image
-                    style={{ width: 150, height: 150, resizeMode: "contain" }}
-                    source={item.image}
-                  />
-                  <View>
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        fontFamily: "OpenSans",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {item.name}
-                    </Text>
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        fontSize: 12,
-                        fontFamily: "OpenSans",
-                        marginTop: 2,
-                        color: "#f08080",
-                      }}
-                    >
-                      Session: {item.session}
-                    </Text>
-
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        fontWeight: 400,
-                        fontFamily: "OpenSans",
-                        marginTop: 2,
-                      }}
-                    >
-                      {item.price}
-                    </Text>
-                  </View>
-
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: "#f08080",
-                      paddingVertical: 5,
-                      width: 100,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginTop: 5,
-                      borderRadius: 4,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "white",
-                        fontSize: 14,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      VIEW
-                    </Text>
-                  </TouchableOpacity>
-
-                  <View
-                    style={{
-                      backgroundColor: "black",
-                      paddingVertical: 3,
-                      width: "auto",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginTop: 1,
-                      borderRadius: 2,
-                      position: "absolute",
-                      top: 20,
-                      left: 0,
-                      paddingHorizontal: 8,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        color: "white",
-                        fontSize: 13,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Trending
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
-
+          {/* offers & deals start */}
           <Text
             style={{
               height: 1,
@@ -737,8 +363,6 @@ const Home = ({ navigation }) => {
               marginTop: 18,
             }}
           />
-
-          {/* offers & deals */}
 
           <View style={styles.container}>
             <Carousel
@@ -758,107 +382,13 @@ const Home = ({ navigation }) => {
               marginTop: 18,
             }}
           />
+          {/* offers & deals end */}
 
-          {/* most booked services */}
+          {/* most booked services section start */}
 
-          <Text
-            style={{
-              paddingTop: 20,
-              fontSize: 12,
-              fontWeight: "bold",
-              paddingLeft: 7,
-              fontFamily: "OpenSans",
-              color: "#eb3b5a",
-            }}
-          >
-            EXPLORE IN
-          </Text>
+          <MostBooked navigation={navigation}></MostBooked>
 
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <Text
-              style={{
-                // paddingTop: 10,
-                fontSize: 18,
-                fontWeight: "bold",
-                paddingLeft: 7,
-                fontFamily: "OpenSans",
-              }}
-            >
-              Most Booked Services
-            </Text>
-
-            <View>
-              <FontAwesome
-                name="stethoscope"
-                size={20}
-                color="#f08080"
-                style={{ marginLeft: 7, marginTop: -2 }}
-              />
-            </View>
-          </View>
-
-          <Text
-            style={{
-              height: 1.5,
-              borderColor: "#eb3b5a",
-              borderWidth: 1.5,
-              marginTop: 10,
-              width: width * 0.6,
-              marginLeft: 7,
-              borderRadius: 5,
-            }}
-          />
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {mostBook.map((item, index) => (
-              <TouchableOpacity
-                key={item.id}
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginRight: 3,
-                  marginLeft: 3,
-                }}
-              >
-                <Image
-                  style={{ width: 150, height: 150, resizeMode: "contain" }}
-                  source={item.image}
-                />
-                <View>
-                  <Text style={{ fontWeight: 500, fontFamily: "OpenSans" }}>
-                    {item.name}
-                  </Text>
-                </View>
-
-                <View
-                  style={{
-                    backgroundColor: "black",
-                    paddingVertical: 3,
-                    width: "auto",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 1,
-                    borderRadius: 2,
-                    position: "absolute",
-                    top: 20,
-                    left: 0,
-                    paddingHorizontal: 8,
-                  }}
-                >
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      color: "white",
-                      fontSize: 13,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Book Now
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          {/* most booked services section end */}
 
           <Text
             style={{
@@ -869,92 +399,11 @@ const Home = ({ navigation }) => {
             }}
           />
 
-          {/* shop by category */}
+          {/* shop by category start */}
 
-          <Text
-            style={{
-              paddingTop: 10,
-              fontSize: 12,
-              fontWeight: "bold",
-              paddingLeft: 7,
-              fontFamily: "OpenSans",
-              color: "#eb3b5a",
-            }}
-          >
-            EXPLORE IN
-          </Text>
+          <Categories></Categories>
 
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <Text
-              style={{
-                // paddingTop: 10,
-                fontSize: 18,
-                fontWeight: "bold",
-                paddingLeft: 7,
-                fontFamily: "OpenSans",
-              }}
-            >
-              Shop By Category
-            </Text>
-
-            <View>
-              <FontAwesome
-                name="stethoscope"
-                size={20}
-                color="#f08080"
-                style={{ marginLeft: 7, marginTop: -2 }}
-              />
-            </View>
-          </View>
-
-          <Text
-            style={{
-              height: 1.5,
-              borderColor: "#eb3b5a",
-              borderWidth: 1.5,
-              marginTop: 10,
-              width: width * 0.6,
-              marginLeft: 7,
-              borderRadius: 5,
-            }}
-          />
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {category.map((item, index) => (
-              <TouchableOpacity
-                key={item.id}
-                style={{
-                  margin: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 15,
-                }}
-              >
-                <Image
-                  style={{
-                    width: 95,
-                    height: 95,
-                    resizeMode: "contain",
-                    borderRadius: 60,
-                    // borderColor:"black",
-                    backgroundColor: "whitesmoke",
-                  }}
-                  source={item.image}
-                />
-
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 12,
-                    fontWeight: "600",
-                    marginTop: 5,
-                    fontFamily: "OpenSans",
-                  }}
-                >
-                  {item?.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          {/* shop by category end */}
 
           <Text
             style={{
@@ -965,93 +414,9 @@ const Home = ({ navigation }) => {
             }}
           />
 
-          {/* specialization */}
-
-          <ImageBackground
-            source={require("../assets/bg8.png")}
-            style={{
-              width: "100%",
-              height: "auto",
-              resizeMode: "cover",
-              marginTop: 15,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-            }}
-          >
-            <Text
-              style={{
-                paddingTop: 10,
-                fontSize: 12,
-                fontWeight: "bold",
-                paddingLeft: 10,
-                fontFamily: "OpenSans",
-                color: "white",
-              }}
-            >
-              EXPLORE IN
-            </Text>
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
-              <Text
-                style={{
-                  // paddingTop: 10,
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  paddingLeft: 10,
-                  fontFamily: "OpenSans",
-                }}
-              >
-                Our Specialization
-              </Text>
-
-              <View>
-                <FontAwesome
-                  name="stethoscope"
-                  size={20}
-                  color="white"
-                  style={{ marginLeft: 7, marginTop: -2 }}
-                />
-              </View>
-            </View>
-
-            <Text
-              style={{
-                height: 1.5,
-                borderColor: "#eb3b5a",
-                borderWidth: 1.5,
-                marginTop: 10,
-                width: width * 0.6,
-                marginLeft: 7,
-                borderRadius: 5,
-              }}
-            />
-
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {specialization.map((item, index) => (
-                <Card
-                  key={item.id}
-                  style={{
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                    paddingTop: 0,
-                    paddingBottom: 0,
-                  }}
-                >
-                  <Card.Title style={{ fontSize: 15 }}>{item.name}</Card.Title>
-
-                  <Card.Divider />
-                  <View style={{ alignItems: "center" }}>
-                    <Image
-                      style={{ width: 180, height: 130, resizeMode: "contain" }}
-                      resizeMode="contain"
-                      source={item.image}
-                    />
-                  </View>
-                </Card>
-              ))}
-            </ScrollView>
-          </ImageBackground>
-
-          {/* brands */}
+          {/* specialization section start */}
+          <Specialization></Specialization>
+          {/* specialization section end */}
 
           <Text
             style={{
@@ -1062,67 +427,9 @@ const Home = ({ navigation }) => {
             }}
           />
 
-          <View style={{ flexDirection: "row", marginTop: 14 }}>
-            <Text
-              style={{
-                // paddingTop: 10,
-                fontSize: 18,
-                fontWeight: "bold",
-                paddingLeft: 7,
-                fontFamily: "OpenSans",
-              }}
-            >
-              Our Brands and Partners
-            </Text>
-
-            <View>
-              <FontAwesome
-                name="stethoscope"
-                size={20}
-                color="#f08080"
-                style={{ marginLeft: 7, marginTop: -2 }}
-              />
-            </View>
-          </View>
-
-          <Text
-            style={{
-              height: 1.5,
-              borderColor: "#eb3b5a",
-              borderWidth: 1.5,
-              marginTop: 10,
-              width: width * 0.7,
-              marginLeft: 7,
-              borderRadius: 5,
-            }}
-          />
-
-          <FlatList
-            data={brands}
-            numColumns={3}
-            columnWrapperStyle={{
-              flex: 1,
-              justifyContent: "space-between",
-            }}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                key={item.id}
-                style={{
-                  margin: 10,
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  backgroundColor: "whitesmoke",
-                  borderRadius: 20,
-                  padding: 8,
-                }}
-              >
-                <Image
-                  style={{ width: 80, height: 80, resizeMode: "contain" }}
-                  source={item.img}
-                />
-              </TouchableOpacity>
-            )}
-          ></FlatList>
+          {/* brands */}
+          <Brands></Brands>
+          {/* brands */}
 
           <Text
             style={{
@@ -1133,6 +440,7 @@ const Home = ({ navigation }) => {
             }}
           />
 
+          {/* footer banner */}
           <FlatList
             data={footerBanner}
             horizontal={true}
@@ -1151,8 +459,6 @@ const Home = ({ navigation }) => {
             )}
           ></FlatList>
 
-          {/* teams */}
-
           <Text
             style={{
               height: 1,
@@ -1162,99 +468,10 @@ const Home = ({ navigation }) => {
             }}
           />
 
-          <View
-            style={{
-              backgroundColor: "whitesmoke",
-              marginTop: 15,
-              paddingTop: 4,
-              paddingBottom: 10,
-              borderTopRightRadius: 20,
-              borderTopEndRadius: 20,
-            }}
-          >
-            <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Text
-                style={{
-                  // paddingTop: 10,
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  paddingLeft: 7,
-                  fontFamily: "OpenSans",
-                }}
-              >
-                Our Top Doctors
-              </Text>
+          {/* teams */}
 
-              <View>
-                <FontAwesome
-                  name="stethoscope"
-                  size={20}
-                  color="#f08080"
-                  style={{ marginLeft: 7, marginTop: -2 }}
-                />
-              </View>
-            </View>
-
-            <Text
-              style={{
-                height: 1.5,
-                borderColor: "#eb3b5a",
-                borderWidth: 1.5,
-                marginTop: 10,
-                width: width * 0.5,
-                marginLeft: 7,
-                borderRadius: 5,
-              }}
-            />
-
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {teams.map((item, index) => (
-                <TouchableOpacity
-                  key={item.id}
-                  style={{
-                    margin: 8,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: 15,
-                  }}
-                >
-                  <Image
-                    style={{
-                      width: 95,
-                      height: 95,
-                      resizeMode: "contain",
-                      borderRadius: 60,
-                    }}
-                    source={item.image}
-                  />
-
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 16,
-                      fontWeight: "600",
-                      marginTop: 5,
-                      fontFamily: "OpenSans",
-                    }}
-                  >
-                    {item?.name}
-                  </Text>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 12,
-                      fontWeight: "600",
-                      marginTop: 5,
-                      fontFamily: "OpenSans",
-                      color: "#f08080",
-                    }}
-                  >
-                    {item.occupation}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
+          <Teams></Teams>
+          {/* teams */}
 
           <Text
             style={{
@@ -1264,6 +481,7 @@ const Home = ({ navigation }) => {
               marginTop: 18,
             }}
           />
+
           {/* banner */}
           <ImageBackground
             source={require("../assets/cure.jpg")}
@@ -1318,90 +536,9 @@ const Home = ({ navigation }) => {
           />
 
           {/* our presence */}
+          <Location1></Location1>
+          {/* our presence */}
 
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <Text
-              style={{
-                // paddingTop: 10,
-                fontSize: 18,
-                fontWeight: "bold",
-                paddingLeft: 7,
-                fontFamily: "OpenSans",
-              }}
-            >
-              Our Presence
-            </Text>
-
-            <View>
-              <FontAwesome
-                name="stethoscope"
-                size={20}
-                color="#f08080"
-                style={{ marginLeft: 7, marginTop: -2 }}
-              />
-            </View>
-          </View>
-
-          <Text
-            style={{
-              height: 1.5,
-              borderColor: "#eb3b5a",
-              borderWidth: 1.5,
-              marginTop: 10,
-              width: width * 0.4,
-              marginLeft: 7,
-              borderRadius: 5,
-            }}
-          />
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {clinic.map((item, index) => (
-              <Card
-                key={item.id}
-                style={{
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  paddingBottom: 0,
-                  borderColor: "white",
-                }}
-              >
-                <Ionicons
-                  name="location-sharp"
-                  size={24}
-                  color="#f08080"
-                  style={{ textAlign: "center" }}
-                />
-                <Card.Title style={{ fontFamily: "OpenSans", fontSize: 18 }}>
-                  {item.heading}
-                </Card.Title>
-                <Text style={{ textAlign: "center", marginBottom: 2 }}>
-                  {item.location}
-                </Text>
-                <Card.Divider />
-                <View style={{ alignItems: "center" }}>
-                  <Image
-                    style={{ width: 200, height: 100, resizeMode: "contain" }}
-                    resizeMode="contain"
-                    source={item.image}
-                  />
-                </View>
-              </Card>
-            ))}
-          </ScrollView>
-          {/* </ImageBackground> */}
-
-          {/* footer banner */}
-
-          {/* <View style={styles.container}>
-            <Carousel
-              pagination={PaginationLight}
-              renderItem={footerRenderItem}
-              data={footerBanner}
-              loop
-              autoplay
-            />
-          </View> */}
           <Text
             style={{
               height: 1,
@@ -1411,111 +548,149 @@ const Home = ({ navigation }) => {
             }}
           />
 
-          <ImageBackground
-            source={require("../assets/bg8.png")}
-            style={{
-              width: "100%",
-              height: "auto",
-              resizeMode: "cover",
-              marginTop: 15,
-            }}
-          >
-            {/* contact */}
+          {/* contact */}
+          <Contact></Contact>
+          {/* contact */}
 
-            <View style={{ flexDirection: "row", marginTop: 10 }}>
+          {/* <View  style={{backgroundColor:"whitesmoke"}}>
+
+              <View style={{ padding: 10, alignItems:"flex-start" , paddingLeft:25,marginTop:25}}>
               <Text
                 style={{
-                  // paddingTop: 10,
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  paddingLeft: 7,
-                  fontFamily: "OpenSans",
+                  fontWeight: "500",
+                  textAlign: "center",
+                  fontSize: 12,
                 }}
               >
-                Contact Us
+              Making healthcare
               </Text>
-
-              <View>
-                <FontAwesome
-                  name="stethoscope"
-                  size={20}
-                  color="white"
-                  style={{ marginLeft: 7, marginTop: -2 }}
-                />
-              </View>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  fontSize: 18,
+                  color:"gray"
+                }}
+              >
+                Understandable, Accessible & 
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  fontSize: 18,
+                  color:"gray"
+                }}
+              >
+                Affordable
+              </Text>
+              <Text style={{ textAlign: "center", fontSize: 10 , marginTop:15}}>
+                Made with ❤ by Cureo Fine
+              </Text>
             </View>
-
-            <Text
-              style={{
-                height: 1.5,
-                borderColor: "#eb3b5a",
-                borderWidth: 1.5,
-                marginTop: 10,
-                width: width * 0.5,
-                marginLeft: 7,
-                borderRadius: 5,
-              }}
-            />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {contact.map((item, index) => (
-                <TouchableOpacity
-                  key={item.id}
-                  style={{
-                    margin: 8,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: 150,
-                    borderWidth: 0.5,
-                    padding: 8,
-                    borderRadius: 8,
-                    backgroundColor: "white",
-                    borderColor: "#D0D0D0",
-                    marginTop: 12,
-                  }}
-                >
-                  {item.icon}
-
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 12,
-                      fontWeight: "500",
-                      marginTop: 5,
-                    }}
-                  >
-                    {item.title}
-                  </Text>
-
-                  {item.text && (
-                    <Text
-                      style={{
-                        textAlign: "center",
-                        fontSize: 10,
-                        fontWeight: "500",
-                        marginTop: 5,
-                      }}
-                    >
-                      {item.text}
-                    </Text>
-                  )}
-
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 8,
-                      fontWeight: "500",
-                      marginTop: 5,
-                      color: "#f08080",
-                    }}
-                  >
-                    {item.subtitle}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </ImageBackground>
+              </View> */}
+          <Footer></Footer>
         </ScrollView>
       </SafeAreaView>
+
+      <BottomModal
+        onBackdropPress={() => setModalVisible(!modalVisible)}
+        swipeDirection={["up", "down"]}
+        swipeThreshold={200}
+        modalAnimation={
+          new SlideAnimation({
+            slideFrom: "bottom",
+          })
+        }
+        onHardwareBackPress={() => setModalVisible(!modalVisible)}
+        visible={modalVisible}
+        onTouchOutside={() => setModalVisible(!modalVisible)}
+      >
+        <ModalContent style={{ width: "100%", height: 250 }}>
+          <View style={{ marginBottom: 8 }}>
+            <Text style={{ fontSize: 16, fontWeight: "500" }}>
+              Choose your Location
+            </Text>
+          </View>
+
+          <View>
+            <View style={styles.inputBoxCont}>
+              <Foundation
+                name="address-book"
+                size={24}
+                color="gray"
+                style={{ marginLeft: 10 }}
+              />
+
+              <TextInput
+                editable
+                multiline
+                numberOfLines={3}
+                maxLength={50}
+                onChangeText={(text) => setAdd(text)}
+                value={address}
+                style={{
+                  color: "gray",
+                  alignItems: "flex-start",
+                  width: 300,
+                  fontSize: 15,
+                }}
+                placeholder="enter your Address"
+              />
+            </View>
+          </View>
+
+          <View style={{ marginTop: 30 }} />
+
+          <TouchableOpacity
+            style={styles.button1}
+            onPress={() => {
+              handleAddress(address);
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                color: "white",
+                fontSize: 16,
+                fontWeight: "bold",
+              }}
+              onPress={() => {
+                handleAddress(address);
+              }}
+            >
+              Add
+            </Text>
+          </TouchableOpacity>
+
+          {/* <View style={{ flexDirection: "column", gap: 7, marginTop: 10 }}>
+          <Text style={{ marginTop: 5, fontSize: 16, color: "gray" }}>
+              Select Your State
+            </Text>
+
+       <SelectList 
+        setSelected={(val) =>{ 
+          setSelected(val) 
+          setState(val)}} 
+        data={data} 
+        />
+          </View>
+
+          <View style={{marginTop:10}}>
+          <Text style={{ marginTop: 5, fontSize: 16, color: "gray" }}>
+              Select Your District
+            </Text>
+
+            
+       <SelectList 
+        setSelected={(val) =>{
+           setSelected(val)
+           setdistrict(val)} } 
+        data={district} 
+        />
+          </View> */}
+        </ModalContent>
+      </BottomModal>
     </>
   );
 };
@@ -1526,7 +701,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     width: "100%",
-    marginTop: 1,
+    marginTop: 0,
   },
 
   cardContainer: {
@@ -1581,6 +756,24 @@ const styles = StyleSheet.create({
     width: width * 1,
     height: width * 0.5,
     resizeMode: "contain",
+  },
+  inputBoxCont: {
+    flexDirection: "row",
+    gap: 10,
+    backgroundColor: "#D0D0D0",
+    borderRadius: 5,
+    marginTop: 15,
+    paddingVertical: 10,
+    alignItems: "center",
+  },
+  button1: {
+    width: 120,
+    backgroundColor: "#f08080",
+    borderRadius: 6,
+    marginLeft: "auto",
+    marginRight: "auto",
+    padding: 15,
+    marginBottom: 20,
   },
 });
 

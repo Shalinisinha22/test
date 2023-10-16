@@ -22,7 +22,6 @@ import Presence from "../Screens/Presence";
 import Terms from "../Screens/Terms";
 import Faq from "../Screens/Faq";
 import Privacy from "../Screens/Privacy";
-
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -35,25 +34,32 @@ import { Foundation } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import Refer from "../Screens/Refer";
-import Share from "../Screens/Share";
+import ShareScreen from "../Screens/Share";
 import Consultation from "../Screens/Consultation";
 import Surgery from "../Screens/Surgery";
 import Physiotherapy from "../Screens/Physiotherapy";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import ProductInfoScreen from "../Screens/ProductInfoScreen";
+import ServiceInfoScreen from "../Screens/ServiceInfoScreen";
+import SurgeryInfoScreen from "../Screens/SurgeryInfoScreen";
+import { Linking } from 'react-native';
+import * as Sharing from 'expo-sharing';
+import { Share } from "react-native";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
+
   const drawerMenu = [
     {
       id: 0,
       name: "Our Services",
       submenu: [
-        {id:0, name: "Doctor Consultation", url: "Consultation" },
-        {id:1, name: "Surgery Appointment", url: "Surgery" },
-        {id:2, name: "Physiotherapy At Home", url: "Physiotherapy" },
+        { id: 0, name: "Doctor Consultation", url: "Consultation" },
+        { id: 1, name: "Surgery Appointment", url: "Surgery" },
+        { id: 2, name: "Physiotherapy At Home", url: "Physiotherapy" },
       ],
       icon: <MaterialIcons name="medical-services" size={24} color="white" />,
       dropdownIcon: <AntDesign name="down" size={20} color="white" />,
@@ -108,8 +114,38 @@ const AppNavigator = () => {
       name: "Share",
       url: "ShareScreen",
       icon: <Entypo name="share" size={24} color="white" />,
+    
     },
   ];
+  const onShare = async (url) => {
+    try {
+      const result = await Share.share({
+        message:
+          ('Cure O Fine | Healthcare application'+ '\n'+ url )
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const shareToWhatsApp = (text) => {
+    // Linking.openURL(`whatsapp://send?text=${text}`);
+    const options={
+      message:"Download Our app by clicking on this below link",
+      url:text
+    }
+    Share.open(options).then(res=> console.log(res) )
+    .catch(err=> console.log(err))
+   }
 
   // #1e272e
 
@@ -121,13 +157,13 @@ const AppNavigator = () => {
           component={Home}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="PresenceScreen" component={Presence} />
+        <Stack.Screen name="PresenceScreen" component={Presence} options={{headerShown:false}} />
         <Stack.Screen name="TermScreen" component={Terms} />
         <Stack.Screen name="PrivacyScreen" component={Privacy} />
         <Stack.Screen name="FaqScreen" component={Faq} />
         <Stack.Screen name="RefundScreen" component={Refund} />
         <Stack.Screen name="ReferScreen" component={Refer} />
-        <Stack.Screen name="ShareScreen" component={Share} />
+        <Stack.Screen name="ShareScreen" component={ShareScreen} />
         <Stack.Screen
           name="Consultation"
           component={Consultation}
@@ -151,6 +187,23 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="ProductInfo"
+          component={ProductInfoScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="ServiceInfo"
+          component={ServiceInfoScreen}
+          options={{ headerShown: false }}
+        />
+           <Stack.Screen
+          name="SurgeryInfo"
+          component={SurgeryInfoScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
@@ -204,7 +257,7 @@ const AppNavigator = () => {
                       <View style={styles.submenu}>
                         {item.submenu.map((subitem) => (
                           <TouchableOpacity
-                             key={subitem.id}
+                            key={subitem.id}
                             onPress={() => navigation.navigate(subitem.url)}
                             style={{
                               flexDirection: "row",
@@ -234,7 +287,7 @@ const AppNavigator = () => {
                       padding: 15,
                       gap: 12,
                     }}
-                    onPress={() => navigation.navigate(item.url)}
+                    onPress={() => {item.name=="Share"? onShare(`https://expo.dev/artifacts/eas/phEj8XNNVKndyuuuv4ZTAb.apk`):navigation.navigate(item.url)} }
                   >
                     {item.icon}
                     <Text style={{ fontSize: 17, color: "white" }}>
@@ -282,6 +335,7 @@ const AppNavigator = () => {
         component={AboutScreen}
         options={{
           tabBarLabel: "About",
+          headerShown: false,
           tabBarLabelStyle: { color: "black" },
           tabBarIcon: ({ focused }) =>
             focused ? (
@@ -302,6 +356,7 @@ const AppNavigator = () => {
         options={{
           tabBarLabel: "Services",
           tabBarLabelStyle: { color: "black" },
+          headerShown: false,
           tabBarIcon: ({ focused }) =>
             focused ? (
               <Fontisto name="doctor" size={24} color="#f08080" />
@@ -315,6 +370,7 @@ const AppNavigator = () => {
         name="Enquiry"
         component={EnquiryScreen}
         options={{
+          headerShown: false,
           tabBarLabel: "Enquiry",
           tabBarLabelStyle: { color: "black" },
           tabBarIcon: ({ focused }) =>

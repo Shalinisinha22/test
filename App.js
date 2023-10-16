@@ -1,6 +1,7 @@
 
 import { StyleSheet, Text, View,SafeAreaView, Platform, StatusBar } from "react-native";
 import StackNavigator from "./navigation/stacknavigator";
+import { ModalPortal } from "react-native-modals";
 
 import AppNavigator from "./navigation/AppNavigator";
 
@@ -11,6 +12,7 @@ export default function App() {
       
        {/* <StackNavigator/> */}
      <AppNavigator></AppNavigator>
+     <ModalPortal></ModalPortal>
 
     </>
   );

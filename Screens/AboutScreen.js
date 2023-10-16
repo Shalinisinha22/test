@@ -1,68 +1,136 @@
-import { View, Text, ImageBackground, Pressable, Image , ScrollView} from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  ImageBackground,
+  Pressable,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import React, { useCallback } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-
+import { FontAwesome } from "@expo/vector-icons";
+import { Dimensions } from "react-native";
+const { width } = Dimensions.get("window");
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import Carousel, { PaginationLight } from "react-native-x-carousel";
+import Specialization from "../Components/Specialization";
+import Header from "../Components/Header";
+import Teams from "../Components/Teams";
+import Contact from "../Components/Contact";
+import Footer from "../Components/Footer";
+import { SafeAreaView } from "react-native-safe-area-context";
+SplashScreen.preventAutoHideAsync();
 
 const AboutScreen = ({ navigation }) => {
-  const contact = [
+
+
+  const [fontsLoaded] = useFonts({
+    EB: require("../assets/fonts/EBGaramond-VariableFont_wght.ttf"),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  const DATA = [
     {
-      id: 1,
-      icon: <Ionicons name="call" size={35} color="#eb3b5a" />,
-      title: "7250446555",
-      subtitle: "Have a question?",
-      text: "Call Us Now",
+      coverImageUri: require("../assets/Banner/cbanner1.png"),
     },
     {
-      id: 2,
-      icon: <Ionicons name="mail" size={35} color="#eb3b5a" />,
-      title: "cureofine@gmail.com",
-      subtitle: " Need support?",
-      text: " Drop us an email",
-    },
-    {
-      id: 3,
-      icon: <Ionicons name="alarm" size={35} color="#eb3b5a" />,
-      title: "Mon - Sat",
-      subtitle: "10.00AM - 06.00PM",
-      text: " We are open on",
+      coverImageUri: require("../assets/Banner/cbanner2.png"),
     },
   ];
+
+  const renderItem = (data) => (
+    <View key={data.coverImageUri} style={styles.cardContainer}>
+      <View style={styles.cardWrapper}>
+        <Image style={styles.card} source={data.coverImageUri} />
+      </View>
+    </View>
+  );
+
+
   return (
-    <View style={{alignItems:"center", justifyContent:"center"}}>
 
-    {/* <Text>About Screen</Text> */}
+    <SafeAreaView style={{ backgroundColor: "white", paddingBottom: 50}}>
 
-      {/* <ImageBackground
-        source={require("../assets/Banner/cbanner1.png")}
-        style={{ width: 410, height: 145, resizeMode: "contain" }}
-      ></ImageBackground>
-        <Text
-            style={{
-              padding: 10,
-              fontSize: 13,
-              fontWeight: "bold",
-              color:"#eb3b5a"
-          
-            }}
-          >
-          
-          INTRODUCING
-          </Text>
-      <Text
-            style={{
-              padding: 10,
-              fontSize: 20,
-              fontWeight: "bold",
-          
-            }}
-          >
-           About Cure o Fine
-          </Text>
-
-      <View style={{marginTop:10, padding:12}}>
+     <Header navigation={navigation}></Header>
+    <ScrollView
+      onLayout={onLayoutRootView}
+      style={{ backgroundColor: "white" }}
+    >
     
-        <Text style={{textAlign:"justify"}}>
+    
+
+      <View style={styles.container}>
+        <Carousel
+          pagination={PaginationLight}
+          renderItem={renderItem}
+          data={DATA}
+          loop
+          autoplay
+        />
+      </View>
+
+      <Text
+        style={{
+          paddingTop: 10,
+          fontSize: 12,
+          fontWeight: "bold",
+          paddingLeft: 10,
+          fontFamily: "OpenSans",
+          color: "#eb3b5a",
+        }}
+      >
+        INTRODUCING
+      </Text>
+
+      <View style={{ flexDirection: "row", marginTop: 10 }}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            paddingLeft: 10,
+            fontFamily: "OpenSans",
+          }}
+        >
+          About Cure O Fine
+        </Text>
+
+        <View>
+          <FontAwesome
+            name="stethoscope"
+            size={20}
+            color="#f08080"
+            style={{ marginLeft: 7, marginTop: -2 }}
+          />
+        </View>
+      </View>
+
+      <Text
+        style={{
+          height: 1.5,
+          borderColor: "#eb3b5a",
+          borderWidth: 1.5,
+          marginTop: 10,
+          width: width * 0.6,
+          marginLeft: 7,
+          borderRadius: 5,
+        }}
+      />
+
+      <View style={{ marginTop: 10, padding: 12 }}>
+        <Text style={{ textAlign: "justify", fontFamily: "EB" }}>
           Cure o fine is a digital Healthcare Application that provide complete
           Health solution through an online application which is designed in a
           user friendly way that can be used by anyone. Our services are very
@@ -80,11 +148,135 @@ const AboutScreen = ({ navigation }) => {
           services. through our Offline centeres pateint can interact with
           specialist Doctors saving money and Time.
         </Text>
-      </View> */}
+      </View>
+      <Text
+        style={{
+          height: 1,
+          borderColor: "#D0D0D0",
+          borderWidth: 2,
+          marginTop: 15,
+        }}
+      />
 
-    
-    </View>
+      <Teams></Teams>
+      <Text
+        style={{
+          height: 1,
+          borderColor: "#D0D0D0",
+          borderWidth: 2,
+          marginTop: 15,
+        }}
+      />
+
+      <ImageBackground
+        source={require("../assets/cure.jpg")}
+        style={{
+          width: "100%",
+          height: 200,
+          resizeMode: "cover",
+          marginTop: 15,
+        }}
+      >
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontWeight: "bold", fontSize: 26, color: "white" }}>
+            Need a Doctor for Checkup?
+          </Text>
+          <Text style={{ fontWeight: "bold", color: "white" }}>
+            Just make an Appointment & You're Done!
+          </Text>
+          <TouchableOpacity style={styles.button}>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "#f08080",
+                fontSize: 16,
+                fontWeight: "bold",
+              }}
+            >
+              Explore Services
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+
+      <Text
+        style={{
+          height: 1,
+          borderColor: "#D0D0D0",
+          borderWidth: 2,
+          marginTop: 15,
+        }}
+      />
+      <Contact></Contact>
+
+      
+      <Text
+        style={{
+          height: 1,
+          borderColor: "#D0D0D0",
+          borderWidth: 2,
+          marginTop: 15,
+        }}
+      />
+
+      <Footer></Footer>
+    </ScrollView>
+    </SafeAreaView>
+
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    alignItems: "center",
+    width: "100%",
+    marginTop: 1,
+  },
+
+  cardContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardWrapper: {
+    // borderRadius: 8,
+    overflow: "hidden",
+  },
+  card: {
+    // width: width * 0.9,
+    height: width * 0.5,
+    width: width,
+    resizeMode: "contain",
+  },
+
+  imgContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  button: {
+    width: 200,
+    color: "#f08080",
+    borderRadius: 6,
+    marginLeft: "auto",
+    marginRight: "auto",
+    padding: 15,
+    borderColor: "#f08080",
+    borderWidth: 2,
+    marginTop: 18,
+  },
+});
 
 export default AboutScreen;
