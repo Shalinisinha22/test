@@ -13,6 +13,8 @@ import {
   Pressable,
   Alert,
   TextInput,
+  Button,
+  Linking
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -44,6 +46,7 @@ import { SelectList } from "react-native-dropdown-select-list";
 import { Foundation } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useToast } from 'native-base';
+
 SplashScreen.preventAutoHideAsync();
 
 const Home = ({ navigation }) => {
@@ -61,13 +64,14 @@ const Home = ({ navigation }) => {
   );
 
   const handleAddress = async (address) => {
-    setModalVisible(!modalVisible);
+     setModalVisible(!modalVisible);
     if (address.length > 0) {
       setDisplayCurrentAddress(address);
       const res = await AsyncStorage.setItem("user", JSON.stringify(address));
     } else {
       toast.show({
         description: "Please Enter Your Address"
+      
     })
 
    
@@ -179,9 +183,9 @@ const Home = ({ navigation }) => {
     }
   };
 
-  useEffect(async() => {
-  await  getAddress();
-  }, []);
+  useEffect(() => {
+     getAddress()
+  });
 
   const CheckIfLocationEnabled = async () => {
     let enabled = await Location.hasServicesEnabledAsync();
@@ -511,7 +515,9 @@ const Home = ({ navigation }) => {
               <Text style={{ fontWeight: "bold", color: "white" }}>
                 Just make an Appointment & You're Done!
               </Text>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button}
+                onPress={()=>Linking.openURL("tel:7250446555")}
+              >
                 <Text
                   style={{
                     textAlign: "center",
@@ -520,7 +526,7 @@ const Home = ({ navigation }) => {
                     fontWeight: "bold",
                   }}
                 >
-                  Explore Services
+                  Call Us Now
                 </Text>
               </TouchableOpacity>
             </View>
@@ -552,43 +558,7 @@ const Home = ({ navigation }) => {
           <Contact></Contact>
           {/* contact */}
 
-          {/* <View  style={{backgroundColor:"whitesmoke"}}>
-
-              <View style={{ padding: 10, alignItems:"flex-start" , paddingLeft:25,marginTop:25}}>
-              <Text
-                style={{
-                  fontWeight: "500",
-                  textAlign: "center",
-                  fontSize: 12,
-                }}
-              >
-              Making healthcare
-              </Text>
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  fontSize: 18,
-                  color:"gray"
-                }}
-              >
-                Understandable, Accessible & 
-              </Text>
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  fontSize: 18,
-                  color:"gray"
-                }}
-              >
-                Affordable
-              </Text>
-              <Text style={{ textAlign: "center", fontSize: 10 , marginTop:15}}>
-                Made with ❤ by Cureo Fine
-              </Text>
-            </View>
-              </View> */}
+      
           <Footer></Footer>
         </ScrollView>
       </SafeAreaView>
@@ -623,6 +593,7 @@ const Home = ({ navigation }) => {
               />
 
               <TextInput
+           
                 editable
                 multiline
                 numberOfLines={3}
@@ -642,7 +613,7 @@ const Home = ({ navigation }) => {
 
           <View style={{ marginTop: 30 }} />
 
-          <TouchableOpacity
+          {/* <Pressable
             style={styles.button1}
             onPress={() => {
               handleAddress(address);
@@ -661,14 +632,24 @@ const Home = ({ navigation }) => {
             >
               Add
             </Text>
-          </TouchableOpacity>
+          </Pressable> */}
 
-          {/* <View style={{ flexDirection: "column", gap: 7, marginTop: 10 }}>
+
+          <Button
+           onPress={()=>handleAddress(address)}
+           title="Add your address"
+           color="#f08080"
+           
+          />
+
+
+
+          {/*<View style={{ flexDirection: "column", gap: 7, marginTop: 10 }}>
           <Text style={{ marginTop: 5, fontSize: 16, color: "gray" }}>
               Select Your State
             </Text>
 
-       <SelectList 
+        <SelectList 
         setSelected={(val) =>{ 
           setSelected(val) 
           setState(val)}} 

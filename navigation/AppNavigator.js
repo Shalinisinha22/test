@@ -42,16 +42,17 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import ProductInfoScreen from "../Screens/ProductInfoScreen";
 import ServiceInfoScreen from "../Screens/ServiceInfoScreen";
 import SurgeryInfoScreen from "../Screens/SurgeryInfoScreen";
-import { Linking } from 'react-native';
-import * as Sharing from 'expo-sharing';
+import { Linking } from "react-native";
+import * as Sharing from "expo-sharing";
 import { Share } from "react-native";
+import ContactScreen from "../Screens/ContactScreen";
+import OtpScreen from "../Screens/OtpScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
-
   const drawerMenu = [
     {
       id: 0,
@@ -70,6 +71,12 @@ const AppNavigator = () => {
       name: "Our Presence",
       url: "PresenceScreen",
       icon: <Entypo name="location" size={24} color="white" />,
+    },
+    {
+      id: 8,
+      name: "Contact Us",
+      url: "ContactScreen",
+      icon: <MaterialIcons name="contact-page" size={24} color="white" />,
     },
     {
       id: 2,
@@ -114,14 +121,12 @@ const AppNavigator = () => {
       name: "Share",
       url: "ShareScreen",
       icon: <Entypo name="share" size={24} color="white" />,
-    
     },
   ];
   const onShare = async (url) => {
     try {
       const result = await Share.share({
-        message:
-          ('Cure O Fine | Healthcare application'+ '\n'+ url )
+        message: "Cure O Fine | Healthcare application" + "\n" + url,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -139,13 +144,14 @@ const AppNavigator = () => {
 
   const shareToWhatsApp = (text) => {
     // Linking.openURL(`whatsapp://send?text=${text}`);
-    const options={
-      message:"Download Our app by clicking on this below link",
-      url:text
-    }
-    Share.open(options).then(res=> console.log(res) )
-    .catch(err=> console.log(err))
-   }
+    const options = {
+      message: "Download Our app by clicking on this below link",
+      url: text,
+    };
+    Share.open(options)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   // #1e272e
 
@@ -157,13 +163,42 @@ const AppNavigator = () => {
           component={Home}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="PresenceScreen" component={Presence} options={{headerShown:false}} />
-        <Stack.Screen name="TermScreen" component={Terms} />
-        <Stack.Screen name="PrivacyScreen" component={Privacy} />
-        <Stack.Screen name="FaqScreen" component={Faq} />
-        <Stack.Screen name="RefundScreen" component={Refund} />
-        <Stack.Screen name="ReferScreen" component={Refer} />
+        <Stack.Screen
+          name="PresenceScreen"
+          component={Presence}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TermScreen"
+          component={Terms}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PrivacyScreen"
+          component={Privacy}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FaqScreen"
+          component={Faq}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RefundScreen"
+          component={Refund}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ReferScreen"
+          component={Refer}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="ShareScreen" component={ShareScreen} />
+        <Stack.Screen
+          name="ContactScreen"
+          component={ContactScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Consultation"
           component={Consultation}
@@ -189,6 +224,11 @@ const AppNavigator = () => {
           component={RegisterScreen}
           options={{ headerShown: false }}
         />
+       <Stack.Screen
+          name="OtpScreen"
+          component={OtpScreen}
+          options={{ headerShown: false }}
+        />
 
         <Stack.Screen
           name="ProductInfo"
@@ -201,11 +241,12 @@ const AppNavigator = () => {
           component={ServiceInfoScreen}
           options={{ headerShown: false }}
         />
-           <Stack.Screen
+        <Stack.Screen
           name="SurgeryInfo"
           component={SurgeryInfoScreen}
           options={{ headerShown: false }}
         />
+     
       </Stack.Navigator>
     );
   }
@@ -287,7 +328,13 @@ const AppNavigator = () => {
                       padding: 15,
                       gap: 12,
                     }}
-                    onPress={() => {item.name=="Share"? onShare(`https://expo.dev/artifacts/eas/phEj8XNNVKndyuuuv4ZTAb.apk`):navigation.navigate(item.url)} }
+                    onPress={() => {
+                      item.name == "Share"
+                        ? onShare(
+                            `https://expo.dev/artifacts/eas/phEj8XNNVKndyuuuv4ZTAb.apk`
+                          )
+                        : navigation.navigate(item.url);
+                    }}
                   >
                     {item.icon}
                     <Text style={{ fontSize: 17, color: "white" }}>

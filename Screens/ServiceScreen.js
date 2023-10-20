@@ -228,7 +228,7 @@ const ServiceScreen = ({ navigation }) => {
         />
 
 <Deals navigation={navigation}></Deals>
-<Text
+     <Text
           style={{
             height: 1,
             borderColor: "#D0D0D0",
@@ -269,14 +269,14 @@ const ServiceScreen = ({ navigation }) => {
           }}
         />
         <Contact></Contact>
-        <Text
+        {/* <Text
           style={{
             height: 1,
             borderColor: "#D0D0D0",
             borderWidth: 2,
             marginTop: 15,
           }}
-        />
+        /> */}
 
         <Footer></Footer>
       </ScrollView>

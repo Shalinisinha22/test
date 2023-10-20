@@ -3,7 +3,10 @@ import { StyleSheet, Text, View, Image, Alert } from 'react-native';
 import * as Location from 'expo-location';
 import { Entypo } from '@expo/vector-icons';
 
+
 const GetLocation = ({ navigation }) => {
+
+
   const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
 
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState(

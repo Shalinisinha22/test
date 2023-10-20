@@ -8,7 +8,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useEffect } from "react";
+import axios from "axios";
+import { decode } from "html-entities";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -22,11 +24,26 @@ import Header from "../Components/Header";
 import Teams from "../Components/Teams";
 import Contact from "../Components/Contact";
 import Footer from "../Components/Footer";
+import RenderHtml from "react-native-render-html";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useWindowDimensions } from "react-native";
 SplashScreen.preventAutoHideAsync();
 
 const AboutScreen = ({ navigation }) => {
 
+
+  const [cont, setCont] = useState("");
+
+  const getData = async () => {
+    const res = await axios.get("http://192.168.0.164:3000/about");
+    const data = res.data;
+    console.log(data[0]);
+    setCont(decode(data));
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const [fontsLoaded] = useFonts({
     EB: require("../assets/fonts/EBGaramond-VariableFont_wght.ttf"),
@@ -59,78 +76,85 @@ const AboutScreen = ({ navigation }) => {
     </View>
   );
 
-
   return (
-
-    <SafeAreaView style={{ backgroundColor: "white", paddingBottom: 50}}>
-
-     <Header navigation={navigation}></Header>
-    <ScrollView
-      onLayout={onLayoutRootView}
-      style={{ backgroundColor: "white" }}
-    >
-    
-    
-
-      <View style={styles.container}>
-        <Carousel
-          pagination={PaginationLight}
-          renderItem={renderItem}
-          data={DATA}
-          loop
-          autoplay
-        />
-      </View>
-
-      <Text
-        style={{
-          paddingTop: 10,
-          fontSize: 12,
-          fontWeight: "bold",
-          paddingLeft: 10,
-          fontFamily: "OpenSans",
-          color: "#eb3b5a",
-        }}
+    <SafeAreaView   onLayout={onLayoutRootView} style={{ backgroundColor: "white", height: "100%" }}>
+      <Header navigation={navigation}></Header>
+      <ScrollView
+        onLayout={onLayoutRootView}
+        style={{ backgroundColor: "white" }}
       >
-        INTRODUCING
-      </Text>
+        <View style={styles.container}>
+          <Carousel
+            pagination={PaginationLight}
+            renderItem={renderItem}
+            data={DATA}
+            loop
+            autoplay
+          />
+        </View>
 
-      <View style={{ flexDirection: "row", marginTop: 10 }}>
         <Text
           style={{
-            fontSize: 18,
+            paddingTop: 10,
+            fontSize: 12,
             fontWeight: "bold",
             paddingLeft: 10,
             fontFamily: "OpenSans",
+            color: "#eb3b5a",
           }}
         >
-          About Cure O Fine
+          INTRODUCING
         </Text>
 
-        <View>
-          <FontAwesome
-            name="stethoscope"
-            size={20}
-            color="#f08080"
-            style={{ marginLeft: 7, marginTop: -2 }}
-          />
+        <View style={{ flexDirection: "row", marginTop: 10 }}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              paddingLeft: 10,
+              fontFamily: "OpenSans",
+            }}
+          >
+            About Cure O Fine
+          </Text>
+
+          <View>
+            <FontAwesome
+              name="stethoscope"
+              size={20}
+              color="#f08080"
+              style={{ marginLeft: 7, marginTop: -2 }}
+            />
+          </View>
         </View>
-      </View>
 
-      <Text
-        style={{
-          height: 1.5,
-          borderColor: "#eb3b5a",
-          borderWidth: 1.5,
-          marginTop: 10,
-          width: width * 0.6,
-          marginLeft: 7,
-          borderRadius: 5,
-        }}
-      />
+        <Text
+          style={{
+            height: 1.5,
+            borderColor: "#eb3b5a",
+            borderWidth: 1.5,
+            marginTop: 10,
+            width: width * 0.6,
+            marginLeft: 7,
+            borderRadius: 5,
+          }}
+        />
 
-      <View style={{ marginTop: 10, padding: 12 }}>
-        <Text style={{ textAlign: "justify", fontFamily: "EB" }}>
+        <View style={{ padding: 10 }}>
+          {cont.length !== 0 ? (
+            cont.map((item) => (
+              // <Text key={item.id} style={{ textAlign: "justify", fontFamily: "EB" }}>{decode(item.content)}</Text>
+
+              <RenderHtml
+              key={item.id}
+                source={{ html: decode(item.content) }}
+                contentWidth={width}
+              ></RenderHtml>
+            ))
+          ) : (
+            <></>
+          )}
+          {/* <Text style={{ textAlign: "justify", fontFamily: "EB" }}>
           Cure o fine is a digital Healthcare Application that provide complete
           Health solution through an online application which is designed in a
           user friendly way that can be used by anyone. Our services are very
@@ -147,92 +171,90 @@ const AboutScreen = ({ navigation }) => {
           Telemedicine centers also act as medicine delivery point and Lab test
           services. through our Offline centeres pateint can interact with
           specialist Doctors saving money and Time.
-        </Text>
-      </View>
-      <Text
-        style={{
-          height: 1,
-          borderColor: "#D0D0D0",
-          borderWidth: 2,
-          marginTop: 15,
-        }}
-      />
-
-      <Teams></Teams>
-      <Text
-        style={{
-          height: 1,
-          borderColor: "#D0D0D0",
-          borderWidth: 2,
-          marginTop: 15,
-        }}
-      />
-
-      <ImageBackground
-        source={require("../assets/cure.jpg")}
-        style={{
-          width: "100%",
-          height: 200,
-          resizeMode: "cover",
-          marginTop: 15,
-        }}
-      >
-        <View
+        </Text> */}
+        </View>
+        <Text
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            justifyContent: "center",
-            alignItems: "center",
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15,
+          }}
+        />
+
+        <Teams></Teams>
+        <Text
+          style={{
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15,
+          }}
+        />
+
+        <ImageBackground
+          source={require("../assets/cure.jpg")}
+          style={{
+            width: "100%",
+            height: 200,
+            resizeMode: "cover",
+            marginTop: 15,
           }}
         >
-          <Text style={{ fontWeight: "bold", fontSize: 26, color: "white" }}>
-            Need a Doctor for Checkup?
-          </Text>
-          <Text style={{ fontWeight: "bold", color: "white" }}>
-            Just make an Appointment & You're Done!
-          </Text>
-          <TouchableOpacity style={styles.button}>
-            <Text
-              style={{
-                textAlign: "center",
-                color: "#f08080",
-                fontSize: 16,
-                fontWeight: "bold",
-              }}
-            >
-              Explore Services
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontWeight: "bold", fontSize: 26, color: "white" }}>
+              Need a Doctor for Checkup?
             </Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
+            <Text style={{ fontWeight: "bold", color: "white" }}>
+              Just make an Appointment & You're Done!
+            </Text>
+            <TouchableOpacity style={styles.button}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "#f08080",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                }}
+              >
+                Explore Services
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
 
-      <Text
-        style={{
-          height: 1,
-          borderColor: "#D0D0D0",
-          borderWidth: 2,
-          marginTop: 15,
-        }}
-      />
-      <Contact></Contact>
+        <Text
+          style={{
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15,
+          }}
+        />
+        <Contact></Contact>
 
-      
-      <Text
-        style={{
-          height: 1,
-          borderColor: "#D0D0D0",
-          borderWidth: 2,
-          marginTop: 15,
-        }}
-      />
+        <Text
+          style={{
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15,
+          }}
+        />
 
-      <Footer></Footer>
-    </ScrollView>
+        <Footer></Footer>
+      </ScrollView>
     </SafeAreaView>
-
   );
 };
 

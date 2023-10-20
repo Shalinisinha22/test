@@ -8,74 +8,54 @@ import {
   TextInput,
   Pressable,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { auth } from "../firebase";
+import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigation = useNavigation();
-  const [flag, setFlag] = useState(false);
-  const [error, setErr] = useState("");
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [user, setUser] = useState("");
 
-  useEffect(() => {
-    validateForm();
-  }, [email, password]);
 
-  const validateForm = () => {
-    let errors = {};
+const LoginScreen = ({ navigation }) => {
 
-    if (!email) {
-      errors.email = "Email is required.";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors.email = "Email is invalid.";
-    }
+  const [phone, setPhone] = useState("");
 
-    if (!password) {
-      errors.password = "Password is required.";
-    } else if (password.length < 6) {
-      errors.password = "Password must be at least 6 characters.";
-    }
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-    setErr(errors);
-    setIsFormValid(Object.keys(errors).length === 0);
+
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    // reset();
+
+    const res = await axios.post("http://192.168.0.164:3000/signup", {
+      phone: data.phone,
+    })
+    console.log(res.data)
+    //  .then((response) => response.json())
+    //  .then((serverResponse) => console.warn(serverResponse));
+
+   await navigation.navigate("OtpScreen");
   };
+//   const Submit =  () => {
 
-  const handleSubmit = () => {
-    if (isFormValid) {
-      auth
-        .signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          setUser(user);
+//  navigation.navigate("OtpScreen");
+//   };
 
-          if (user !== null) {
-            alert("Login successfully 🎉!");
-            setEmail("");
-            setPassword("");
-            navigation.navigate("Home");
-          }
-        })
-        .catch((error) => {
-          const errorMessage = error.message;
-          setErr(errorMessage);
-          alert(errorMessage)
-        });
-    } else {
-      setFlag(true);
-      alert("Form has errors. Please correct them.");
-      setEmail("");
-      setPassword("");
-    }
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    return console.log(errors);
   };
-
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       <SafeAreaView style={styles.safeArea}>
@@ -88,7 +68,49 @@ const LoginScreen = () => {
             <Text style={styles.heading}>Login In to your Account</Text>
           </View>
 
-          <View style={{ marginTop: 35 }}>
+          <View>
+            <View style={styles.inputBoxCont}>
+              <FontAwesome5
+                name="phone-alt"
+                size={24}
+                color="gray"
+                style={{ marginLeft: 8 }}
+              />
+
+              <Controller
+                control={control}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    keyboardType="numeric"
+                    autoFocus={true}
+                    onBlur={onBlur}
+                    onChangeText={(value) => onChange(value)}
+                    value={value}
+                    style={{
+                      color: "gray",
+                      marginVertical: 10,
+                      width: 300,
+                      fontSize: 16,
+                    }}
+                    placeholder="enter your Phone Number"
+                  />
+                )}
+                name="phone"
+                rules={{
+                  required: {
+                    value: true,
+                    message: "This field is required!",
+                  },
+                }}
+              />
+            </View>
+
+            {errors.phone && (
+              <Text style={{ color: "red" }}>{errors.phone.message}</Text>
+            )}
+          </View>
+
+          {/* <View style={{ marginTop: 35 }}>
             <View style={styles.inputBoxCont}>
               <MaterialIcons
                 style={{ marginLeft: 8 }}
@@ -110,9 +132,9 @@ const LoginScreen = () => {
               />
             </View>
             {error.email && flag && <Text>{error.email}</Text>}
-          </View>
+          </View> */}
 
-          <View style={{ marginTop: 1 }}>
+          {/* <View style={{ marginTop: 1 }}>
             <View style={styles.inputBoxCont}>
               <AntDesign
                 name="lock1"
@@ -135,19 +157,22 @@ const LoginScreen = () => {
               />
             </View>
             {error.password && flag && <Text>{error.password}</Text>}
-          </View>
+          </View> */}
 
-          <View style={styles.forgotCont}>
+          {/* <View style={styles.forgotCont}>
             <Text>Keep me logged in</Text>
 
             <Text style={{ color: "#007FFF", fontWeight: "500" }}>
               Forgot Password
             </Text>
-          </View>
+          </View> */}
 
           <View style={{ marginTop: 85 }} />
 
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSubmit(onSubmit)}
+          >
             <Text
               style={{
                 textAlign: "center",
@@ -160,24 +185,15 @@ const LoginScreen = () => {
             </Text>
           </TouchableOpacity>
 
+
           {/* <Pressable
-          
-            style={{ marginTop: 15 }}
-          >
-            <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
-            Sign in with <Text style={{fontSize:20, color:"#0652DD", fontWeight:"bold"}}>Google</Text>
-            </Text>
-
-          </Pressable> */}
-
-          <Pressable
             onPress={() => navigation.navigate("Register")}
             style={{ marginTop: 15 }}
           >
             <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
               Don't have an account? Sign Up
             </Text>
-          </Pressable>
+          </Pressable> */}
         </KeyboardAvoidingView>
       </SafeAreaView>
     </ScrollView>
@@ -196,7 +212,7 @@ const styles = StyleSheet.create({
   img: {
     width: 200,
     height: 120,
-    resizeMode:"contain"
+    resizeMode: "contain",
   },
   heading: {
     fontSize: 17,
