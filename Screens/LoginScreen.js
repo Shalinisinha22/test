@@ -6,23 +6,24 @@ import {
   Image,
   KeyboardAvoidingView,
   TextInput,
-  Pressable,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useState, useEffect } from "react";
-import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { auth } from "../firebase";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
+import Toast from 'react-native-toast-message';
 
 
 
 const LoginScreen = ({ navigation }) => {
 
   const [phone, setPhone] = useState("");
+  const [valid,setValid]= useState(false);
+  const [err,setErr]=useState("");
+
+
 
   const {
     register,
@@ -33,28 +34,74 @@ const LoginScreen = ({ navigation }) => {
     formState: { errors },
   } = useForm();
 
+  // const onSubmit = async (phone) => {
+ 
+  //   const checkValid = phoneInput.current?.isValidNumber(phone);
+  
+  //   setValid(checkValid ? checkValid : false);
+
+  //   if(valid){
+  //     const res = await axios.post("http://192.168.0.164:3000/signup", {
+  //       phone: data.phone,
+  //     })
+  //     console.log(res.data)
+  //     showToast();
+  //     //  .then((response) => response.json())
+  //     //  .then((serverResponse) => console.warn(serverResponse));
+  
+  //    await navigation.navigate("OtpScreen");
+  //   }
+
+  //   else{
+
+  //     setErr("Inavalid Number")
+  //      setTimeout(()=>{
+  //            setErr("")
+  //      },3000)
+  //   }
+  
+  // };
 
 
   const onSubmit = async (data) => {
     console.log(data);
-    // reset();
 
-    const res = await axios.post("http://192.168.0.164:3000/signup", {
-      phone: data.phone,
-    })
-    console.log(res.data)
-    //  .then((response) => response.json())
-    //  .then((serverResponse) => console.warn(serverResponse));
+    var phoneno = /^\d{10}$/;
+    if((data.phone.match(phoneno))){
+      const res = await axios.post("http://192.168.0.164:3000/signup", {
+        phone: data.phone,
+      })
+      console.log(res.data)
 
-   await navigation.navigate("OtpScreen");
+      if(res.data.message=="Valid Number"){
+        await navigation.navigate("OtpScreen");
+      }
+    }
+    else{
+        setErr("Inavalid Number");
+        setTimeout(()=>{
+             setErr("")
+        },3000)
+         reset();
+    }
+   
+
+  
   };
-//   const Submit =  () => {
-
-//  navigation.navigate("OtpScreen");
-//   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
     return console.log(errors);
+  };
+
+
+  const showToast = () => {
+    Toast.show({
+      type: "success",
+      text1: "OTP Sent Successfully !!.",
+     
+    });
+
+   
   };
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
@@ -68,6 +115,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.heading}>Login In to your Account</Text>
           </View>
 
+          
           <View>
             <View style={styles.inputBoxCont}>
               <FontAwesome5
@@ -108,64 +156,10 @@ const LoginScreen = ({ navigation }) => {
             {errors.phone && (
               <Text style={{ color: "red" }}>{errors.phone.message}</Text>
             )}
+            {err!=="" && <Text style={{ color: "red" }}>{err}</Text>}
           </View>
 
-          {/* <View style={{ marginTop: 35 }}>
-            <View style={styles.inputBoxCont}>
-              <MaterialIcons
-                style={{ marginLeft: 8 }}
-                name="email"
-                size={24}
-                color="gray"
-              />
-
-              <TextInput
-                value={email}
-                onChangeText={(text) => setEmail(text)}
-                style={{
-                  color: "gray",
-                  marginVertical: 10,
-                  width: 300,
-                  fontSize: email ? 16 : 16,
-                }}
-                placeholder="enter your Email"
-              />
-            </View>
-            {error.email && flag && <Text>{error.email}</Text>}
-          </View> */}
-
-          {/* <View style={{ marginTop: 1 }}>
-            <View style={styles.inputBoxCont}>
-              <AntDesign
-                name="lock1"
-                size={24}
-                color="gray"
-                style={{ marginLeft: 8 }}
-              />
-
-              <TextInput
-                value={password}
-                onChangeText={(text) => setPassword(text)}
-                secureTextEntry={true}
-                style={{
-                  color: "gray",
-                  marginVertical: 10,
-                  width: 300,
-                  fontSize: password ? 16 : 16,
-                }}
-                placeholder="enter your Password"
-              />
-            </View>
-            {error.password && flag && <Text>{error.password}</Text>}
-          </View> */}
-
-          {/* <View style={styles.forgotCont}>
-            <Text>Keep me logged in</Text>
-
-            <Text style={{ color: "#007FFF", fontWeight: "500" }}>
-              Forgot Password
-            </Text>
-          </View> */}
+    
 
           <View style={{ marginTop: 85 }} />
 
@@ -194,6 +188,11 @@ const LoginScreen = ({ navigation }) => {
               Don't have an account? Sign Up
             </Text>
           </Pressable> */}
+
+<Toast
+        position='bottom'
+        bottomOffset={80}
+         />
         </KeyboardAvoidingView>
       </SafeAreaView>
     </ScrollView>

@@ -1,16 +1,32 @@
 import { Text, View, ScrollView, Image } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 import { Card } from "@rneui/themed";
 import { FontAwesome } from "@expo/vector-icons";
-// import { useToast } from 'native-base';
-import Toast from "react-native-toast-message";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
+import axios from "axios";
 
 const Location = () => {
-  // const toast = useToast();
+ 
+
+    const [cLoc, setLoc]=useState(null)
+
+   
+    const getLocation= async()=>{
+            
+       const res = await axios.get("http://192.168.0.164:3000/presence");
+       const data= res.data;
+       console.log(data)
+       setLoc(data)
+
+    }
+
+    useEffect(()=>{
+       getLocation()
+    },[])
 
  
 
@@ -74,11 +90,12 @@ const Location = () => {
     
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {clinic.map((item, index) => (
+        {
+          cLoc!=null ?  cLoc.map((item, index) => (
        
                   
 
-                <TouchableOpacity key={item.id} >
+            <TouchableOpacity key={item.id} >
            
            <Card
              key={item.id}
@@ -97,7 +114,7 @@ const Location = () => {
                style={{ textAlign: "center" }}
              />
              <Card.Title style={{ fontFamily: "OpenSans", fontSize: 18 }}>
-               {item.heading}
+               {item.centre_name}
              </Card.Title>
              <Text style={{ textAlign: "center", marginBottom: 2 }}>
                {item.location}
@@ -107,7 +124,7 @@ const Location = () => {
                <Image
                  style={{ width: 200, height: 100, resizeMode: "contain" }}
                  resizeMode="contain"
-                 source={item.image}
+                 source={require("../assets/clinic/b14.png")}
                />
              </View>
            </Card>
@@ -115,8 +132,13 @@ const Location = () => {
    
       
       
-        ))}
+        ))
+        :<></>
+
+        }
+   
       </ScrollView>
+
     </>
   );
 };

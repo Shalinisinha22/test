@@ -10,28 +10,57 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
-import OTPInputView from '@twotalltotems/react-native-otp-input'
+import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { TextInput } from "react-native";
 
 const OtpScreen = ({ navigation }) => {
   const [code, setCode] = useState("");
+  const [err,setErr] = useState("")
 
-  const onSubmit = async (otp) => {
+  const onSubmit = async () => {
 
-    try{
-      const res = await axios.post("http://192.168.0.164:3000/verify", {
-             otp:otp
-        })
-      
-        .then((response) => response.json())
-        .then((serverResponse) => console.warn(serverResponse));
-     await navigation.navigate("Home");
+
+    if(code.length==6){
+      try {
+        const response = await axios.post("http://192.168.0.164:3000/verify", {
+          otp: code,
+        });
+  
+        console.log(response.data);
+  
+    
+        if (response.data.message === "OTP verification successful") {
+          console.log("OTP verification was successful");
+          // You can navigate to the next page here if the OTP is verified.
+          await navigation.navigate("Home");
+        } else {
+          console.log("OTP verification failed");
+           setErr("Incorrect OTP");
+           setTimeout(()=>{
+             setErr("")
+           },3000)
+          // navigation.navigate("Login");
+          // Handle the case where the OTP verification failed, e.g., show an error message to the user.
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        setErr("Invalid OTP")
+        setTimeout(()=>{
+          setErr("")
+        },3000)
+        
+      }
     }
 
-    catch(err){
-         console.log(err);
+    else{
+      setErr("Incorrect OTP");
+      setTimeout(()=>{
+        setErr("")
+      },3000)
     }
- 
+
+
+
   };
 
   return (
@@ -47,33 +76,29 @@ const OtpScreen = ({ navigation }) => {
           </View>
 
           <View>
-       <TextInput onChangeText={
-        (value)=> setCode(value)
-       }
-       style={{
-        color: "gray",
-        marginVertical: 10,
-        width: 300,
-        fontSize: 16,
-        borderBottomWidth:2,
-        borderColor:"#f08080",
-        marginTop:30,
-        padding:40
-      }}
-       value={code}
-       placeholder="Enter your 6-digits code here"
-       keyboardType="numeric"
-       >
+            <TextInput
+              onChangeText={(value) => setCode(value)}
+              style={{
+                color: "gray",
+                marginVertical: 10,
+                width: 300,
+                fontSize: 16,
+                borderBottomWidth: 2,
+                borderColor: "#f08080",
+                marginTop: 30,
+                padding: 40,
+              }}
+              value={code}
+              placeholder="Enter your 6-digits code here"
+              keyboardType="numeric"
+            ></TextInput>
 
-       </TextInput>
-
-
-       
+            {err!=="" && <Text style={{color:"red"}}>{err}</Text>}
           </View>
 
           <View style={{ marginTop: 85 }} />
 
-          <TouchableOpacity style={styles.button} onPress={()=>onSubmit(code)}>
+          <TouchableOpacity style={styles.button} onPress={onSubmit}>
             <Text
               style={{
                 textAlign: "center",
@@ -90,6 +115,7 @@ const OtpScreen = ({ navigation }) => {
     </ScrollView>
   );
 };
+
 
 export default OtpScreen;
 
@@ -136,7 +162,7 @@ const styles = StyleSheet.create({
   },
   borderStyleBase: {
     width: 30,
-    height: 45
+    height: 45,
   },
 
   borderStyleHighLighted: {

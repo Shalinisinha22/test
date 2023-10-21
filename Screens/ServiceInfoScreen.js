@@ -187,6 +187,7 @@ const ServiceInfoScreen = ({navigation}) => {
           marginHorizontal: 10,
           marginVertical: 10,
         }}
+        onPress={() => navigation.navigate("Login")}
       >
         <Text>Book Now</Text>
       </TouchableOpacity>
