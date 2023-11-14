@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import React from "react";
+import React , {useState, useEffect} from "react";
 import Carousel, { PaginationLight } from "react-native-x-carousel";
 const { width } = Dimensions.get("window");
 import { AntDesign } from "@expo/vector-icons";
@@ -20,8 +20,10 @@ import { FontAwesome } from "@expo/vector-icons";
 import Contact from "../Components/Contact";
 import Footer from "../Components/Footer";
 import { isNewBackTitleImplementation } from "react-native-screens";
+import axios from "axios";
 
 const Physiotherapy = ({ navigation }) => {
+  const [product,setProduct]=useState([])
   const DATA = [
     {
       coverImageUri: require("../assets/physiotherapy.png"),
@@ -36,138 +38,150 @@ const Physiotherapy = ({ navigation }) => {
     </View>
   );
 
-  const products = [
-    {
-      id: 1,
-      name: "Test",
-      price: "Rs 50",
-      image: require("../assets/Product/product1.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product1.png"),
-        require("../assets/Product/product1.png"),
-        require("../assets/Product/product1.png"),
-      ],
-     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-    {
-      id: 2,
-      name: "Neurological Condition",
-      price: "Rs 350",
-      image: require("../assets/Product/product2.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product2.png"),
-        require("../assets/Product/product2.png"),
-        require("../assets/Product/product2.png"),
-      ],
-      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-    {
-      id: 3,
-      name: "Ligament injuries",
-      price: "Rs 350",
-      image: require("../assets/Product/product3.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product3.png"),
-        require("../assets/Product/product3.png"),
-        require("../assets/Product/product3.png"),
-      ],
-      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-    {
-      id: 4,
-      name: "Foot Massage",
-      price: "Rs 350",
-      image: require("../assets/Product/product4.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product4.png"),
-        require("../assets/Product/product4.png"),
-        require("../assets/Product/product4.png"),
-      ],
-      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-    {
-      id: 5,
-      name: "Sports Massage",
-      price: "Rs 999",
-      image: require("../assets/Product/product5.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product5.png"),
-        require("../assets/Product/product5.png"),
-        require("../assets/Product/product5.png"),
-      ],
-      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-    {
-      id: 6,
-      name: "Muscles Strain",
-      price: "Rs 350",
-      image: require("../assets/Product/product6.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product6.png"),
-        require("../assets/Product/product6.png"),
-        require("../assets/Product/product6.png"),
-      ],
-      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-    {
-      id: 7,
-      name: "Sciatica",
-      price: "Rs 350",
-      image: require("../assets/Product/product7.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product7.png"),
-        require("../assets/Product/product7.png"),
-        require("../assets/Product/product7.png"),
-      ],
-      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-    {
-      id: 8,
-      name: "Disc Problem",
-      price: "Rs 350",
-      image: require("../assets/Product/product8.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product8.png"),
-        require("../assets/Product/product8.png"),
-        require("../assets/Product/product8.png"),
-      ],
-      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-    {
-      id: 9,
-      name: "Frozen Shoulder",
-      price: "Rs 350",
-      image: require("../assets/Product/product9.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product9.png"),
-        require("../assets/Product/product9.png"),
-        require("../assets/Product/product9.png"),
-      ],
-      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-    {
-      id: 10,
-      name: "Joint Pain",
-      price: "Rs 350",
-      image: require("../assets/Product/product5.png"),
-      session: "45 minutes",
-      carouselImages: [
-        require("../assets/Product/product5.png"),
-        require("../assets/Product/product5.png"),
-        require("../assets/Product/product5.png"),
-      ],
-      desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
-    },
-  ];
+  const getProduct = async () => {
+    const res = await axios.get("http://192.168.0.110:3000/products");
+    const data = res.data;
+    console.log(data)
+    setProduct(data)
+  
+  };
+
+  useEffect(()=>{
+    getProduct()
+  },[])
+
+  // const products = [
+  //   {
+  //     id: 1,
+  //     name: "Test",
+  //     price: "Rs 50",
+  //     image: require("../assets/Product/product1.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product1.png"),
+  //       require("../assets/Product/product1.png"),
+  //       require("../assets/Product/product1.png"),
+  //     ],
+  //    desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Neurological Condition",
+  //     price: "Rs 350",
+  //     image: require("../assets/Product/product2.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product2.png"),
+  //       require("../assets/Product/product2.png"),
+  //       require("../assets/Product/product2.png"),
+  //     ],
+  //     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Ligament injuries",
+  //     price: "Rs 350",
+  //     image: require("../assets/Product/product3.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product3.png"),
+  //       require("../assets/Product/product3.png"),
+  //       require("../assets/Product/product3.png"),
+  //     ],
+  //     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Foot Massage",
+  //     price: "Rs 350",
+  //     image: require("../assets/Product/product4.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product4.png"),
+  //       require("../assets/Product/product4.png"),
+  //       require("../assets/Product/product4.png"),
+  //     ],
+  //     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Sports Massage",
+  //     price: "Rs 999",
+  //     image: require("../assets/Product/product5.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product5.png"),
+  //       require("../assets/Product/product5.png"),
+  //       require("../assets/Product/product5.png"),
+  //     ],
+  //     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Muscles Strain",
+  //     price: "Rs 350",
+  //     image: require("../assets/Product/product6.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product6.png"),
+  //       require("../assets/Product/product6.png"),
+  //       require("../assets/Product/product6.png"),
+  //     ],
+  //     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Sciatica",
+  //     price: "Rs 350",
+  //     image: require("../assets/Product/product7.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product7.png"),
+  //       require("../assets/Product/product7.png"),
+  //       require("../assets/Product/product7.png"),
+  //     ],
+  //     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Disc Problem",
+  //     price: "Rs 350",
+  //     image: require("../assets/Product/product8.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product8.png"),
+  //       require("../assets/Product/product8.png"),
+  //       require("../assets/Product/product8.png"),
+  //     ],
+  //     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  //   {
+  //     id: 9,
+  //     name: "Frozen Shoulder",
+  //     price: "Rs 350",
+  //     image: require("../assets/Product/product9.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product9.png"),
+  //       require("../assets/Product/product9.png"),
+  //       require("../assets/Product/product9.png"),
+  //     ],
+  //     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  //   {
+  //     id: 10,
+  //     name: "Joint Pain",
+  //     price: "Rs 350",
+  //     image: require("../assets/Product/product5.png"),
+  //     session: "45 minutes",
+  //     carouselImages: [
+  //       require("../assets/Product/product5.png"),
+  //       require("../assets/Product/product5.png"),
+  //       require("../assets/Product/product5.png"),
+  //     ],
+  //     desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra velit enim, varius faucibus quam scelerisque rutrum. Ut nec eros mattis nisi ornare feugiat vitae eu est. Suspendisse eget risus faucibus, ullamcorper eros in, cursus sapien. Mauris finibus diam non cursus pretium. Suspendisse et bibendum ipsum. Proin a dolor vitae dui tincidunt ultrices et at purus. Quisque consequat tortor ligula, nec consequat tortor laoreet sed. Morbi eu dignissim leo, vel tempor dui. Donec dui orci, eleifend id rhoncus fringilla, convallis eu diam."
+  //   },
+  // ];
 
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
@@ -231,7 +245,7 @@ const Physiotherapy = ({ navigation }) => {
         />
 
         <FlatList
-          data={products}
+          data={product}
           numColumns={2}
           scrollEnabled={false}
           columnWrapperStyle={{
@@ -255,17 +269,16 @@ const Physiotherapy = ({ navigation }) => {
                 navigation.navigate("ProductInfo", {
                   id: item.id,
                   name: item.name,
-                  price: item?.price,
-                  carouselImages: item.carouselImages,
-                  session: item.session,
-                  desc:item.desc,
+                  price: item?.offer_price,
+                  carouselImages:[`https://www.cureofine.com/upload/physiotherapy/${item.image}`,`https://www.cureofine.com/upload/physiotherapy/${item.image}`,`https://www.cureofine.com/upload/physiotherapy/${item.image}`],
+                  session:item.duration,
                   item: item,
                 })
               }
             >
               <Image
                 style={{ width: 180, height: 150, resizeMode: "contain" }}
-                source={item.image}
+                source={{uri:`https://www.cureofine.com/upload/physiotherapy/${item.image}`}}
               />
               <View>
                 <Text
@@ -286,7 +299,7 @@ const Physiotherapy = ({ navigation }) => {
                     color: "#f08080",
                   }}
                 >
-                  Session: {item.session}
+                  Session: {item.duration} minutes
                 </Text>
 
                 <Text
@@ -297,7 +310,7 @@ const Physiotherapy = ({ navigation }) => {
                     marginTop: 2,
                   }}
                 >
-                  {item.price}
+                 Rs {item.offer_price}
                 </Text>
               </View>
 
@@ -315,9 +328,9 @@ const Physiotherapy = ({ navigation }) => {
                   navigation.navigate("ProductInfo", {
                     id: item.id,
                     name: item.name,
-                    price: item?.price,
-                    carouselImages: item.carouselImages,
-                    session: item.session,
+                    price: item?.offer_price,
+                    carouselImages:[`https://www.cureofine.com/upload/physiotherapy/${item.image}`,`https://www.cureofine.com/upload/physiotherapy/${item.image}`,`https://www.cureofine.com/upload/physiotherapy/${item.image}`],
+                    session:item.duration,
                     item: item,
                   })
                 }

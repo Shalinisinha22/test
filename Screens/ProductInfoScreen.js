@@ -7,8 +7,10 @@ import {
   TextInput,
   ImageBackground,
   Dimensions,
+  BackHandler,
+  Alert
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
@@ -21,6 +23,21 @@ const ProductInfoScreen = ({ navigation }) => {
   const { width } = Dimensions.get("window");
   const height = (width * 100) / 100;
 
+
+  // useEffect(() => {
+  //   const backAction = () => {
+    
+  //    navigation.goBack();
+  //   };
+
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     backAction,
+  //   );
+
+  //   return () => backHandler.remove();
+  // }, []);
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "white" }}
@@ -32,7 +49,7 @@ const ProductInfoScreen = ({ navigation }) => {
         {route.params.carouselImages.map((item, index) => (
           <ImageBackground
             style={{ width, height, marginTop: 25, resizeMode: "contain" }}
-            source={item}
+            source={{uri:`${item}`}}
             key={index}
           >
             <View
@@ -118,7 +135,7 @@ const ProductInfoScreen = ({ navigation }) => {
           }}
         >
           <Text>Session: </Text>
-          <Text style={{ color: "#eb3b5a" }}>{route.params.item?.session}</Text>
+          <Text style={{ color: "#eb3b5a" }}>{route.params.item?.duration} minutes</Text>
         </View>
         <Text
           style={{
@@ -138,7 +155,7 @@ const ProductInfoScreen = ({ navigation }) => {
         >
           <Text>Description: </Text>
           <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
-            {route.params.item?.desc}
+            {route.params.item?.details}
           </Text>
         </View>
 

@@ -22,7 +22,7 @@ const OtpScreen = ({ navigation }) => {
 
     if(code.length==6){
       try {
-        const response = await axios.post("http://192.168.0.164:3000/verify", {
+        const response = await axios.post("http://192.168.0.110:3000/verify", {
           otp: code,
         });
   
@@ -98,7 +98,7 @@ const OtpScreen = ({ navigation }) => {
 
           <View style={{ marginTop: 85 }} />
 
-          <TouchableOpacity style={styles.button} onPress={onSubmit}>
+          <TouchableOpacity delayPressIn={0} style={styles.button} onPress={onSubmit}>
             <Text
               style={{
                 textAlign: "center",

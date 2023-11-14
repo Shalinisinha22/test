@@ -68,7 +68,7 @@ const LoginScreen = ({ navigation }) => {
 
     var phoneno = /^\d{10}$/;
     if((data.phone.match(phoneno))){
-      const res = await axios.post("http://192.168.0.164:3000/signup", {
+      const res = await axios.post("http://192.168.0.110:3000/signup", {
         phone: data.phone,
       })
       console.log(res.data)
@@ -164,6 +164,7 @@ const LoginScreen = ({ navigation }) => {
           <View style={{ marginTop: 85 }} />
 
           <TouchableOpacity
+          delayPressIn={0}
             style={styles.button}
             onPress={handleSubmit(onSubmit)}
           >

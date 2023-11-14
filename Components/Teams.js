@@ -16,25 +16,25 @@ const Teams = () => {
     const teams = [
         {
           id: 0,
-          name: "Dr Namcy",
+          name: "Dr Nancy",
           occupation: "General Physician",
           image: require("../assets/team1.jpg"),
         },
         {
           id: 1,
-          name: "Dr Namcy",
+          name: "Dr Nancy",
           occupation: "General Physician",
           image: require("../assets/team1.jpg"),
         },
         {
           id: 2,
-          name: "Dr Namcy",
+          name: "Dr Nancy",
           occupation: "General Physician",
           image: require("../assets/team1.jpg"),
         },
         {
           id: 3,
-          name: "Dr Namcy",
+          name: "Dr Nancy",
           occupation: "General Physician",
           image: require("../assets/team1.jpg"),
         },

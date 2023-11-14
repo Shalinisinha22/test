@@ -35,7 +35,7 @@ const ContactScreen = ({ navigation }) => {
      reset()
      showToast()
       const res = await axios
-        .post("http://192.168.0.164:3000/contact", {
+        .post("http://192.168.0.110:3000/contact", {
           name: data.fullname,
           email: data.email,
           message: data.message,
@@ -280,6 +280,7 @@ const ContactScreen = ({ navigation }) => {
         position='bottom'
         bottomOffset={80}
          />
+        
           </KeyboardAvoidingView>
         
         </View>

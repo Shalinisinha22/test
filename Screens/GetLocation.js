@@ -72,7 +72,7 @@ const GetLocation = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-      <Entypo name="location-pin" size={24} color="black" />
+        <Entypo name="location-pin" size={24} color="black" />
         <Text style={styles.title}>What's your address?</Text>
       </View>
       <Text style={styles.text}>{displayCurrentAddress}</Text>

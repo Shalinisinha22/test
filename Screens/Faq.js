@@ -18,9 +18,9 @@ const Faq = ({navigation}) => {
   const [cont, setCont] = useState("");
 
   const getData = async () => {
-   const res= await axios.get("http://192.168.0.164:3000/faq");
+   const res= await axios.get("http://192.168.0.110:3000/faq");
    const data= res.data;
-   console.log(data[0])
+  //  console.log(data[0])
    setCont(decode(data))
 
 

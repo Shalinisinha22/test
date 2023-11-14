@@ -27,6 +27,7 @@ import Footer from "../Components/Footer";
 import RenderHtml from "react-native-render-html";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useWindowDimensions } from "react-native";
+import RenderHTML from "react-native-render-html";
 SplashScreen.preventAutoHideAsync();
 
 const AboutScreen = ({ navigation }) => {
@@ -35,9 +36,9 @@ const AboutScreen = ({ navigation }) => {
   const [cont, setCont] = useState("");
 
   const getData = async () => {
-    const res = await axios.get("http://192.168.0.164:3000/about");
+    const res = await axios.get("http://192.168.0.110:3000/about");
     const data = res.data;
-    console.log(data[0]);
+    // console.log(data[0]);
     setCont(decode(data));
   };
 
@@ -76,8 +77,18 @@ const AboutScreen = ({ navigation }) => {
     </View>
   );
 
+  const tagsStyles = {
+
+    p: {
+      fontSize: 14,
+      textAlign: "justify",
+      margin: 5,
+      color: "gray"
+    }
+  };
+
   return (
-    <SafeAreaView   onLayout={onLayoutRootView} style={{ backgroundColor: "white", height: "100%" }}>
+    <SafeAreaView onLayout={onLayoutRootView} style={{ backgroundColor: "white", height: "100%" }}>
       <Header navigation={navigation}></Header>
       <ScrollView
         onLayout={onLayoutRootView}
@@ -146,9 +157,10 @@ const AboutScreen = ({ navigation }) => {
               // <Text key={item.id} style={{ textAlign: "justify", fontFamily: "EB" }}>{decode(item.content)}</Text>
 
               <RenderHtml
-              key={item.id}
+                key={item.id}
                 source={{ html: decode(item.content) }}
                 contentWidth={width}
+                tagsStyles={tagsStyles}
               ></RenderHtml>
             ))
           ) : (

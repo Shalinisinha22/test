@@ -5,38 +5,55 @@ import {
     FlatList,
     TouchableOpacity,
   } from "react-native";
-  import React from "react";
+  import React, {useState, useEffect} from "react";
   import { Dimensions } from "react-native";
   const { width } = Dimensions.get("window");
   import { FontAwesome } from "@expo/vector-icons";
+  import axios from "axios";
 
 const Brands = () => {
-      const brands = [
-        {
-          id: 0,
-          img: require("../assets/Brands/p1.png"),
-        },
-        {
-          id: 1,
-          img: require("../assets/Brands/p2.png"),
-        },
-        {
-          id: 2,
-          img: require("../assets/Brands/p3.png"),
-        },
-        {
-          id: 3,
-          img: require("../assets/Brands/p4.png"),
-        },
-        {
-          id: 4,
-          img: require("../assets/Brands/p5.png"),
-        },
-        {
-          id: 5,
-          img: require("../assets/Brands/p6.png"),
-        },
-      ];
+  
+  const [brands, setBrands] =useState([])
+
+
+  const getBrand = async () => {
+    const res = await axios.get("http://192.168.0.110:3000/brand");
+    const data = res.data;
+    // console.log(data)
+    setBrands(data)
+  
+  };
+
+  useEffect(()=>{
+    getBrand()
+  },[])
+
+      // const brands = [
+      //   {
+      //     id: 0,
+      //     img: require("../assets/Brands/p1.png"),
+      //   },
+      //   {
+      //     id: 1,
+      //     img: require("../assets/Brands/p2.png"),
+      //   },
+      //   {
+      //     id: 2,
+      //     img: require("../assets/Brands/p3.png"),
+      //   },
+      //   {
+      //     id: 3,
+      //     img: require("../assets/Brands/p4.png"),
+      //   },
+      //   {
+      //     id: 4,
+      //     img: require("../assets/Brands/p5.png"),
+      //   },
+      //   {
+      //     id: 5,
+      //     img: require("../assets/Brands/p6.png"),
+      //   },
+      // ];
 
   return (
     <>
@@ -75,35 +92,48 @@ const Brands = () => {
             }}
           />
 
-          <FlatList
+          { brands.length!==0 &&  <FlatList
             data={brands}
-            numColumns={3}
-            scrollEnabled={false}
-            columnWrapperStyle={{
-              flex: 1,
-              justifyContent: "space-between",
-            }}
+            horizontal
+      showsHorizontalScrollIndicator={false}
+            // numColumns={3}
+            // scrollEnabled={false}
+            // columnWrapperStyle={{
+            //   flex: 1,
+            //   justifyContent: "space-between",
+            // }}
             renderItem={({ item, index }) => (
+
+           item.status == "Active" 
+           
+           &&
+
               <TouchableOpacity
-                key={item.id}
-                style={{
-                  margin: 10,
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  backgroundColor: "whitesmoke",
-                  borderRadius: 20,
-                  padding: 8,
-                }}
-              >
-                <Image
-                  style={{ width: 80, height: 80, resizeMode: "contain" }}
-                  source={item.img}
-                />
-              </TouchableOpacity>
+              key={item.id}
+              style={{
+                margin: 10,
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                backgroundColor: "whitesmoke",
+                borderRadius: 20,
+                padding: 8,
+              }}
+            >
+              <Image
+                style={{ width: 80, height: 80, resizeMode: "contain" }}
+                source={{uri:`https://www.cureofine.com/upload/brand/${item.logo}`}}
+              />
+            </TouchableOpacity>
+          
+            
             )}
-          ></FlatList>
+          ></FlatList>}
+
+        
     </>
   )
 }
 
 export default Brands
+
+// https://www.cureofine.com/upload/brand/

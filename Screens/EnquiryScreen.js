@@ -9,7 +9,6 @@ import {
   TextInput,
   Alert,
   ScrollView,
-  ToastAndroid
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -36,9 +35,6 @@ const EnquiryScreen = ({ navigation }) => {
   } = useForm();
 
 
-  // function showToast() {
-  //   ToastAndroid.show('Your enquiry is successfully sent! We will get back to you soon.', ToastAndroid.SHORT);
-  // }
 
   const showToast = () => {
     Toast.show({
@@ -50,24 +46,25 @@ const EnquiryScreen = ({ navigation }) => {
     console.log("toast called");
   };
 
-  const onSubmit = async(data) => {
-     console.log(data);
-     reset()
-    showToast()
 
-    const res = await axios.post("http://192.168.0.164:3000/enquiry", {
-        name: data.fullname,
-        email: data.email,
-        message: data.message,
-        phone: data.phone,
-        city: data.city,
-        address:data.address
-      })
+  const onSubmit = async (data) => {
+    console.log(data);
+    reset()
+
+
+    const res = await axios.post("http://192.168.0.110:3000/enquiry", {
+      name: data.fullname,
+      email: data.email,
+      message: data.message,
+      phone: data.phone,
+      city: data.city,
+      address: data.address
+    })
       .then((response) => response.json())
       .then((serverResponse) => console.warn(serverResponse));
 
-      showToast()  
-   
+    showToast()
+
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
@@ -92,7 +89,10 @@ const EnquiryScreen = ({ navigation }) => {
               </Text>
             </View>
 
-          <View>
+            <View>
+
+
+
               <View style={styles.inputBoxCont}>
                 <FontAwesome5
                   name="phone-alt"
@@ -132,7 +132,9 @@ const EnquiryScreen = ({ navigation }) => {
               {errors.phone && (
                 <Text style={{ color: "red" }}>{errors.phone.message}</Text>
               )}
-            </View>    <View style={{ marginTop: 20 }}>
+            </View>
+
+            <View style={{ marginTop: 8 }}>
               <View style={styles.inputBoxCont}>
                 <Ionicons
                   name="ios-person"
@@ -168,7 +170,7 @@ const EnquiryScreen = ({ navigation }) => {
                 />
 
               </View>
-              
+
               {errors.fullname && (
                 <Text style={{ color: "red" }}>{errors.fullname.message}</Text>
               )}
@@ -215,7 +217,7 @@ const EnquiryScreen = ({ navigation }) => {
               )}
             </View>
 
-          
+
 
             <View>
               <View style={styles.inputBoxCont}>
@@ -292,10 +294,12 @@ const EnquiryScreen = ({ navigation }) => {
                   }}
                 />
               </View>
-              
+
               {errors.address && (
                 <Text style={{ color: "red" }}>{errors.address.message}</Text>
               )}
+
+
             </View>
 
             <View>
@@ -336,8 +340,7 @@ const EnquiryScreen = ({ navigation }) => {
               )}
             </View>
 
-            <View style={{ marginTop: 30 }} />
-
+            <View style={{ marginTop: 30 }}></View>
             <TouchableOpacity
               style={styles.button}
               onPress={handleSubmit(onSubmit)}
@@ -354,14 +357,20 @@ const EnquiryScreen = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
 
+
+
             <Toast
-        position='bottom'
-        bottomOffset={80}
-         />
+              position='bottom'
+              bottomOffset={80}
+            >
+
+            </Toast>
+
           </KeyboardAvoidingView>
+
         </View>
-        {/* <Contact></Contact> */}
-        <Footer></Footer>
+
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -392,7 +401,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D0D0D0",
     paddingVertical: 5,
     borderRadius: 5,
-    marginTop: 15,
+    marginTop: 18,
   },
 
   button: {

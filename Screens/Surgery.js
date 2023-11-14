@@ -10,7 +10,7 @@ import {
   FlatList,
   TouchableOpacity
 } from "react-native";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Carousel, { PaginationLight } from "react-native-x-carousel";
 const { width } = Dimensions.get("window");
 import { AntDesign } from "@expo/vector-icons";
@@ -22,6 +22,7 @@ import Teams from "../Components/Teams";
 import Contact from "../Components/Contact";
 import Footer from "../Components/Footer";
 import Specialization from "../Components/Specialization";
+import axios from "axios";
 
 
 const Surgery = ({ navigation }) => {
@@ -30,6 +31,18 @@ const Surgery = ({ navigation }) => {
       coverImageUri: require("../assets/surgery1.png"),
     },
   ];
+
+  const [surgeryList, setSurgery]= useState([])
+
+  const getSurgery = async()=>{
+    const res = await axios.get("http://192.168.0.110:3000/surgery");
+    const data = res.data;
+    setSurgery(data)
+  }
+
+  useEffect(()=>{
+    getSurgery()
+  },[])
 
   const list = [
     {
@@ -145,15 +158,15 @@ const Surgery = ({ navigation }) => {
 
 
 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {list.map((item, index) => (
+              {surgeryList.map((item, index) => (
 
                 <TouchableOpacity
                 key={item.id}
                 onPress={() => navigation.navigate("SurgeryInfo", {
                   id: item.id,
                   name: item.name,
-                  carouselImages: item.carouselImages,
-                  desc:item.desc,
+                  carouselImages:[ require("../assets/surgeryImg.png"), require("../assets/surgeryImg.png"), require("../assets/surgeryImg.png")],
+                  desc:item.description,
                   item: item,
                 
                 }
@@ -175,7 +188,7 @@ const Surgery = ({ navigation }) => {
                     <Image
                       style={{ width: 180, height: 150, resizeMode: "contain" }}
                       resizeMode="contain"
-                      source={item.image}
+                      source={ require("../assets/surgeryImg.png")}
                     />
                   </View>
                 </Card>

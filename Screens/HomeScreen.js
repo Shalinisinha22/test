@@ -14,7 +14,10 @@ import {
   Alert,
   TextInput,
   Button,
-  Linking
+  Linking,
+  Modal,
+  BackHandler,
+
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -41,133 +44,133 @@ import { useRoute } from "@react-navigation/native";
 import * as Location from "expo-location";
 import { Entypo } from "@expo/vector-icons";
 import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
-import SelectDropdown from "react-native-select-dropdown";
-import { SelectList } from "react-native-dropdown-select-list";
 import { Foundation } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useToast } from 'native-base';
-
+import { useToast } from "native-base";
+import axios from "axios";
+import { Select } from "native-base";
+import { FlatListSlider } from 'react-native-flatlist-slider';
+import { FontAwesome } from '@expo/vector-icons';
+import { decode } from 'html-entities';
+import RenderHtml from 'react-native-render-html'
 SplashScreen.preventAutoHideAsync();
+
+
 
 const Home = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [address, setAdd] = useState("");
-
-  const toast = useToast();
-
+  const [state, setState] = useState([]);
+  const [city, setCity] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [isExitModalVisible, setIsExitModalVisible] = useState(false);
   const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
-
   const [selected, setSelected] = React.useState("");
-
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
     "Wait, we are fetching you location..."
   );
+  const [bannerImage, setBaner] = useState([]);
 
-  const handleAddress = async (address) => {
-     setModalVisible(!modalVisible);
-    if (address.length > 0) {
-      setDisplayCurrentAddress(address);
-      const res = await AsyncStorage.setItem("user", JSON.stringify(address));
-    } else {
-      toast.show({
-        description: "Please Enter Your Address"
-      
-    })
+  const [pageMenu, setpageMenu] = useState("")
+  const [content, setContent] = useState("")
 
-   
+
+  const getText = async () => {
+    const res = await axios.get("http://192.168.0.110:3000/staticText");
+    const data = res.data;
+    console.log(data)
+    console.log(decode(data[0].content))
+    //  console.log(data[0].page_menu)
+    setpageMenu(data[0].page_menu)
+    setContent(decode(data[0].content))
+
+  }
+
+  useEffect(() => {
+    getText()
+  }, [])
+
+// backhandler
+  useEffect(() => {
+
+    const backAction = () => {
+      Alert.alert('CureOFine', 'Are you sure you want to close the app?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+  return () => {
+    BackHandler.removeEventListener("hardwareBackPress", backAction);
   };
-}
+  ;
+  }, []);
 
-  const data = [
-    { key: "1", value: "Andhra Pradesh" },
-    { key: "2", value: "Arunachal Pradesh" },
-    { key: "3", value: "Assam" },
-    { key: "4", value: "Bihar" },
-    { key: "5", value: "Chandigarh (UT)" },
-    { key: "6", value: "Chhattisgarh" },
-    { key: "7", value: "Dadra and Nagar Haveli (UT)" },
-    { key: "8", value: "Daman and Diu (UT)" },
-    { key: "9", value: "Delhi (NCT)" },
-    { key: "10", value: "Goa" },
-    { key: "11", value: "Gujarat" },
-    { key: "12", value: "Haryana" },
-    { key: "13", value: "Himachal Pradesh" },
-    { key: "14", value: "Jammu and Kashmir" },
-    { key: "15", value: "Jharkhand" },
-    { key: "16", value: "Karnataka" },
-    { key: "17", value: "Kerala" },
-    { key: "18", value: "Lakshadweep (UT)" },
-    { key: "19", value: "Madhya Pradesh" },
-    { key: "20", value: "Maharashtra" },
-    { key: "21", value: "Manipur" },
-    { key: "22", value: "Meghalaya" },
-    { key: "23", value: "Mizoram" },
-    { key: "24", value: "Nagaland" },
-    { key: "25", value: "Odisha" },
-    { key: "26", value: "Puducherry (UT)" },
-    { key: "27", value: "Punjab" },
-    { key: "28", value: "Rajasthan" },
-    { key: "29", value: "Sikkim" },
-    { key: "30", value: "Tamil Nadu" },
-    { key: "31", value: "Telangana" },
-    { key: "32", value: "Tripura" },
-    { key: "33", value: "Uttarakhand" },
-    { key: "34", value: "Uttar Pradesh" },
-    { key: "35", value: "West Bengal" },
-  ];
 
-  const district = [
-    // {Arwal,	 Patna,	 Nalanda,
-    //   Rohtas,	 Bhabhua,	 Bhojpur,	 Buxar,	 Gaya,	 Jehanabad,	 Nawada,	 Siwan,	 Gopalganj,
-    //   Sitamarhi,	 Muzaffarpur,	 Shivahar,	 West	 Champaran,	 East	 Champaran,	 Vaishali,
-    //   Darbhanga,	 Madhubani,	 Samastipur,	 Saharsa,	 Supaul,	 Madhepura,	 Purnia,	 Araria,
-    //   Kishanganj,	 Katihar,	 Banka,	 Bhagalpur,	 Munger,	 Lakhisarai,	 Aurangabad,	 Saran,
-    //   Shekhpura,	Jamui,	Khagaria	and,	Begusarai}
+ 
 
-    { key: "1", value: "Arwal" },
-    { key: "2", value: "Patna" },
-    { key: "3", value: "Nalanda" },
-    { key: "4", value: "Rohtas" },
-    { key: "5", value: "Bhabhua" },
-    { key: "6", value: "Bhojpur" },
-    { key: "7", value: "Buxar" },
-    { key: "8", value: "Gaya" },
-    { key: "9", value: "Jehanabad" },
-    { key: "10", value: "Nawada" },
-    { key: "11", value: "Siwan" },
-    { key: "12", value: "Gopalganj" },
-    { key: "13", value: "Sitamarhi" },
-    { key: "14", value: "Muzaffarpur" },
-    { key: "15", value: "Shivahar" },
-    { key: "16", value: "West Champaran" },
-    { key: "17", value: "East Champaran" },
-    { key: "18", value: "vaishali" },
-    { key: "19", value: "Darbhanga" },
-    { key: "20", value: "Madhubani" },
-    { key: "21", value: "Samastipur" },
-    { key: "22", value: "Saharsa" },
-    { key: "23", value: "Supaul" },
-    { key: "24", value: "Madhepura" },
-    { key: "25", value: "Purnia" },
-    { key: "26", value: "Araria" },
-    { key: "27", value: "Kishanganj" },
-    { key: "28", value: "Katihar" },
-    { key: "29", value: "Banka" },
-    { key: "30", value: "Bhagalpur" },
-    { key: "31", value: "Munger" },
-    { key: "32", value: "Lakhisarai" },
-    { key: "33", value: "Aurangabad" },
-    { key: "34", value: "Saran" },
-    { key: "35", value: "Shekhpura" },
-    { key: "36", value: "Jamui" },
-    { key: "37", value: "Khagaria" },
-    { key: "38", value: "Begusarai" },
-    { key: "39", value: "Lucknow" },
-    { key: "40", value: "Ranchi" },
-    { key: "41", value: "Jhansi" },
-    { key: "42", value: "North Goa" },
-    { key: "43", value: "South Goa" },
-  ];
+
+
+ 
+
+  const getState = async () => {
+    const res = await axios.get("http://192.168.0.110:3000/state");
+    const data = res.data;
+    // console.log(data);
+    setState(data);
+  };
+  const getCity = async () => {
+    const res = await axios.get("http://192.168.0.110:3000/city");
+    const data = res.data;
+    // console.log(data);
+    setCity(data);
+  };
+
+  useEffect(() => {
+    getState();
+    getCity();
+  }, []);
+
+  useEffect(() => {
+    getImage();
+
+  }, []);
+
+  const getImage = async () => {
+    const res = await axios.get("http://192.168.0.110:3000/banner");
+    const data = res.data;
+    let imgArr = []
+    for (let i = 0; i < data.length; i++) {
+
+      imgArr.push({ image: `https://cureofine.com/upload/banner/${data[i].image}`, id: data[i].id });
+    }
+    // console.log(imgArr)
+    setBaner(imgArr)
+    // console.log(res.data);
+
+  };
+
+  
+
+  const handleAddress = async (address, state, city) => {
+    if (address.length > 0 || state !== "" || city !== "") {
+      const fullAdd = `${address} ${city} ${state}`;
+      setDisplayCurrentAddress(fullAdd);
+      const res = await AsyncStorage.setItem("user", JSON.stringify(fullAdd));
+    }
+    setModalVisible(false);
+  };
 
   const getAddress = async () => {
     try {
@@ -184,7 +187,7 @@ const Home = ({ navigation }) => {
   };
 
   useEffect(() => {
-     getAddress()
+    getAddress();
   });
 
   const CheckIfLocationEnabled = async () => {
@@ -225,15 +228,10 @@ const Home = ({ navigation }) => {
 
       for (let item of response) {
         // console.log(item)
-        let address = ` ${item.street}, ${item.postalCode}, ${item.city}`;
+        let address = `${item.city}`;
+        //  ${item.street}, ${item.postalCode},
 
         setDisplayCurrentAddress(address);
-
-        // if (address.length > 0) {
-        //   setTimeout(() => {
-        //     navigation.navigate('Home', { item: address });
-        //   }, 2000);
-        // }
       }
     }
   };
@@ -262,6 +260,8 @@ const Home = ({ navigation }) => {
       coverImageUri: require("../assets/Banner/cbanner2.png"),
     },
   ];
+
+
 
   const banner2 = [
     {
@@ -292,6 +292,14 @@ const Home = ({ navigation }) => {
       coverImageUri: require("../assets/surgery1.png"),
     },
   ];
+
+  const tagsStyles = {
+
+    h1: {
+      color: 'white',
+      fontSize: 15
+    }
+  };
 
   return (
     <>
@@ -340,13 +348,31 @@ const Home = ({ navigation }) => {
         <ScrollView>
           {/* banner slider start */}
           <View style={styles.container}>
-            <Carousel
-              pagination={PaginationLight}
-              renderItem={renderItem}
-              data={DATA}
-              loop
-              autoplay
-            />
+
+            {/*        
+          <Carousel
+          pagination={PaginationLight}
+          renderItem={renderItem}
+          data={DATA}
+          loop
+          autoplay
+         /> */}
+
+            {
+              bannerImage.length != 0 &&
+
+              <FlatListSlider
+                data={bannerImage}
+                height={180}
+                indicatorActiveColor={'#f08080'}
+                indicatorActiveWidth={30}
+              />
+
+            }
+
+
+
+
           </View>
           {/* banner slider end */}
 
@@ -510,13 +536,20 @@ const Home = ({ navigation }) => {
               <Text
                 style={{ fontWeight: "bold", fontSize: 26, color: "white" }}
               >
-                Need a Doctor for Checkup?
+                {/* Need a Doctor for Checkup? */}
+                {pageMenu}
               </Text>
-              <Text style={{ fontWeight: "bold", color: "white" }}>
-                Just make an Appointment & You're Done!
+              <Text style={{ fontWeight: "bold", color: "white", fontSize: 10 }}>
+                {/* Just make an Appointment & You're Done! */}
+
+
+                <RenderHtml tagsStyles={tagsStyles} source={{ html: decode(content) }} contentWidth={width} ></RenderHtml>
+
+
               </Text>
-              <TouchableOpacity style={styles.button}
-                onPress={()=>Linking.openURL("tel:7250446555")}
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => Linking.openURL("tel:7250446555")}
               >
                 <Text
                   style={{
@@ -554,14 +587,17 @@ const Home = ({ navigation }) => {
             }}
           />
 
+
+
           {/* contact */}
           <Contact></Contact>
           {/* contact */}
 
-      
           <Footer></Footer>
         </ScrollView>
       </SafeAreaView>
+
+
 
       <BottomModal
         onBackdropPress={() => setModalVisible(!modalVisible)}
@@ -576,24 +612,83 @@ const Home = ({ navigation }) => {
         visible={modalVisible}
         onTouchOutside={() => setModalVisible(!modalVisible)}
       >
-        <ModalContent style={{ width: "100%", height: 250 }}>
-          <View style={{ marginBottom: 8 }}>
+        <ModalContent style={{ width: "100%", height: 440 }}>
+          <TouchableOpacity style={{ position: "absolute", right: 15, top: 20 }} onPress={() => setModalVisible(!modalVisible)}>
+            <AntDesign name="close" size={28} color="black" onPress={() => setModalVisible(!modalVisible)} />
+          </TouchableOpacity>
+
+          <View style={{ marginBottom: 8, marginTop: 8 }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>
               Choose your Location
             </Text>
           </View>
 
-          <View>
-            <View style={styles.inputBoxCont}>
-              <Foundation
-                name="address-book"
-                size={24}
-                color="gray"
-                style={{ marginLeft: 10 }}
-              />
+          {state.length != 0 && (
+            <View style={{ marginTop: 10 }}>
+              <Text
+                style={{ color: "#f08080", fontWeight: 500, marginBottom: 5 }}
+              >
+                Choose State{" "}
+              </Text>
+              <Select
+                selectedValue={selectedState}
+                minWidth="200"
+                accessibilityLabel="Choose State"
+                placeholder="Choose State"
+                _selectedItem={{
+                  bg: "#f08080",
+                  // endIcon: <CheckIcon size="5" />,
+                }}
+                mt={1}
+                onValueChange={(itemValue) => setSelectedState(itemValue)}
+              >
+                {state.map((item) => (
+                  <Select.Item
+                    key={item.id}
+                    label={item.State}
+                    value={item.State}
+                  />
+                ))}
+              </Select>
+            </View>
+          )}
 
+          {city.length != 0 && (
+            <View style={{ marginTop: 10 }}>
+              <Text
+                style={{ color: "#f08080", fontWeight: 500, marginBottom: 5 }}
+              >
+                Choose City{" "}
+              </Text>
+              <Select
+                selectedValue={selectedCity}
+                minWidth="200"
+                accessibilityLabel="Choose City"
+                placeholder="Choose City"
+                _selectedItem={{
+                  bg: "#f08080",
+                  // endIcon: <CheckIcon size="5" />,
+                }}
+                mt={1}
+                onValueChange={(itemValue) => setSelectedCity(itemValue)}
+              >
+                {city.map((item) => (
+                  <Select.Item
+                    key={item.id}
+                    label={item.name}
+                    value={item.name}
+                  />
+                ))}
+              </Select>
+            </View>
+          )}
+
+          <View>
+            <Text style={{ color: "#f08080", fontWeight: 500, marginTop: 10 }}>
+              Your Address
+            </Text>
+            <View style={styles.inputBoxCont}>
               <TextInput
-           
                 editable
                 multiline
                 numberOfLines={3}
@@ -604,74 +699,26 @@ const Home = ({ navigation }) => {
                   color: "gray",
                   alignItems: "flex-start",
                   width: 300,
-                  fontSize: 15,
+                  fontSize: 12,
                 }}
-                placeholder="enter your Address"
+                placeholder="Enter Your Address"
               />
             </View>
           </View>
-
           <View style={{ marginTop: 30 }} />
 
-          {/* <Pressable
-            style={styles.button1}
-            onPress={() => {
-              handleAddress(address);
-            }}
+          <TouchableOpacity
+            onPress={() => handleAddress(address, selectedState, selectedCity)}
+            style={{ backgroundColor: "#f08080", padding: 18 }}
           >
-            <Text
-              style={{
-                textAlign: "center",
-                color: "white",
-                fontSize: 16,
-                fontWeight: "bold",
-              }}
-              onPress={() => {
-                handleAddress(address);
-              }}
-            >
-              Add
+            <Text style={{ textAlign: "center", fontSize: 18, color: "white" }}>
+              Add Your Address
             </Text>
-          </Pressable> */}
-
-
-          <Button
-           onPress={()=>handleAddress(address)}
-           title="Add your address"
-           color="#f08080"
-           
-          />
-
-
-
-          {/*<View style={{ flexDirection: "column", gap: 7, marginTop: 10 }}>
-          <Text style={{ marginTop: 5, fontSize: 16, color: "gray" }}>
-              Select Your State
-            </Text>
-
-        <SelectList 
-        setSelected={(val) =>{ 
-          setSelected(val) 
-          setState(val)}} 
-        data={data} 
-        />
-          </View>
-
-          <View style={{marginTop:10}}>
-          <Text style={{ marginTop: 5, fontSize: 16, color: "gray" }}>
-              Select Your District
-            </Text>
-
-            
-       <SelectList 
-        setSelected={(val) =>{
-           setSelected(val)
-           setdistrict(val)} } 
-        data={district} 
-        />
-          </View> */}
+          </TouchableOpacity>
         </ModalContent>
       </BottomModal>
+
+   
     </>
   );
 };
@@ -682,7 +729,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     width: "100%",
-    marginTop: 0,
+    marginTop: 10,
   },
 
   cardContainer: {
@@ -741,11 +788,14 @@ const styles = StyleSheet.create({
   inputBoxCont: {
     flexDirection: "row",
     gap: 10,
-    backgroundColor: "#D0D0D0",
+    backgroundColor: "#ffffff",
     borderRadius: 5,
     marginTop: 15,
-    paddingVertical: 10,
+    paddingVertical: 5,
     alignItems: "center",
+    borderWidth: 0.4,
+    borderColor: "gray",
+    paddingLeft: 10,
   },
   button1: {
     width: 120,

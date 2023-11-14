@@ -17,7 +17,7 @@ const Privacy = ({navigation}) => {
   const [cont, setCont] = useState("");
 
   const getData = async () => {
-   const res= await axios.get("http://192.168.0.164:3000/privacy");
+   const res= await axios.get("http://192.168.0.110:3000/privacy");
    const data= res.data;
    console.log(data[0])
    setCont(decode(data))

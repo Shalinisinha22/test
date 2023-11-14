@@ -12,9 +12,15 @@ const Share = () => {
   return (
     <View style={{flex:1, alignItems:"center",marginTop:60}}>
       
-      <Button onPress={()=>shareToWhatsApp(`https://expo.dev/artifacts/eas/phEj8XNNVKndyuuuv4ZTAb.apk`)}>Share With Whatsapp</Button>
+      {/* <Button onPress={()=>shareToWhatsApp(`https://expo.dev/artifacts/eas/phEj8XNNVKndyuuuv4ZTAb.apk`)}>Share With Whatsapp</Button> */}
     </View>
   )
 }
 
 export default Share
+
+
+
+
+
+

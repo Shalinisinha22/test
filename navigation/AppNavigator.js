@@ -53,6 +53,8 @@ const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
+
+
   const drawerMenu = [
     {
       id: 0,
@@ -63,7 +65,7 @@ const AppNavigator = () => {
         { id: 2, name: "Physiotherapy At Home", url: "Physiotherapy" },
       ],
       icon: <MaterialIcons name="medical-services" size={24} color="white" />,
-      dropdownIcon: <AntDesign name="down" size={20} color="white" />,
+      dropdownIcon: <AntDesign name="down" size={20} color="white"/>,
       url: "Consulation",
     },
     {
@@ -123,6 +125,8 @@ const AppNavigator = () => {
       icon: <Entypo name="share" size={24} color="white" />,
     },
   ];
+
+  
   const onShare = async (url) => {
     try {
       const result = await Share.share({
@@ -258,7 +262,7 @@ const AppNavigator = () => {
       setSubmenuVisible(!submenuVisible);
     };
     return (
-      <ScrollView style={{ flex: 1, paddingTop: 5 }}>
+      <ScrollView style={{ flex: 1, paddingTop: 10 }}>
         <Entypo
           name="cross"
           size={35}
@@ -333,7 +337,8 @@ const AppNavigator = () => {
                         ? onShare(
                             `https://expo.dev/artifacts/eas/phEj8XNNVKndyuuuv4ZTAb.apk`
                           )
-                        : navigation.navigate(item.url);
+                        :
+                     navigation.navigate(item.url);
                     }}
                   >
                     {item.icon}

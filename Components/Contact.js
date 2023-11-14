@@ -5,46 +5,70 @@ import {
     ImageBackground,
     TouchableOpacity,
   } from "react-native";
-  import React from "react";
+  import React, {useState, useEffect} from "react";
   import { Ionicons } from "@expo/vector-icons";
   import { Feather } from "@expo/vector-icons";
   import { Dimensions } from "react-native";
   const { width } = Dimensions.get("window");
   import { FontAwesome } from "@expo/vector-icons";
   import { Linking } from "react-native";
+  import axios from "axios";
 
 
 const Contact = () => {
 
-    const contact = [
-        {
-          // #f08080
-          id: 1,
-          icon: <Feather name="phone-call" size={24} color="#f08080" />,
-          title: "7250446555",
-          subtitle: "Have a question?",
-          text: "Call Us Now",
-          url:"tel:7250446555"
-        },
-        {
-          id: 2,
-          icon: <Feather name="mail" size={24} color="#f08080" />,
-          title: "cureofine@gmail.com",
-          subtitle: " Need support?",
-          text: " Drop us an email",
-          url:"mailto:cureofine@gmail.com"
-        },
-        {
-          id: 3,
-          icon: <Ionicons name="alarm-outline" size={24} color="#f08080" />,
-          title: "Mon - Sat",
-          subtitle: "10.00AM - 06.00PM",
-          text: " We are open on",
-        },
-      ];
+  const [contactInfo, setContact]= useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setNumber] = useState("")
+  const [officeHour, setHour] = useState("")
+
+
+  const getInfo = async()=>{
+    const res= await axios.get("http://192.168.0.110:3000/contactInfo");
+    const data = res.data
+    console.log(data)
+    setContact(data)
+    setContact(data)
+    console.log(data[0].mobile_2)
+    setNumber(data[0].mobile_2)
+    setEmail(data[0].email)
+    setHour(data[0].office_hour)
+    
+  }
+
+  useEffect(()=>{
+    getInfo()
+  },[])
+
+    // const contact = [
+    //     {
+    //       // #f08080
+    //       id: 1,
+    //       icon: <Feather name="phone-call" size={24} color="#f08080" />,
+    //       title: "7250446555",
+    //       subtitle: "Have a question?",
+    //       text: "Call Us Now",
+    //       url:"tel:7250446555"
+    //     },
+    //     {
+    //       id: 2,
+    //       icon: <Feather name="mail" size={24} color="#f08080" />,
+    //       title: "cureofine@gmail.com",
+    //       subtitle: " Need support?",
+    //       text: " Drop us an email",
+    //       url:"mailto:cureofine@gmail.com"
+    //     },
+    //     {
+    //       id: 3,
+    //       icon: <Ionicons name="alarm-outline" size={24} color="#f08080" />,
+    //       title: "Mon - Sat",
+    //       subtitle: "10.00AM - 06.00PM",
+    //       text: " We are open on",
+    //     },
+    //   ];
   return (
     <>
-     <ImageBackground
+         <ImageBackground
             source={require("../assets/bg8.png")}
             style={{
               width: "100%",
@@ -88,7 +112,7 @@ const Contact = () => {
                 borderRadius: 5,
               }}
             />
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {contact.map((item, index) => (
 
 
@@ -149,8 +173,198 @@ const Contact = () => {
                   </Text>
                 </TouchableOpacity>
               ))}
+            </ScrollView> */}
+
+
+             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+
+           <TouchableOpacity
+                 
+                 style={{
+                   margin: 8,
+                   justifyContent: "center",
+                   alignItems: "center",
+                   width: 150,
+                   borderWidth: 0.5,
+                   padding: 8,
+                   borderRadius: 8,
+                   backgroundColor: "white",
+                   borderColor: "#D0D0D0",
+                   marginTop: 12,
+                 }}
+   onPress={()=>{ Linking.openURL("tel:7250446555")}} 
+
+                 
+               >
+
+               
+                <Feather name="phone-call" size={24} color="#f08080" />
+
+                 <Text
+                   style={{
+                     textAlign: "center",
+                     fontSize: 12,
+                     fontWeight: "500",
+                     marginTop: 5,
+                   }}
+                 >
+                   {phone}
+                 </Text>
+
+                 
+                   <Text
+                     style={{
+                       textAlign: "center",
+                       fontSize: 10,
+                       fontWeight: "500",
+                       marginTop: 5,
+                     }}
+                   >
+                   Call Us Now
+                 
+                   </Text>
+         
+
+                 <Text
+                   style={{
+                     textAlign: "center",
+                     fontSize: 8,
+                     fontWeight: "500",
+                     marginTop: 5,
+                     color: "#f08080",
+                   }}
+                 >
+                      Have a question?
+                 </Text>
+               </TouchableOpacity>
+
+
+
+               <TouchableOpacity
+                
+                style={{
+                  margin: 8,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: 150,
+                  borderWidth: 0.5,
+                  padding: 8,
+                  borderRadius: 8,
+                  backgroundColor: "white",
+                  borderColor: "#D0D0D0",
+                  marginTop: 12,
+                }}
+  onPress={()=>{ Linking.openURL("mailto:cureofine@gmail.com")}} 
+
+                
+              >
+             <Feather name="mail" size={24} color="#f08080" />
+
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 12,
+                    fontWeight: "500",
+                    marginTop: 5,
+                  }}
+                >
+                  {email}
+                </Text>
+
+                
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 10,
+                      fontWeight: "500",
+                      marginTop: 5,
+                    }}
+                  >
+                 Drop us an email
+                
+                  </Text>
+        
+
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 8,
+                    fontWeight: "500",
+                    marginTop: 5,
+                    color: "#f08080",
+                  }}
+                >
+                     Need support?
+                </Text>
+              </TouchableOpacity>
+
+
+              <TouchableOpacity
+                
+                style={{
+                  margin: 8,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: 150,
+                  borderWidth: 0.5,
+                  padding: 8,
+                  borderRadius: 8,
+                  backgroundColor: "white",
+                  borderColor: "#D0D0D0",
+                  marginTop: 12,
+                }}
+  
+
+                
+              >
+             <Ionicons name="alarm-outline" size={24} color="#f08080" />
+
+             <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 10,
+                      fontWeight: "500",
+                      marginTop: 5,
+                    }}
+                  >
+              We are open on
+                
+                  </Text>
+
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 12,
+                    fontWeight: "500",
+                    marginTop: 5,
+                  }}
+                >
+                  {officeHour}
+                </Text>
+
+                
+                
+        
+
+                {/* <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 8,
+                    fontWeight: "500",
+                    marginTop: 5,
+                    color: "#f08080",
+                  }}
+                >
+                 {officeHour}
+                </Text> */}
+              </TouchableOpacity>
+  
+
+
+       
+           
             </ScrollView>
-          </ImageBackground>
+         </ImageBackground>
     </>
   )
 }
