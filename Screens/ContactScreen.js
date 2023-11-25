@@ -35,7 +35,7 @@ const ContactScreen = ({ navigation }) => {
      reset()
      showToast()
       const res = await axios
-        .post("http://192.168.0.110:3000/contact", {
+        .post("https://cureofine-azff.onrender.com/contact", {
           name: data.fullname,
           email: data.email,
           message: data.message,

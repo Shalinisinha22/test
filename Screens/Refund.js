@@ -13,7 +13,7 @@ const Refund = ({navigation}) => {
   const [cont, setCont] = useState("");
   const { width } = useWindowDimensions();
   const getData = async () => {
-   const res= await axios.get("http://192.168.0.110:3000/return");
+   const res= await axios.get("https://cureofine-azff.onrender.com/return");
    const data= res.data;
   //  console.log(data[0])
    setCont(decode(data))

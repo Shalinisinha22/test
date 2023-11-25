@@ -22,6 +22,7 @@ import Header from "../Components/Header";
 import Teams from "../Components/Teams";
 import Contact from "../Components/Contact";
 import Footer from "../Components/Footer";
+import { Linking } from "react-native";
 
 const Consultation = ({ navigation }) => {
   const DATA = [
@@ -46,16 +47,19 @@ const Consultation = ({ navigation }) => {
       id: "0",
       image: require("../assets/video.png"),
       name: "Video Consultation",
+      url:"tel:7250446555"
     },
     {
       id: "1",
       image: require("../assets/call.png"),
       name: "Call Consultation",
+      url:"tel:7250446555"
     },
     {
       id: "3",
       image: require("../assets/whatsapp.png"),
       name: "Whatsapp Consultation",
+      url:"whatsapp://send?text=hello&phone=7250446555"
     },
   ];
 
@@ -143,7 +147,7 @@ const Consultation = ({ navigation }) => {
               marginTop: 10,
               padding: 2,
             }}
-            // onPress={() => navigation.navigate(item.url)}
+            onPress={() => Linking.openURL(item.url)}
           >
             <Image
               style={{
@@ -190,7 +194,7 @@ const Consultation = ({ navigation }) => {
           marginTop: 15,
         }}
       />
-      <Teams></Teams>
+      <Teams navigation={navigation}></Teams>
       <Text
         style={{
           height: 1,

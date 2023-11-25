@@ -11,7 +11,7 @@ import {
   import { FontAwesome } from "@expo/vector-icons";
 
 
-const Teams = () => {
+const Teams = ({navigation}) => {
 
     const teams = [
         {
@@ -99,6 +99,8 @@ const Teams = () => {
                     alignItems: "center",
                     marginTop: 15,
                   }}
+                  onPress={()=> navigation.navigate("SingleTeam")}
+                   
                 >
                   <Image
                     style={{

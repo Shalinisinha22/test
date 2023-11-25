@@ -52,7 +52,7 @@ const EnquiryScreen = ({ navigation }) => {
     reset()
 
 
-    const res = await axios.post("http://192.168.0.110:3000/enquiry", {
+    const res = await axios.post("https://cureofine-azff.onrender.com/enquiry", {
       name: data.fullname,
       email: data.email,
       message: data.message,

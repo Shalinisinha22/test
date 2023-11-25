@@ -9,7 +9,6 @@ import {
   StatusBar,
   ImageBackground,
   FlatList,
-  TouchableOpacity,
   Pressable,
   Alert,
   TextInput,
@@ -17,7 +16,7 @@ import {
   Linking,
   Modal,
   BackHandler,
-
+  TouchableOpacity
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -52,7 +51,11 @@ import { Select } from "native-base";
 import { FlatListSlider } from 'react-native-flatlist-slider';
 import { FontAwesome } from '@expo/vector-icons';
 import { decode } from 'html-entities';
-import RenderHtml from 'react-native-render-html'
+import RenderHtml from 'react-native-render-html';
+import { ActivityIndicator } from "react-native";
+import HomeBanner from "./HomeBanner";
+import CallBanner from "../Components/CallBanner";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 SplashScreen.preventAutoHideAsync();
 
 
@@ -77,10 +80,10 @@ const Home = ({ navigation }) => {
 
 
   const getText = async () => {
-    const res = await axios.get("http://192.168.0.110:3000/staticText");
+    const res = await axios.get("https://cureofine-azff.onrender.com/staticText");
     const data = res.data;
-    console.log(data)
-    console.log(decode(data[0].content))
+    // console.log(data)
+    // console.log(decode(data[0].content))
     //  console.log(data[0].page_menu)
     setpageMenu(data[0].page_menu)
     setContent(decode(data[0].content))
@@ -91,7 +94,7 @@ const Home = ({ navigation }) => {
     getText()
   }, [])
 
-// backhandler
+  // backhandler
   useEffect(() => {
 
     const backAction = () => {
@@ -101,7 +104,7 @@ const Home = ({ navigation }) => {
           onPress: () => null,
           style: 'cancel',
         },
-        {text: 'YES', onPress: () => BackHandler.exitApp()},
+        { text: 'YES', onPress: () => BackHandler.exitApp() },
       ]);
       return true;
     };
@@ -111,27 +114,24 @@ const Home = ({ navigation }) => {
       backAction,
     );
 
-  return () => {
-    BackHandler.removeEventListener("hardwareBackPress", backAction);
-  };
-  ;
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+    };
+    ;
   }, []);
 
 
- 
 
 
-
- 
 
   const getState = async () => {
-    const res = await axios.get("http://192.168.0.110:3000/state");
+    const res = await axios.get("https://cureofine-azff.onrender.com/state");
     const data = res.data;
     // console.log(data);
     setState(data);
   };
   const getCity = async () => {
-    const res = await axios.get("http://192.168.0.110:3000/city");
+    const res = await axios.get("https://cureofine-azff.onrender.com/city");
     const data = res.data;
     // console.log(data);
     setCity(data);
@@ -148,7 +148,7 @@ const Home = ({ navigation }) => {
   }, []);
 
   const getImage = async () => {
-    const res = await axios.get("http://192.168.0.110:3000/banner");
+    const res = await axios.get("https://cureofine-azff.onrender.com/banner");
     const data = res.data;
     let imgArr = []
     for (let i = 0; i < data.length; i++) {
@@ -161,15 +161,17 @@ const Home = ({ navigation }) => {
 
   };
 
-  
+
 
   const handleAddress = async (address, state, city) => {
+    console.log("called")
+    setModalVisible(false);
     if (address.length > 0 || state !== "" || city !== "") {
       const fullAdd = `${address} ${city} ${state}`;
       setDisplayCurrentAddress(fullAdd);
       const res = await AsyncStorage.setItem("user", JSON.stringify(fullAdd));
     }
-    setModalVisible(false);
+
   };
 
   const getAddress = async () => {
@@ -182,7 +184,7 @@ const Home = ({ navigation }) => {
         setDisplayCurrentAddress(userData);
       }
     } catch (error) {
-      console.log(error);
+      console.log("182", error);
     }
   };
 
@@ -348,32 +350,8 @@ const Home = ({ navigation }) => {
         <ScrollView>
           {/* banner slider start */}
           <View style={styles.container}>
-
-            {/*        
-          <Carousel
-          pagination={PaginationLight}
-          renderItem={renderItem}
-          data={DATA}
-          loop
-          autoplay
-         /> */}
-
-            {
-              bannerImage.length != 0 &&
-
-              <FlatListSlider
-                data={bannerImage}
-                height={180}
-                indicatorActiveColor={'#f08080'}
-                indicatorActiveWidth={30}
-              />
-
-            }
-
-
-
-
-          </View>
+         <HomeBanner></HomeBanner>
+         </View>
           {/* banner slider end */}
 
           {/* service section start */}
@@ -500,7 +478,7 @@ const Home = ({ navigation }) => {
 
           {/* teams */}
 
-          <Teams></Teams>
+          <Teams navigation={navigation}></Teams>
           {/* teams */}
 
           <Text
@@ -512,58 +490,10 @@ const Home = ({ navigation }) => {
             }}
           />
 
+          <CallBanner></CallBanner>
+
           {/* banner */}
-          <ImageBackground
-            source={require("../assets/cure.jpg")}
-            style={{
-              width: "100%",
-              height: 200,
-              resizeMode: "cover",
-              marginTop: 15,
-            }}
-          >
-            <View
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{ fontWeight: "bold", fontSize: 26, color: "white" }}
-              >
-                {/* Need a Doctor for Checkup? */}
-                {pageMenu}
-              </Text>
-              <Text style={{ fontWeight: "bold", color: "white", fontSize: 10 }}>
-                {/* Just make an Appointment & You're Done! */}
-
-
-                <RenderHtml tagsStyles={tagsStyles} source={{ html: decode(content) }} contentWidth={width} ></RenderHtml>
-
-
-              </Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => Linking.openURL("tel:7250446555")}
-              >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    color: "#f08080",
-                    fontSize: 16,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Call Us Now
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </ImageBackground>
+       
 
           <Text
             style={{
@@ -612,10 +542,13 @@ const Home = ({ navigation }) => {
         visible={modalVisible}
         onTouchOutside={() => setModalVisible(!modalVisible)}
       >
-        <ModalContent style={{ width: "100%", height: 440 }}>
-          <TouchableOpacity style={{ position: "absolute", right: 15, top: 20 }} onPress={() => setModalVisible(!modalVisible)}>
-            <AntDesign name="close" size={28} color="black" onPress={() => setModalVisible(!modalVisible)} />
-          </TouchableOpacity>
+        <ModalContent style={{ width: "100%", height: "auto" }}>
+
+
+
+          <Pressable style={{ position: "absolute", right: 10, top: 10 }} unstable_pressDelay={0}>
+            <AntDesign name="close" size={28} color="black" style={{ zIndex: 1001 }} onPress={() => setModalVisible(!modalVisible)} />
+          </Pressable>
 
           <View style={{ marginBottom: 8, marginTop: 8 }}>
             <Text style={{ fontSize: 16, fontWeight: "500" }}>
@@ -628,7 +561,7 @@ const Home = ({ navigation }) => {
               <Text
                 style={{ color: "#f08080", fontWeight: 500, marginBottom: 5 }}
               >
-                Choose State{" "}
+                Choose State
               </Text>
               <Select
                 selectedValue={selectedState}
@@ -641,9 +574,11 @@ const Home = ({ navigation }) => {
                 }}
                 mt={1}
                 onValueChange={(itemValue) => setSelectedState(itemValue)}
+                style={{ zIndex: 1000 }}
               >
                 {state.map((item) => (
                   <Select.Item
+
                     key={item.id}
                     label={item.State}
                     value={item.State}
@@ -669,11 +604,13 @@ const Home = ({ navigation }) => {
                   bg: "#f08080",
                   // endIcon: <CheckIcon size="5" />,
                 }}
+                style={{ zIndex: 1000 }}
                 mt={1}
                 onValueChange={(itemValue) => setSelectedCity(itemValue)}
               >
                 {city.map((item) => (
                   <Select.Item
+
                     key={item.id}
                     label={item.name}
                     value={item.name}
@@ -683,7 +620,7 @@ const Home = ({ navigation }) => {
             </View>
           )}
 
-          <View>
+          <View >
             <Text style={{ color: "#f08080", fontWeight: 500, marginTop: 10 }}>
               Your Address
             </Text>
@@ -700,25 +637,30 @@ const Home = ({ navigation }) => {
                   alignItems: "flex-start",
                   width: 300,
                   fontSize: 12,
+                  zIndex:1000
                 }}
                 placeholder="Enter Your Address"
               />
             </View>
           </View>
+
+
           <View style={{ marginTop: 30 }} />
 
-          <TouchableOpacity
+          <Pressable
             onPress={() => handleAddress(address, selectedState, selectedCity)}
-            style={{ backgroundColor: "#f08080", padding: 18 }}
+            unstable_pressDelay={0}
+            style={{ backgroundColor: "#f08080", padding: 18, zIndex: 1005 }}
           >
             <Text style={{ textAlign: "center", fontSize: 18, color: "white" }}>
               Add Your Address
             </Text>
-          </TouchableOpacity>
+          </Pressable>
+
         </ModalContent>
       </BottomModal>
 
-   
+
     </>
   );
 };
@@ -809,3 +751,58 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+
+
+
+// <ImageBackground
+// source={require("../assets/cure.jpg")}
+// style={{
+//   width: "100%",
+//   height: 200,
+//   resizeMode: "cover",
+//   marginTop: 15,
+// }}
+// >
+// <View
+//   style={{
+//     position: "absolute",
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   }}
+// >
+//   <Text
+//     style={{ fontWeight: "bold", fontSize: 26, color: "white" }}
+//   >
+//     {/* Need a Doctor for Checkup? */}
+//     {pageMenu}
+//   </Text>
+//   <Text style={{ fontWeight: "bold", color: "white", fontSize: 10 }}>
+//     {/* Just make an Appointment & You're Done! */}
+
+
+//     <RenderHtml tagsStyles={tagsStyles} source={{ html: decode(content) }} contentWidth={width} ></RenderHtml>
+
+
+//   </Text>
+//   <TouchableOpacity
+//     style={styles.button}
+//     onPress={() => Linking.openURL("tel:7250446555")}
+//   >
+//     <Text
+//       style={{
+//         textAlign: "center",
+//         color: "#f08080",
+//         fontSize: 16,
+//         fontWeight: "bold",
+//       }}
+//     >
+//       Call Us Now
+//     </Text>
+//   </TouchableOpacity>
+// </View>
+// </ImageBackground>
+

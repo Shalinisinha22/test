@@ -22,7 +22,7 @@ const OtpScreen = ({ navigation }) => {
 
     if(code.length==6){
       try {
-        const response = await axios.post("http://192.168.0.110:3000/verify", {
+        const response = await axios.post("https://cureofine-azff.onrender.com/verify", {
           otp: code,
         });
   

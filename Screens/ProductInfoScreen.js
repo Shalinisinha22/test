@@ -10,13 +10,15 @@ import {
   BackHandler,
   Alert
 } from "react-native";
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Header from "../Components/Header";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Share } from "react-native";
+
 
 const ProductInfoScreen = ({ navigation }) => {
   const route = useRoute();
@@ -24,9 +26,29 @@ const ProductInfoScreen = ({ navigation }) => {
   const height = (width * 100) / 100;
 
 
+
+  const onShare = async (url) => {
+    try {
+      const result = await Share.share({
+        message: "Cure O Fine | Healthcare application" + "\n" + url,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   // useEffect(() => {
   //   const backAction = () => {
-    
+
   //    navigation.goBack();
   //   };
 
@@ -49,7 +71,7 @@ const ProductInfoScreen = ({ navigation }) => {
         {route.params.carouselImages.map((item, index) => (
           <ImageBackground
             style={{ width, height, marginTop: 25, resizeMode: "contain" }}
-            source={{uri:`${item}`}}
+            source={{ uri: `${item}` }}
             key={index}
           >
             <View
@@ -98,6 +120,10 @@ const ProductInfoScreen = ({ navigation }) => {
                   name="share-variant"
                   size={24}
                   color="black"
+
+                  onPress={() => onShare(
+                    `https://expo.dev/artifacts/eas/mWAhDR5fZ859tU5FJipAxp.apk`
+                  )}
                 />
               </View>
             </View>
@@ -194,7 +220,7 @@ const ProductInfoScreen = ({ navigation }) => {
           marginHorizontal: 15,
           marginVertical: 0,
         }}
-        onPress={() => navigation.navigate("Login")}
+      // onPress={() => navigation.navigate("Payment")}
       >
         <Text>Book Now</Text>
       </TouchableOpacity>

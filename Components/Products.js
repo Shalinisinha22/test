@@ -10,6 +10,7 @@ import {
   const { width } = Dimensions.get("window");
   import { FontAwesome } from "@expo/vector-icons";
   import axios from "axios";
+  import { ActivityIndicator } from "react-native";
   
 
 
@@ -20,7 +21,7 @@ const Products = ({navigation}) => {
 
 
      const getProduct = async () => {
-      const res = await axios.get("http://192.168.0.110:3000/products");
+      const res = await axios.get("https://cureofine-azff.onrender.com/products");
       const data = res.data;
       // console.log(data)
       setProduct(data)
@@ -224,7 +225,8 @@ const Products = ({navigation}) => {
               }}
             />
 
-            {product.length!= 0 &&  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {product.length!= 0  &&
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               { product.map((item, index) => (
                 <TouchableOpacity
                   key={item.id}
@@ -342,7 +344,9 @@ const Products = ({navigation}) => {
                   </View>
                 </TouchableOpacity>
               ))}
-            </ScrollView> }
+            </ScrollView> 
+              
+            }
           
           </View>
 

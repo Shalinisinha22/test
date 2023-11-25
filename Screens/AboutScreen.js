@@ -32,11 +32,11 @@ SplashScreen.preventAutoHideAsync();
 
 const AboutScreen = ({ navigation }) => {
 
-
+// https://cureofine-azff.onrender.com
   const [cont, setCont] = useState("");
 
   const getData = async () => {
-    const res = await axios.get("http://192.168.0.110:3000/about");
+    const res = await axios.get("https://cureofine-azff.onrender.com/about");
     const data = res.data;
     // console.log(data[0]);
     setCont(decode(data));
@@ -144,7 +144,7 @@ const AboutScreen = ({ navigation }) => {
             height: 1.5,
             borderColor: "#eb3b5a",
             borderWidth: 1.5,
-            marginTop: 10,
+            marginTop: 8,
             width: width * 0.6,
             marginLeft: 7,
             borderRadius: 5,
@@ -166,24 +166,7 @@ const AboutScreen = ({ navigation }) => {
           ) : (
             <></>
           )}
-          {/* <Text style={{ textAlign: "justify", fontFamily: "EB" }}>
-          Cure o fine is a digital Healthcare Application that provide complete
-          Health solution through an online application which is designed in a
-          user friendly way that can be used by anyone. Our services are very
-          much affordable and accessible for Tier 2& Tier 3 cities also. Our
-          Unique services include Blood group availability check and blood donor
-          registration, E pharmacy with single day medicine delivery, lab test
-          at home , physiotherapy at home, video consultation, mental health
-          sessions and many more services, we also have physical Telemedicine
-          center which acts as a source of connectivity between remote Pateints
-          to Specialist Doctors all over India. we are dedicated to provide best
-          quality services in given time peeriod, we also provide single day
-          medicine delivery PAN India. Our offline Telemedicine centeres helps
-          to provide healthy services in remote or Rural areas of India.
-          Telemedicine centers also act as medicine delivery point and Lab test
-          services. through our Offline centeres pateint can interact with
-          specialist Doctors saving money and Time.
-        </Text> */}
+
         </View>
         <Text
           style={{
@@ -194,7 +177,7 @@ const AboutScreen = ({ navigation }) => {
           }}
         />
 
-        <Teams></Teams>
+        <Teams navigation={navigation}></Teams>
         <Text
           style={{
             height: 1,

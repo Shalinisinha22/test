@@ -47,6 +47,9 @@ import * as Sharing from "expo-sharing";
 import { Share } from "react-native";
 import ContactScreen from "../Screens/ContactScreen";
 import OtpScreen from "../Screens/OtpScreen";
+import PaymentScreen from "../Screens/PaymentScreen";
+import SingleTeamScreen from "../Screens/SingleTeamScreen";
+import HomeBanner from "../Screens/HomeBanner";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -195,7 +198,7 @@ const AppNavigator = () => {
         <Stack.Screen
           name="ReferScreen"
           component={Refer}
-          options={{ headerShown: false }}
+          options={{ headerShown: true }}
         />
         <Stack.Screen name="ShareScreen" component={ShareScreen} />
         <Stack.Screen
@@ -248,6 +251,16 @@ const AppNavigator = () => {
         <Stack.Screen
           name="SurgeryInfo"
           component={SurgeryInfoScreen}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="Payment"
+          component={PaymentScreen}
+          options={{ headerShown: false }}
+        />
+          <Stack.Screen
+          name="SingleTeam"
+          component={SingleTeamScreen}
           options={{ headerShown: false }}
         />
      
@@ -335,7 +348,7 @@ const AppNavigator = () => {
                     onPress={() => {
                       item.name == "Share"
                         ? onShare(
-                            `https://expo.dev/artifacts/eas/phEj8XNNVKndyuuuv4ZTAb.apk`
+                            `https://expo.dev/artifacts/eas/mWAhDR5fZ859tU5FJipAxp.apk`
                           )
                         :
                      navigation.navigate(item.url);

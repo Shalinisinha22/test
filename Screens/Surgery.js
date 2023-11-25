@@ -35,7 +35,7 @@ const Surgery = ({ navigation }) => {
   const [surgeryList, setSurgery]= useState([])
 
   const getSurgery = async()=>{
-    const res = await axios.get("http://192.168.0.110:3000/surgery");
+    const res = await axios.get("https://cureofine-azff.onrender.com/surgery");
     const data = res.data;
     setSurgery(data)
   }
@@ -216,7 +216,7 @@ const Surgery = ({ navigation }) => {
         }}
       />
 
-      <Teams></Teams>
+      <Teams navigation={navigation}></Teams>
       <Text
         style={{
           height: 1,

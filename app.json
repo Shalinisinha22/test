@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "CureFine",
-    "slug": "cureofine",
+    "slug": "CureFine",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +11,8 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -27,11 +26,14 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+
     "extra": {
       "eas": {
         "projectId": "f430409b-8b57-47b1-aaa4-29e6d1e04184"
       }
     },
+
+
     "owner": "shalinisinha2"
   }
 }

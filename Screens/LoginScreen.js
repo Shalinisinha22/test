@@ -20,8 +20,9 @@ import Toast from 'react-native-toast-message';
 const LoginScreen = ({ navigation }) => {
 
   const [phone, setPhone] = useState("");
-  const [valid,setValid]= useState(false);
-  const [err,setErr]=useState("");
+  const [valid, setValid] = useState(false);
+  const [err, setErr] = useState("");
+
 
 
 
@@ -35,9 +36,9 @@ const LoginScreen = ({ navigation }) => {
   } = useForm();
 
   // const onSubmit = async (phone) => {
- 
+
   //   const checkValid = phoneInput.current?.isValidNumber(phone);
-  
+
   //   setValid(checkValid ? checkValid : false);
 
   //   if(valid){
@@ -48,7 +49,7 @@ const LoginScreen = ({ navigation }) => {
   //     showToast();
   //     //  .then((response) => response.json())
   //     //  .then((serverResponse) => console.warn(serverResponse));
-  
+
   //    await navigation.navigate("OtpScreen");
   //   }
 
@@ -59,7 +60,7 @@ const LoginScreen = ({ navigation }) => {
   //            setErr("")
   //      },3000)
   //   }
-  
+
   // };
 
 
@@ -67,26 +68,26 @@ const LoginScreen = ({ navigation }) => {
     console.log(data);
 
     var phoneno = /^\d{10}$/;
-    if((data.phone.match(phoneno))){
-      const res = await axios.post("http://192.168.0.110:3000/signup", {
+    if ((data.phone.match(phoneno))) {
+      const res = await axios.post("https://cureofine-azff.onrender.com/signup", {
         phone: data.phone,
       })
-      console.log(res.data)
+      console.log("75",res.data)
 
-      if(res.data.message=="Valid Number"){
+      if (res.data.message == "Valid Number") {
         await navigation.navigate("OtpScreen");
       }
     }
-    else{
-        setErr("Inavalid Number");
-        setTimeout(()=>{
-             setErr("")
-        },3000)
-         reset();
+    else {
+      setErr("Inavalid Number");
+      setTimeout(() => {
+        setErr("")
+      }, 3000)
+      reset();
     }
-   
 
-  
+
+
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
@@ -98,10 +99,10 @@ const LoginScreen = ({ navigation }) => {
     Toast.show({
       type: "success",
       text1: "OTP Sent Successfully !!.",
-     
+
     });
 
-   
+
   };
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
@@ -115,7 +116,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.heading}>Login In to your Account</Text>
           </View>
 
-          
+
           <View>
             <View style={styles.inputBoxCont}>
               <FontAwesome5
@@ -156,15 +157,15 @@ const LoginScreen = ({ navigation }) => {
             {errors.phone && (
               <Text style={{ color: "red" }}>{errors.phone.message}</Text>
             )}
-            {err!=="" && <Text style={{ color: "red" }}>{err}</Text>}
+            {err !== "" && <Text style={{ color: "red" }}>{err}</Text>}
           </View>
 
-    
 
-          <View style={{ marginTop: 85 }} />
+
+          <View style={{ marginTop: 45 }} />
 
           <TouchableOpacity
-          delayPressIn={0}
+            delayPressIn={0}
             style={styles.button}
             onPress={handleSubmit(onSubmit)}
           >
@@ -190,10 +191,10 @@ const LoginScreen = ({ navigation }) => {
             </Text>
           </Pressable> */}
 
-<Toast
-        position='bottom'
-        bottomOffset={80}
-         />
+          <Toast
+            position='bottom'
+            bottomOffset={80}
+          />
         </KeyboardAvoidingView>
       </SafeAreaView>
     </ScrollView>
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#D0D0D0",
     paddingVertical: 5,
     borderRadius: 5,
-    marginTop: 30,
+    marginTop: 40,
   },
   forgotCont: {
     marginTop: 15,

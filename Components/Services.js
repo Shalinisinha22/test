@@ -28,45 +28,7 @@ export default function Services({ navigation }) {
       name: "Surgery Appointment",
       url: "Surgery",
     },
-    // {
-    //   id: "8",
-    //   image: require("../assets/Services/labtest1.png"),
-    //   name: "Lab Test",
-    //   url: "ServiceInfo",
-    //   carouselImages:[
-    //     require("../assets/Services/labtest1.png"),
-    //     require("../assets/Services/labtest1.png"),
-    //     require("../assets/Services/labtest1.png"),
-    //   ],
-    //   heading:
-    //   "Ready to transform your life and achieve your weight loss goals? Look no further than Cure O Fine, your partner in the journey to a healthier you.",
-    // subHeading:
-    //   "Our app is your gateway to a sustainable, effective weight loss program tailored to your unique needs. Our team of experienced professionals is here to support you every step of the way.",
-    // bodyHeading: "**What We Offer:**",
-    // body: "Enjoy delicious, nutritious meals designed to fuel your weight loss journey. Get moving with fitness plans that suit your fitness level and preferences. Monitor your progress, track your results, and celebrate your achievements. Book appointments that fit your lifestyle, so you can stay on track. Your journey to a healthier lifestyle is a personal one, and we're committed to keeping it confidential.",
-    // conclusion:
-    //   "We're here to help you succeed. Your weight loss journey starts now.",
-    // },
 
-    // {
-    //   id: "5",
-    //   image: require("../assets/Services/stress1.png"),
-    //   name: "Stress & Anxiety",
-    //   url: "ServiceInfo",
-    //   carouselImages:[
-    //     require("../assets/Services/stress1.png"),
-    //     require("../assets/Services/stress1.png"),
-    //     require("../assets/Services/stress1.png"),
-    //   ],
-    //   heading:
-    //   "Ready to transform your life and achieve your weight loss goals? Look no further than Cure O Fine, your partner in the journey to a healthier you.",
-    // subHeading:
-    //   "Our app is your gateway to a sustainable, effective weight loss program tailored to your unique needs. Our team of experienced professionals is here to support you every step of the way.",
-    // bodyHeading: "**What We Offer:**",
-    // body: "Enjoy delicious, nutritious meals designed to fuel your weight loss journey. Get moving with fitness plans that suit your fitness level and preferences. Monitor your progress, track your results, and celebrate your achievements. Book appointments that fit your lifestyle, so you can stay on track. Your journey to a healthier lifestyle is a personal one, and we're committed to keeping it confidential.",
-    // conclusion:
-    //   "We're here to help you succeed. Your weight loss journey starts now.",
-    // },
     {
       id: "2",
       image: require("../assets/Services/cs4.png"),
@@ -74,84 +36,7 @@ export default function Services({ navigation }) {
       url: "Physiotherapy",
     },
 
-    // {
-    //   id: "9",
-    //   image: require("../assets/Services/pharmacy1.png"),
-    //   name: "Pharmacy",
-    //   url: "ServiceInfo",
-    //   carouselImages:[
-    //     require("../assets/Services/pharmacy1.png"),
-    //     require("../assets/Services/pharmacy1.png"),
-    //     require("../assets/Services/pharmacy1.png"),
-    //   ],
-    //   heading:
-    //   "Ready to transform your life and achieve your weight loss goals? Look no further than Cure O Fine, your partner in the journey to a healthier you.",
-    // subHeading:
-    //   "Our app is your gateway to a sustainable, effective weight loss program tailored to your unique needs. Our team of experienced professionals is here to support you every step of the way.",
-    // bodyHeading: "**What We Offer:**",
-    // body: "Enjoy delicious, nutritious meals designed to fuel your weight loss journey. Get moving with fitness plans that suit your fitness level and preferences. Monitor your progress, track your results, and celebrate your achievements. Book appointments that fit your lifestyle, so you can stay on track. Your journey to a healthier lifestyle is a personal one, and we're committed to keeping it confidential.",
-    // conclusion:
-    //   "We're here to help you succeed. Your weight loss journey starts now.",
-    // },
 
-    // {
-    //   id: "3",
-    //   image: require("../assets/Services/cs1.png"),
-    //   name: "CureoFine Care",
-    //   url: "ServiceInfo",
-    //   carouselImages:[
-    //     require("../assets/Services/cs1.png"),
-    //     require("../assets/Services/cs1.png"),
-    //     require("../assets/Services/cs1.png"),
-    //   ],
-    //   heading:
-    //   "Ready to transform your life and achieve your weight loss goals? Look no further than Cure O Fine, your partner in the journey to a healthier you.",
-    // subHeading:
-    //   "Our app is your gateway to a sustainable, effective weight loss program tailored to your unique needs. Our team of experienced professionals is here to support you every step of the way.",
-    // bodyHeading: "**What We Offer:**",
-    // body: "Enjoy delicious, nutritious meals designed to fuel your weight loss journey. Get moving with fitness plans that suit your fitness level and preferences. Monitor your progress, track your results, and celebrate your achievements. Book appointments that fit your lifestyle, so you can stay on track. Your journey to a healthier lifestyle is a personal one, and we're committed to keeping it confidential.",
-    // conclusion:
-    //   "We're here to help you succeed. Your weight loss journey starts now.",
-    // },
-    // {
-    //   id: "7",
-    //   image: require("../assets/Services/weight.png"),
-    //   name: "Weight loss Program",
-    //   url: "ServiceInfo",
-    //   carouselImages:[
-    //     require("../assets/Services/weight.png"),
-    //     require("../assets/Services/weight.png"),
-    //     require("../assets/Services/weight.png"),
-    //   ],
-    //   heading:
-    //   "Ready to transform your life and achieve your weight loss goals? Look no further than Cure O Fine, your partner in the journey to a healthier you.",
-    // subHeading:
-    //   "Our app is your gateway to a sustainable, effective weight loss program tailored to your unique needs. Our team of experienced professionals is here to support you every step of the way.",
-    // bodyHeading: "**What We Offer:**",
-    // body: "Enjoy delicious, nutritious meals designed to fuel your weight loss journey. Get moving with fitness plans that suit your fitness level and preferences. Monitor your progress, track your results, and celebrate your achievements. Book appointments that fit your lifestyle, so you can stay on track. Your journey to a healthier lifestyle is a personal one, and we're committed to keeping it confidential.",
-    // conclusion:
-    //   "We're here to help you succeed. Your weight loss journey starts now.",
-    // },
-
-    // {
-    //   id: "4",
-    //   image: require("../assets/Services/ambulance.png"),
-    //   name: "Ambulance",
-    //   url: "ServiceInfo",
-    //   carouselImages:[
-    //     require("../assets/Services/ambulance.png"),
-    //     require("../assets/Services/ambulance.png"),
-    //     require("../assets/Services/ambulance.png"),
-    //   ],
-    //   heading:
-    //   "Ready to transform your life and achieve your weight loss goals? Look no further than Cure O Fine, your partner in the journey to a healthier you.",
-    // subHeading:
-    //   "Our app is your gateway to a sustainable, effective weight loss program tailored to your unique needs. Our team of experienced professionals is here to support you every step of the way.",
-    // bodyHeading: "**What We Offer:**",
-    // body: "Enjoy delicious, nutritious meals designed to fuel your weight loss journey. Get moving with fitness plans that suit your fitness level and preferences. Monitor your progress, track your results, and celebrate your achievements. Book appointments that fit your lifestyle, so you can stay on track. Your journey to a healthier lifestyle is a personal one, and we're committed to keeping it confidential.",
-    // conclusion:
-    //   "We're here to help you succeed. Your weight loss journey starts now.",
-    // },
   ];
 
   return (

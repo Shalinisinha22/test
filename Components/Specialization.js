@@ -19,7 +19,7 @@ const Specialization = () => {
 
   
    const getSpecialization = async()=>{
-     const res = await axios.get("http://192.168.0.110:3000/specialization");
+     const res = await axios.get("https://cureofine-azff.onrender.com/specialization");
 
     //  console.log(res.data)
      setSpecialization(res.data)
@@ -32,7 +32,7 @@ const Specialization = () => {
     getSpecialization()
    },[])
 
-// http://192.168.0.110:3000/products
+// https://cureofine-azff.onrender.com/products
 
   const specialization = [
       {

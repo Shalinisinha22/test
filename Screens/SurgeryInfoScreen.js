@@ -13,6 +13,7 @@ import {
   import { MaterialCommunityIcons } from "@expo/vector-icons";
   import Header from "../Components/Header";
   import { TouchableOpacity } from "react-native-gesture-handler";
+  import { Share } from "react-native";
   
   
   const SurgeryInfoScreen = ({navigation}) => {
@@ -21,6 +22,26 @@ import {
     // const navigation = useNavigation();
   
     const height = (width * 100) / 100;
+
+
+    const onShare = async (url) => {
+      try {
+        const result = await Share.share({
+          message: "Cure O Fine | Healthcare application" + "\n" + url,
+        });
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            // shared with activity type of result.activityType
+          } else {
+            // shared
+          }
+        } else if (result.action === Share.dismissedAction) {
+          // dismissed
+        }
+      } catch (error) {
+        alert(error.message);
+      }
+    };
   
     return (
       <ScrollView
@@ -82,6 +103,9 @@ import {
                     name="share-variant"
                     size={24}
                     color="black"
+                    onPress={()=> onShare(
+                      `https://expo.dev/artifacts/eas/mWAhDR5fZ859tU5FJipAxp.apk`
+                    )}
                   />
                 </View>
               </View>

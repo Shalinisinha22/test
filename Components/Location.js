@@ -17,7 +17,7 @@ const Location = () => {
    
     const getLocation= async()=>{
             
-       const res = await axios.get("http://192.168.0.110:3000/presence");
+       const res = await axios.get("https://cureofine-azff.onrender.com/presence");
        const data= res.data;
       //  console.log(data)
        setLoc(data)

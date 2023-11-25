@@ -46,45 +46,7 @@ const ServiceScreen = ({ navigation }) => {
     },
 
   
-    // {
-    //   id: "7",
-    //   image: require("../assets/Services/weight.png"),
-    //   name: "Weight loss Program",
-    //   url: "ServiceInfo",
-    //   carouselImages:[
-    //     require("../assets/Services/weight.png"),
-    //     require("../assets/Services/weight.png"),
-    //     require("../assets/Services/weight.png"),
-    //   ],
-    //   heading:
-    //   "Ready to transform your life and achieve your weight loss goals? Look no further than Cure O Fine, your partner in the journey to a healthier you.",
-    // subHeading:
-    //   "Our app is your gateway to a sustainable, effective weight loss program tailored to your unique needs. Our team of experienced professionals is here to support you every step of the way.",
-    // bodyHeading: "**What We Offer:**",
-    // body: "Enjoy delicious, nutritious meals designed to fuel your weight loss journey. Get moving with fitness plans that suit your fitness level and preferences. Monitor your progress, track your results, and celebrate your achievements. Book appointments that fit your lifestyle, so you can stay on track. Your journey to a healthier lifestyle is a personal one, and we're committed to keeping it confidential.",
-    // conclusion:
-    //   "We're here to help you succeed. Your weight loss journey starts now.",
-    // },
-
-    // {
-    //   id: "4",
-    //   image: require("../assets/Services/ambulance.png"),
-    //   name: "Ambulance",
-    //   url: "ServiceInfo",
-    //   carouselImages:[
-    //     require("../assets/Services/ambulance.png"),
-    //     require("../assets/Services/ambulance.png"),
-    //     require("../assets/Services/ambulance.png"),
-    //   ],
-    //   heading:
-    //   "Ready to transform your life and achieve your weight loss goals? Look no further than Cure O Fine, your partner in the journey to a healthier you.",
-    // subHeading:
-    //   "Our app is your gateway to a sustainable, effective weight loss program tailored to your unique needs. Our team of experienced professionals is here to support you every step of the way.",
-    // bodyHeading: "**What We Offer:**",
-    // body: "Enjoy delicious, nutritious meals designed to fuel your weight loss journey. Get moving with fitness plans that suit your fitness level and preferences. Monitor your progress, track your results, and celebrate your achievements. Book appointments that fit your lifestyle, so you can stay on track. Your journey to a healthier lifestyle is a personal one, and we're committed to keeping it confidential.",
-    // conclusion:
-    //   "We're here to help you succeed. Your weight loss journey starts now.",
-    // },
+  
   ];
 
   const renderItem = (data) => (

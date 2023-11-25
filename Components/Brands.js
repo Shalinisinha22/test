@@ -17,7 +17,7 @@ const Brands = () => {
 
 
   const getBrand = async () => {
-    const res = await axios.get("http://192.168.0.110:3000/brand");
+    const res = await axios.get("https://cureofine-azff.onrender.com/brand");
     const data = res.data;
     // console.log(data)
     setBrands(data)

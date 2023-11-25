@@ -39,9 +39,9 @@ const Physiotherapy = ({ navigation }) => {
   );
 
   const getProduct = async () => {
-    const res = await axios.get("http://192.168.0.110:3000/products");
+    const res = await axios.get("https://cureofine-azff.onrender.com/products");
     const data = res.data;
-    console.log(data)
+    // console.log(data)
     setProduct(data)
   
   };

@@ -24,12 +24,12 @@ const Contact = () => {
 
 
   const getInfo = async()=>{
-    const res= await axios.get("http://192.168.0.110:3000/contactInfo");
+    const res= await axios.get("https://cureofine-azff.onrender.com/contactInfo");
     const data = res.data
-    console.log(data)
+    // console.log(data)
     setContact(data)
     setContact(data)
-    console.log(data[0].mobile_2)
+    // console.log(data[0].mobile_2)
     setNumber(data[0].mobile_2)
     setEmail(data[0].email)
     setHour(data[0].office_hour)
