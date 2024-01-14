@@ -1,96 +1,131 @@
 import {
-    Text,
-    View,
-    ScrollView,
-    Image,
-    TouchableOpacity,
-  } from "react-native";
-  import React  from "react";
-  import { Dimensions } from "react-native";
-  const { width } = Dimensions.get("window");
-  import { FontAwesome } from "@expo/vector-icons";
+  Text,
+  View,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import { Dimensions } from "react-native";
+const { width } = Dimensions.get("window");
+import { FontAwesome } from "@expo/vector-icons";
+import { ActivityIndicator } from "react-native";
+import axios from "axios";
 
+const Teams = ({ navigation }) => {
 
-const Teams = ({navigation}) => {
+  const teams = [
+    {
+      id: 0,
+      name: "Dr Nancy",
+      occupation: "General Physician",
+      image: require("../assets/team1.jpg"),
+    },
+    {
+      id: 1,
+      name: "Dr Nancy",
+      occupation: "General Physician",
+      image: require("../assets/team1.jpg"),
+    },
+    {
+      id: 2,
+      name: "Dr Nancy",
+      occupation: "General Physician",
+      image: require("../assets/team1.jpg"),
+    },
+    {
+      id: 3,
+      name: "Dr Nancy",
+      occupation: "General Physician",
+      image: require("../assets/team1.jpg"),
+    },
+  ];
 
-    const teams = [
-        {
-          id: 0,
-          name: "Dr Nancy",
-          occupation: "General Physician",
-          image: require("../assets/team1.jpg"),
-        },
-        {
-          id: 1,
-          name: "Dr Nancy",
-          occupation: "General Physician",
-          image: require("../assets/team1.jpg"),
-        },
-        {
-          id: 2,
-          name: "Dr Nancy",
-          occupation: "General Physician",
-          image: require("../assets/team1.jpg"),
-        },
-        {
-          id: 3,
-          name: "Dr Nancy",
-          occupation: "General Physician",
-          image: require("../assets/team1.jpg"),
-        },
-      ];
+  const [doctorList, setDoctorList] = useState([])
+
+  const getDoctorList = async () => {
+    const res = await axios.get("https://cureofine-azff.onrender.com/doctorsList")
+    const data = res.data;
+    setDoctorList(data)
+  }
+
+  useEffect(() => {
+    getDoctorList()
+  }, [])
 
 
 
   return (
     <>
-       <View
+      <View
+        style={{
+          backgroundColor: "whitesmoke",
+          marginTop: 15,
+          paddingTop: 4,
+          paddingBottom: 10,
+          borderTopRightRadius: 20,
+          borderTopEndRadius: 20,
+        }}
+      >
+        <Text
+          style={{
+            paddingTop: 10,
+            fontSize: 12,
+            fontWeight: "bold",
+            paddingLeft: 7,
+            fontFamily: "OpenSans",
+            color: "#eb3b5a",
+          }}
+        >
+          MEET OUR EXPERIENCED TEAM
+        </Text>
+        <View style={{ flexDirection: "row", marginTop: 10 }}>
+          <Text
             style={{
-              backgroundColor: "whitesmoke",
-              marginTop: 15,
-              paddingTop: 4,
-              paddingBottom: 10,
-              borderTopRightRadius: 20,
-              borderTopEndRadius: 20,
+              // paddingTop: 10,
+              fontSize: 18,
+              fontWeight: "bold",
+              paddingLeft: 7,
+              fontFamily: "OpenSans",
             }}
           >
-            <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Text
-                style={{
-                  // paddingTop: 10,
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  paddingLeft: 7,
-                  fontFamily: "OpenSans",
-                }}
-              >
-                Our Top Doctors
-              </Text>
+            Our Dedicated Doctors Team
+          </Text>
 
-              <View>
-                <FontAwesome
-                  name="stethoscope"
-                  size={20}
-                  color="#f08080"
-                  style={{ marginLeft: 7, marginTop: -2 }}
-                />
-              </View>
-            </View>
-
-            <Text
-              style={{
-                height: 1.5,
-                borderColor: "#eb3b5a",
-                borderWidth: 1.5,
-                marginTop: 10,
-                width: width * 0.5,
-                marginLeft: 7,
-                borderRadius: 5,
-              }}
+          <View>
+            <FontAwesome
+              name="stethoscope"
+              size={20}
+              color="#f08080"
+              style={{ marginLeft: 7, marginTop: -2 }}
             />
+          </View>
+
+        </View>
+
+
+        <Text
+          style={{
+            height: 1.5,
+            borderColor: "#eb3b5a",
+            borderWidth: 1.5,
+            marginTop: 10,
+            width: width * 0.5,
+            marginLeft: 7,
+            borderRadius: 5,
+          }}
+        />
+
+
+
+        {
+          doctorList.length == 0 ?
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <ActivityIndicator color={"#f08080"} size={"large"} />
+            </View> :
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {teams.map((item, index) => (
+              {doctorList.map((item, index) => (
                 <TouchableOpacity
                   key={item.id}
                   style={{
@@ -99,8 +134,8 @@ const Teams = ({navigation}) => {
                     alignItems: "center",
                     marginTop: 15,
                   }}
-                  onPress={()=> navigation.navigate("SingleTeam")}
-                   
+                  onPress={() => navigation.navigate("Doctor Consultation")}
+
                 >
                   <Image
                     style={{
@@ -109,7 +144,7 @@ const Teams = ({navigation}) => {
                       resizeMode: "contain",
                       borderRadius: 60,
                     }}
-                    source={item.image}
+                    source={{uri:`http://cureofine.com/new_demo/upload/profile/${item.profile_img}`}}
                   />
 
                   <Text
@@ -133,12 +168,14 @@ const Teams = ({navigation}) => {
                       color: "#f08080",
                     }}
                   >
-                    {item.occupation}
+                    {/* {item.occupation} */}
                   </Text>
                 </TouchableOpacity>
               ))}
             </ScrollView>
-          </View>
+        }
+
+      </View>
     </>
   )
 }

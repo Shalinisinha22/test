@@ -1,0 +1,240 @@
+import {
+    View,
+    ScrollView,
+    Image,
+    TouchableOpacity
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import { Dimensions } from "react-native";
+const { width } = Dimensions.get("window");
+import { Avatar, Button, Card, Text } from 'react-native-paper';
+import { FlatList } from "react-native-gesture-handler";
+import { FontAwesome } from "@expo/vector-icons";
+import axios from "axios";
+import { decode } from "html-entities";
+import RenderHTML from "react-native-render-html";
+import { ActivityIndicator } from "react-native";
+import Header from "../Components/Header";
+import Contact from "../Components/Contact";
+import Footer from "../Components/Footer";
+
+const SurgeryList = ({ navigation }) => {
+
+    const [surgeryList, setSurgeryList] = useState("")
+    // https://cureofine-azff.onrender.com/surgeryList
+    const getSurgeryList = async () => {
+        const res = await axios.get("https://cureofine-azff.onrender.com/surgeryCategory")
+        const data = res.data;
+        setSurgeryList(data)
+    }
+
+    useEffect(() => {
+        getSurgeryList()
+    }, [])
+
+
+    const tagsStyles = {
+
+        p: {
+          fontSize: 12,
+          textAlign: "justify",
+         
+    
+        }
+      };
+
+
+    return (
+        <View style={{ backgroundColor: "white", height: "100%" }}>
+            <Header navigation={navigation}></Header>
+            <ScrollView>
+
+
+                <Text
+                    style={{
+                        height: 1,
+                        borderColor: "whitesmoke",
+                        borderWidth: 2,
+                        marginTop: 15,
+                    }}
+                />
+
+                <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                <Text
+                    style={{
+                        height: 1,
+                        borderColor: "whitesmoke",
+                        borderWidth: 2,
+                        marginTop: 15,
+                    }}
+                />
+
+                <View style={{ marginTop: 20, paddingBottom: 50, flexDirection:"row" , flexWrap:"wrap",width:Dimensions.get('screen').width, justifyContent:"center"}}>
+                    {
+                        surgeryList.length == 0 ? 
+                        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                            <ActivityIndicator color={"#f08080"} size={"large"} />
+                        </View> :
+
+     surgeryList!= "" &&      <FlatList   
+data={surgeryList}
+// horizontal
+// showsHorizontalScrollIndicator={false}
+      numColumns={3}
+      scrollEnabled={false}
+      columnWrapperStyle={{
+        flex: 1,
+        justifyContent: "space-between",
+      }}
+renderItem={({ item, index }) => (
+<TouchableOpacity style={{margin:10,width:170,alignItems:"center",margin:10,padding:10,elevation:3,borderRadius:5}}>
+
+<View style={{width:"100%", alignItems:"center"}}>
+<Image style={{width:100,height:100}} source={{ uri: `http://cureofine.com/new_demo/upload/surgerycat/${item.image}` }} />
+
+</View>
+
+<Text style={{textAlign:"center",fontSize:17,marginTop:5}} variant="titleLarge">{item.name}</Text>
+
+
+  
+               <TouchableOpacity
+                    style={{
+                      backgroundColor: "#f08080",
+                      paddingVertical: 5,
+                      width: 100,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginTop: 10,
+                      borderRadius: 4,
+                    }} 
+                    onPress={()=>navigation.navigate("SurgeryInner", {id:item.cat_id})}
+                  
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        color: "white",
+                        fontSize: 14,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      VIEW MORE
+                    </Text>
+                  </TouchableOpacity>
+
+
+
+</TouchableOpacity>
+)}
+  />
+
+
+
+
+}
+                        
+
+
+
+
+                              
+                              
+                        
+                            
+                    
+                             
+     
+                         
+
+         
+
+                
+                </View>
+
+                <Contact></Contact>
+<Footer></Footer>
+
+            </ScrollView>
+        </View>
+    )
+}
+
+
+
+export default SurgeryList
+
+
+
+                         // <Card key={item.id} style={{ margin: 10 }} theme={{ colors: { primary: 'green' } }} >
+
+                           //     <Card.Cover source={require("../assets/surgeryImg.png")} />
+                                //     <Card.Title title={item.name} subtitle="" />
+
+                                //     <Card.Content>
+
+                                //         <Text variant="bodyMedium" style={{ color: "gray" }}>Original Price- {item.price}</Text>
+                                //         <Text variant="bodyMedium" style={{ fontWeight: "bold" }}>Offer Price- Rs {item.offer_price}</Text>
+                                //         <Text variant="bodyMedium">Description: </Text>
+                                //      {item.details!="" && <RenderHTML key={item.id} source={{ html: decode(item.details) }}></RenderHTML> }   
+                                //     </Card.Content>
+
+
+                                //     <Card.Actions style={{ marginTop: 10, borderColor: "#f08080" }}>
+                                //         <Button onPress={() => navigation.navigate("Login")}><Text style={{ color: "#f08080" }}>EMI With No Interest</Text></Button>
+                                //         <Button onPress={() => navigation.navigate("Login")} theme={{ colors: { primary: '#f08080' } }}><Text style={{ color: "white" }}>Book Now</Text></Button>
+                                //     </Card.Actions>
+
+
+                                // </Card>
+
+
+
+
+
+
+                                        //     <Card containerStyle={{ marginTop: 15 }}>
+
+                            //         <Image
+                            //           style={{width:"100%",height:100}}
+                            //           resizeMode="contain"
+                            //           source={{uri:`http://cureofine.com/new_demo/upload/surgerycat/${item.image}`}}                                    />
+                            //  <Card.Title>{item.name}</Card.Title>
+                            //     <Card.Divider/>
+                            //     <View style={{position:"relative",alignItems:"center"}}>
+                           
+                            //      </View>
+
+                            //          <Card.Actions style={{ marginTop: 10 }}>
+                            //            <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} ><Text style={{ color: "white" }}>Show Hospitals</Text></Button>
+                            //         </Card.Actions>
+                            //      </Card>   
+// onPress={()=>navigation.navigate("SurgeryInner", {id:item.cby})}
+                                // <Card key={item.id} style={{ margin: 10, backgroundColor:"white" }} >
+
+                                //     <View style={{ flexDirection: "row", width: "100%", alignItems: "center" }}>
+                                //         {/* http://cureofine.com/new_demo/upload/surgerycat/ */}
+                                //         <Image source={{uri:`http://cureofine.com/new_demo/upload/surgerycat/${item.image}`}} style={{ height: 150, width: 168, resizeMode: "cover" }} />
+
+                                //         <View style={{ marginLeft: 8, flexWrap: "wrap" }}>
+
+                                //             <Card.Content>
+                                //                 <Text style={{ fontSize: 12}}>{item.name}</Text>
+                                //                 <Text variant="bodyMedium" style={{ color: "gray", fontSize: 12 }}>Original Price- Rs {item.price}</Text>
+                                //                 <Text variant="bodyMedium" style={{ fontWeight: "bold", fontSize: 12 }}>Offer Price- Rs {item.offer_price}</Text>
+                                //                 <Text variant="bodyMedium">Description: </Text>
+                                //                 {item.details != "" && <RenderHTML tagsStyles={tagsStyles} key={item.id} source={{ html: decode(item.details) }}></RenderHTML>}
+
+                                               
+                                //             </Card.Content>
+
+                                //         </View>
+
+
+                                //     </View>
+
+
+
+                             
+                                // </Card>

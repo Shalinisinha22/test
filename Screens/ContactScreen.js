@@ -69,18 +69,34 @@ const ContactScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: "white", paddingBottom: 50 }}>
       <Header navigation={navigation}></Header>
+       <Text
+                    style={{
+                        height: 1,
+                        borderColor: "whitesmoke",
+                        borderWidth: 2,
+                        marginTop: 15,
+                    }}
+                />
       <ScrollView>
         <View style={styles.safeArea}>
           <KeyboardAvoidingView>
-            <View style={{ alignItems: "center", marginTop: 10 }}>
+            <View style={{ alignItems: "center", marginTop: 5 }}>
               <Text style={{ color: "gray", fontSize: 10 }}>
                 HOW CAN WE HELP ?{" "}
               </Text>
               <Text style={{ color: "gray", fontSize: 15 }}>
                 Feel free to contact us{" "}
               </Text>
+             
             </View>
-
+            <Text
+                    style={{
+                        height: 1,
+                        borderColor: "whitesmoke",
+                        borderWidth: 2,
+                        marginTop: 10,
+                    }}
+                />
             <View style={{ marginTop: 20 }}>
               <Text> Your FullName*</Text>
               <View style={styles.inputBoxCont}>

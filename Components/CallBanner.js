@@ -5,9 +5,32 @@ import { decode } from 'html-entities';
 import { Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 import axios from 'axios';
-
+import { Linking } from "react-native";
 
 const CallBanner = () => {
+
+
+  const [email, setEmail] = useState("")
+  const [phone, setNumber] = useState("")
+  const [officeHour, setHour] = useState("")
+
+
+  const getInfo = async()=>{
+    const res= await axios.get("https://cureofine-azff.onrender.com/contactInfo");
+    const data = res.data
+    // console.log(data)
+   
+
+    // console.log(data[0].mobile_2)
+    setNumber(data[0].mobile_1)
+    setEmail(data[0].email)
+    setHour(data[0].office_hour)
+    
+  }
+
+  useEffect(()=>{
+    getInfo()
+  },[])
 
     const [pageMenu, setpageMenu] = useState("")
     const [content, setContent] = useState("")
@@ -16,7 +39,7 @@ const CallBanner = () => {
   const getText = async () => {
     const res = await axios.get("https://cureofine-azff.onrender.com/staticText");
     const data = res.data;
-  
+    //  console.log(data[0].page_menu)
     setpageMenu(data[0].page_menu)
     setContent(decode(data[0].content))
 
@@ -69,7 +92,7 @@ const CallBanner = () => {
               </Text>
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => Linking.openURL("tel:7250446555")}
+                onPress={() => Linking.openURL(`tel:${phone}`)}
               >
                 <Text
                   style={{

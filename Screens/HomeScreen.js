@@ -7,14 +7,9 @@ import {
   ScrollView,
   Image,
   StatusBar,
-  ImageBackground,
-  FlatList,
   Pressable,
   Alert,
   TextInput,
-  Button,
-  Linking,
-  Modal,
   BackHandler,
   TouchableOpacity
 } from "react-native";
@@ -55,12 +50,15 @@ import RenderHtml from 'react-native-render-html';
 import { ActivityIndicator } from "react-native";
 import HomeBanner from "./HomeBanner";
 import CallBanner from "../Components/CallBanner";
+import Testimonials from "./Testimonials";
+
 // import { TouchableOpacity } from "react-native-gesture-handler";
 SplashScreen.preventAutoHideAsync();
 
 
 
 const Home = ({ navigation }) => {
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [address, setAdd] = useState("");
   const [state, setState] = useState([]);
@@ -77,6 +75,8 @@ const Home = ({ navigation }) => {
 
   const [pageMenu, setpageMenu] = useState("")
   const [content, setContent] = useState("")
+
+  const [locationId, setLocationId] = useState('')
 
 
   const getText = async () => {
@@ -124,22 +124,39 @@ const Home = ({ navigation }) => {
 
 
 
-  const getState = async () => {
-    const res = await axios.get("https://cureofine-azff.onrender.com/state");
-    const data = res.data;
-    // console.log(data);
-    setState(data);
-  };
-  const getCity = async () => {
-    const res = await axios.get("https://cureofine-azff.onrender.com/city");
-    const data = res.data;
-    // console.log(data);
-    setCity(data);
-  };
+  // const getState = async () => {
+  //   const res = await axios.get("https://cureofine-azff.onrender.com/state");
+  //   const data = res.data;
+  //   // console.log(data);
+  //   setState(data);
+  // };
+  // const getCity = async () => {
+  //   const res = await axios.get("https://cureofine-azff.onrender.com/city");
+  //   const data = res.data;
+  //   // console.log(data);
+  //   setCity(data);
+  // };
+
+  const [cLoc, setLoc]=useState([])
+
+   
+  const getLocation= async()=>{
+          
+     const res = await axios.get("https://cureofine-azff.onrender.com/presence");
+     const data= res.data;
+    //  console.log(data)
+     setLoc(data)
+     setLocationId(data[0].id)
+     setCity(data[0])
+
+  }
+
+
 
   useEffect(() => {
-    getState();
-    getCity();
+    // getState();
+    // getCity();
+    getLocation()
   }, []);
 
   useEffect(() => {
@@ -164,28 +181,48 @@ const Home = ({ navigation }) => {
 
 
   const handleAddress = async (address, state, city) => {
-    console.log("called")
+    // console.log("called")
     setModalVisible(false);
     if (address.length > 0 || state !== "" || city !== "") {
-      const fullAdd = `${address} ${city} ${state}`;
+      const fullAdd = city ;
       setDisplayCurrentAddress(fullAdd);
+      let locId;
+       for(let i=0; i<=cLoc.length;i++){
+            if(cLoc[i] == city){
+             locId = cLoc[i].id
+              setLocationId(cLoc[i].id)
+            }
+       }
+      
       const res = await AsyncStorage.setItem("user", JSON.stringify(fullAdd));
+      const res1 = await AsyncStorage.setItem("locationId", JSON.stringify(locId));
     }
 
   };
 
   const getAddress = async () => {
-    try {
-      const userData = JSON.parse(await AsyncStorage.getItem("user"));
-      if (!userData) {
-        CheckIfLocationEnabled();
-        GetCurrentLocation();
-      } else {
-        setDisplayCurrentAddress(userData);
-      }
-    } catch (error) {
-      console.log("182", error);
+    // try {
+    //   const userData = JSON.parse(await AsyncStorage.getItem("user"));
+    //   if (!userData) {
+    //     CheckIfLocationEnabled();
+    //     GetCurrentLocation();
+    //   } 
+      
+    //   else {
+    //     setDisplayCurrentAddress(userData);
+    //   }
+    // } catch (error) {
+    //   console.log("182", error);
+    // }
+    const userData = JSON.parse(await AsyncStorage.getItem("user"));
+    if(userData){
+      // setDisplayCurrentAddress(cLoc!=null ? cLoc[0]: "");
+      setDisplayCurrentAddress(userData);
     }
+    // else{
+    //   setDisplayCurrentAddress(userData);
+    // }
+  
   };
 
   useEffect(() => {
@@ -232,7 +269,7 @@ const Home = ({ navigation }) => {
         // console.log(item)
         let address = `${item.city}`;
         //  ${item.street}, ${item.postalCode},
-
+        // console.log("248",address)
         setDisplayCurrentAddress(address);
       }
     }
@@ -330,21 +367,21 @@ const Home = ({ navigation }) => {
             alignItems: "center",
             gap: 3,
             padding: 10,
-            backgroundColor: "#ffe4e1",
+            backgroundColor: "#103042",
             paddingLeft: 15,
             flexWrap: "wrap",
           }}
           onPress={() => setModalVisible(!modalVisible)}
         >
-          <Ionicons name="location-outline" size={20} color="gray" />
+          <Ionicons name="location-outline" size={20} color="white" />
 
           <Pressable onPress={() => setModalVisible(!modalVisible)}>
-            <Text style={{ color: "black", fontSize: 12, textAlign: "center" }}>
+            <Text style={{ color: "white", fontSize: 15, textAlign: "center" }}>
               {displayCurrentAddress}
             </Text>
           </Pressable>
 
-          <MaterialIcons name="keyboard-arrow-down" size={24} color="gray" />
+          <MaterialIcons name="keyboard-arrow-down" size={24} color="whitesmoke" />
         </TouchableOpacity>
 
         <ScrollView>
@@ -355,8 +392,19 @@ const Home = ({ navigation }) => {
           {/* banner slider end */}
 
           {/* service section start */}
-          <Services navigation={navigation}></Services>
+         <MostBooked navigation={navigation}></MostBooked>  
+          {/* <Services navigation={navigation}></Services> */}
           {/* service section end */}
+
+
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 20,
+            }}
+          />
 
           {/* products section start */}
           <Products navigation={navigation}></Products>
@@ -372,7 +420,7 @@ const Home = ({ navigation }) => {
             }}
           />
 
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             <Carousel
               pagination={PaginationLight}
               renderItem={renderItem}
@@ -380,58 +428,85 @@ const Home = ({ navigation }) => {
               loop
               autoplay
             />
-          </View>
+          </View> */}
 
-          <Text
+          {/* <Text
             style={{
               height: 1,
               borderColor: "#D0D0D0",
               borderWidth: 2,
               marginTop: 18,
             }}
-          />
+          /> */}
           {/* offers & deals end */}
 
           {/* most booked services section start */}
 
-          <MostBooked navigation={navigation}></MostBooked>
+          {/* <MostBooked navigation={navigation}></MostBooked>  */}
 
           {/* most booked services section end */}
 
-          <Text
+          {/* <Text
             style={{
               height: 1,
               borderColor: "#D0D0D0",
               borderWidth: 2,
               marginTop: 15,
             }}
-          />
+          /> */}
 
           {/* shop by category start */}
 
-          <Categories></Categories>
+          {/* <Categories></Categories> */}
 
           {/* shop by category end */}
 
-          <Text
+          {/* <Text
             style={{
               height: 1,
               borderColor: "#D0D0D0",
               borderWidth: 2,
               marginTop: 15,
             }}
-          />
+          /> */}
 
           {/* specialization section start */}
-          <Specialization></Specialization>
+          {/* <Specialization navigation={navigation}></Specialization> */}
           {/* specialization section end */}
 
-          <Text
+          {/* <Text
             style={{
               height: 1,
               borderColor: "#D0D0D0",
               borderWidth: 2,
               marginTop: 18,
+            }}
+          /> */}
+
+              {/* teams */}
+
+              <Teams navigation={navigation}></Teams>
+          {/* teams */}
+
+          
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 10,
+            }}
+          />
+
+          {/* Testimonials start */}
+          <Testimonials></Testimonials>
+          {/* Testimonials end */}
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 10,
             }}
           />
 
@@ -439,17 +514,17 @@ const Home = ({ navigation }) => {
           <Brands></Brands>
           {/* brands */}
 
-          <Text
+          {/* <Text
             style={{
               height: 1,
               borderColor: "#D0D0D0",
               borderWidth: 2,
               marginTop: 15,
             }}
-          />
+          /> */}
 
           {/* footer banner */}
-          <FlatList
+          {/* <FlatList
             data={footerBanner}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
@@ -465,21 +540,10 @@ const Home = ({ navigation }) => {
                 }}
               ></Image>
             )}
-          ></FlatList>
+          ></FlatList> */}
 
-          <Text
-            style={{
-              height: 1,
-              borderColor: "#D0D0D0",
-              borderWidth: 2,
-              marginTop: 10,
-            }}
-          />
 
-          {/* teams */}
-
-          <Teams navigation={navigation}></Teams>
-          {/* teams */}
+      
 
           <Text
             style={{
@@ -505,7 +569,7 @@ const Home = ({ navigation }) => {
           />
 
           {/* our presence */}
-          <Location1></Location1>
+          <Location1 navigation={navigation}></Location1>
           {/* our presence */}
 
           <Text
@@ -556,7 +620,7 @@ const Home = ({ navigation }) => {
             </Text>
           </View>
 
-          {state.length != 0 && (
+          {/* {state.length != 0 && (
             <View style={{ marginTop: 10 }}>
               <Text
                 style={{ color: "#f08080", fontWeight: 500, marginBottom: 5 }}
@@ -586,9 +650,9 @@ const Home = ({ navigation }) => {
                 ))}
               </Select>
             </View>
-          )}
+          )} */}
 
-          {city.length != 0 && (
+          {cLoc.length != 0 && (
             <View style={{ marginTop: 10 }}>
               <Text
                 style={{ color: "#f08080", fontWeight: 500, marginBottom: 5 }}
@@ -606,9 +670,17 @@ const Home = ({ navigation }) => {
                 }}
                 style={{ zIndex: 1000 }}
                 mt={1}
-                onValueChange={(itemValue) => setSelectedCity(itemValue)}
+                onValueChange={(itemValue) =>
+                  {
+                    // console.log("651",itemValue)
+
+                    setSelectedCity(itemValue)
+                  }
+                 
+                
+                }
               >
-                {city.map((item) => (
+                {cLoc.map((item) => (
                   <Select.Item
 
                     key={item.id}
@@ -620,7 +692,7 @@ const Home = ({ navigation }) => {
             </View>
           )}
 
-          <View >
+          {/* <View >
             <Text style={{ color: "#f08080", fontWeight: 500, marginTop: 10 }}>
               Your Address
             </Text>
@@ -642,7 +714,7 @@ const Home = ({ navigation }) => {
                 placeholder="Enter Your Address"
               />
             </View>
-          </View>
+          </View> */}
 
 
           <View style={{ marginTop: 30 }} />
@@ -805,4 +877,8 @@ export default Home;
 //   </TouchableOpacity>
 // </View>
 // </ImageBackground>
+
+
+
+// http://192.168.0.164:3000/state
 

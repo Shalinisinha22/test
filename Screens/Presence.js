@@ -67,7 +67,7 @@ const Presence = ({navigation}) => {
             />
           </View>
           {/* banner slider end */}
-    <Location></Location>
+    <Location navigation={navigation}></Location>
     <Contact></Contact>
     <Footer></Footer>
   </ScrollView>

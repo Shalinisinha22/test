@@ -22,13 +22,13 @@ const Header = ({navigation}) => {
     <AntDesign
       name="menu-fold"
       size={34}
-      color="black"
+      color="#103042"
       onPress={() => navigation.openDrawer()}
       style={{ marginLeft: 18 }}
     />
 
     <Image
-      style={{ width: 160, height: 50, resizeMode: "contain" }}
+      style={{ width: 180, height: 50, resizeMode: "contain" }}
       source={require("../assets/logo.png")}
     />
   </View>

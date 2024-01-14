@@ -4,6 +4,7 @@ import {
   ScrollView,
   Image,
   ImageBackground,
+  Pressable,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Dimensions } from "react-native";
@@ -11,46 +12,47 @@ const { width } = Dimensions.get("window");
 import { Card } from "@rneui/themed";
 import { FontAwesome } from "@expo/vector-icons";
 import axios from "axios";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
-const Specialization = () => {
+const Specialization = ({navigation}) => {
 
   const [specializationList, setSpecialization] = useState([])
 
-  
-   const getSpecialization = async()=>{
-     const res = await axios.get("https://cureofine-azff.onrender.com/specialization");
+
+  const getSpecialization = async () => {
+    const res = await axios.get("https://cureofine-azff.onrender.com/specialization");
 
     //  console.log(res.data)
-     setSpecialization(res.data)
-     
+    setSpecialization(res.data)
 
 
-   }
 
-   useEffect(()=>{
+  }
+
+  useEffect(() => {
     getSpecialization()
-   },[])
+  }, [])
 
-// https://cureofine-azff.onrender.com/products
+  // https://cureofine-azff.onrender.com/products
 
   const specialization = [
-      {
-        id: 0,
-        image: require("../assets/physician.png"),
-        name: "General Physician",
-      },
-      {
-        id: 1,
-        image: require("../assets/dental.png"),
-        name: "Dental",
-      },
-      {
-        id: 2,
-        image: require("../assets/ortho.png"),
-        name: "Ortho",
-      },
-    ];
+    {
+      id: 0,
+      image: require("../assets/physician.png"),
+      name: "General Physician",
+    },
+    {
+      id: 1,
+      image: require("../assets/dental.png"),
+      name: "Dental",
+    },
+    {
+      id: 2,
+      image: require("../assets/ortho.png"),
+      name: "Ortho",
+    },
+  ];
 
   return (
     <>
@@ -112,7 +114,7 @@ const Specialization = () => {
         />
 
 
-       {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           
           
         {  specialization.map((item, index) => (
@@ -142,9 +144,11 @@ const Specialization = () => {
         {/* {  console.log("142",specializationList)
            } */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          
-          
-          { specializationList.map((item, index) => (
+
+
+          {specializationList.map((item, index) => (
+
+            <Pressable onPress={()=>navigation.navigate("SingleTeam")}>
               <Card
                 key={item.id}
                 style={{
@@ -153,9 +157,11 @@ const Specialization = () => {
                   paddingTop: 0,
                   paddingBottom: 0,
                 }}
+
+
               >
                 <Card.Title style={{ fontSize: 15 }}>{item.name}</Card.Title>
-  
+
                 <Card.Divider />
                 <View style={{ alignItems: "center" }}>
                   <Image
@@ -165,12 +171,16 @@ const Specialization = () => {
                   />
                 </View>
               </Card>
-            ))}
-        
-          </ScrollView>
+            </Pressable>
 
 
-       
+
+          ))}
+
+        </ScrollView>
+
+
+
 
       </ImageBackground>
     </>

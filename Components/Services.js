@@ -133,7 +133,7 @@ export default function Services({ navigation }) {
             <Text
               style={{
                 textAlign: "center",
-                fontSize: 12,
+                fontSize: 16,
                 fontWeight: "600",
                 marginTop: 5,
                 fontFamily: "OpenSans",

@@ -12,11 +12,13 @@ const HomeBanner = () => {
     const getImage = async () => {
         const res = await axios.get("https://cureofine-azff.onrender.com/banner");
         const data = res.data;
-        // console.log(data)
+       
         let imgArr = []
         for (let i = 0; i < data.length; i++) {
-
-            imgArr.push({ image: `https://cureofine.com/upload/banner/${data[i].image}`, id: data[i].id });
+            if(data[i].page == "main-page"){ 
+                imgArr.push({ image: `http://cureofine.com/new_demo/upload/banner/${data[i].image}`, id: data[i].id });
+            }
+    
         }
 
         setBanner(imgArr)
@@ -41,7 +43,7 @@ const HomeBanner = () => {
           <FlatListSlider
             data={bannerImage}
             height={180}
-            indicatorActiveColor={'#f08080'}
+            indicatorActiveColor={'#f46b78'}
             indicatorActiveWidth={30}
           /> :  <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                     <ActivityIndicator color={"#f08080"} size={"large"} />

@@ -50,6 +50,16 @@ import OtpScreen from "../Screens/OtpScreen";
 import PaymentScreen from "../Screens/PaymentScreen";
 import SingleTeamScreen from "../Screens/SingleTeamScreen";
 import HomeBanner from "../Screens/HomeBanner";
+import SurgeryInnerScreen from "../Screens/SurgeryInnerScreen";
+import SurgeryList from "../Screens/SurgeryList";
+import IVF from "../Screens/IVF";
+import Dental from "../Screens/Dental";
+import HairCosmetic from "../Screens/HairCosmetic";
+import Ayurveda from "../Screens/Ayurveda";
+import IvfInnerScreen from "../Screens/IvfInnerScreen";
+import DentalInnerScreen from "../Screens/DentalInnerScreen";
+import HairInnerScreen from "../Screens/HairInnerScreen";
+import AyurvedaInnerScreen from "../Screens/AyurvedaInnerScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -64,8 +74,12 @@ const AppNavigator = () => {
       name: "Our Services",
       submenu: [
         { id: 0, name: "Doctor Consultation", url: "Consultation" },
-        { id: 1, name: "Surgery Appointment", url: "Surgery" },
-        { id: 2, name: "Physiotherapy At Home", url: "Physiotherapy" },
+        { id: 1, name: "Surgery", url: "SurgeryList" },
+        { id: 2, name: "IVF", url: "IVF" },
+        { id: 3, name: "Dental", url: "Dental" },
+        { id: 4, name: "Hair & Cosmetic", url: "Hair & Cosmetic" },
+        { id: 5, name: "Ayurveda", url: "Ayurveda" }
+ 
       ],
       icon: <MaterialIcons name="medical-services" size={24} color="white" />,
       dropdownIcon: <AntDesign name="down" size={20} color="white"/>,
@@ -115,18 +129,18 @@ const AppNavigator = () => {
         <MaterialCommunityIcons name="cash-refund" size={24} color="white" />
       ),
     },
-    {
-      id: 6,
-      name: "Refer a friend",
-      url: "ReferScreen",
-      icon: <FontAwesome name="slideshare" size={24} color="white" />,
-    },
+    // {
+    //   id: 6,
+    //   name: "Refer a friend",
+    //   url: "ReferScreen",
+    //   icon: <FontAwesome name="slideshare" size={24} color="white" />,
+    // },
     {
       id: 7,
       name: "Share",
       url: "ShareScreen",
       icon: <Entypo name="share" size={24} color="white" />,
-    },
+    }
   ];
 
   
@@ -207,13 +221,13 @@ const AppNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Consultation"
+          name="Doctor Consultation"
           component={Consultation}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Surgery"
-          component={Surgery}
+          component={SurgeryList}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -261,6 +275,57 @@ const AppNavigator = () => {
           <Stack.Screen
           name="SingleTeam"
           component={SingleTeamScreen}
+          options={{ headerShown: false }}
+        />
+           <Stack.Screen
+          name="SurgeryInner"
+          component={SurgeryInnerScreen}
+          options={{ headerShown: false }}
+        />
+           <Stack.Screen
+          name="SurgeryList"
+          component={SurgeryList}
+          options={{ headerShown: false }}
+        />
+            <Stack.Screen
+          name="IVF"
+          component={IVF}
+          options={{ headerShown: false }}
+        />
+            <Stack.Screen
+          name="Dental"
+          component={Dental}
+          options={{ headerShown: false }}
+        />
+            <Stack.Screen
+          name="Hair & Cosmetic"
+          component={HairCosmetic}
+          options={{ headerShown: false }}
+        />
+            <Stack.Screen
+          name="Ayurveda"
+          component={Ayurveda}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="IvfInnerScreen"
+          component={IvfInnerScreen}
+          options={{ headerShown: false }}
+        />
+          <Stack.Screen
+          name="DentalInnerScreen"
+          component={DentalInnerScreen}
+          options={{ headerShown: false }}
+        />
+            <Stack.Screen
+          name="HairInnerScreen"
+          component={HairInnerScreen}
+          options={{ headerShown: false }}
+        />
+
+<Stack.Screen
+          name="AyurvedaInnerScreen"
+          component={AyurvedaInnerScreen}
           options={{ headerShown: false }}
         />
      
@@ -348,7 +413,7 @@ const AppNavigator = () => {
                     onPress={() => {
                       item.name == "Share"
                         ? onShare(
-                            `https://expo.dev/artifacts/eas/mWAhDR5fZ859tU5FJipAxp.apk`
+                            `https://expo.dev/artifacts/eas/5ua1tSJD4RS22HLuiVNHzJ.apk`
                           )
                         :
                      navigation.navigate(item.url);

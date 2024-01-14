@@ -104,7 +104,7 @@ import {
                     size={24}
                     color="black"
                     onPress={()=> onShare(
-                      `https://expo.dev/artifacts/eas/mWAhDR5fZ859tU5FJipAxp.apk`
+                      `https://expo.dev/artifacts/eas/5ua1tSJD4RS22HLuiVNHzJ.apk`
                     )}
                   />
                 </View>

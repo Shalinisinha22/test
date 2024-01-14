@@ -9,7 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from "axios";
 
-const Location = () => {
+const Location = ({navigation}) => {
  
 
     const [cLoc, setLoc]=useState(null)
@@ -95,7 +95,7 @@ const Location = () => {
        
                   
 
-            <TouchableOpacity key={item.id} >
+            <TouchableOpacity key={item.id}  onPress={()=>navigation.navigate("About")}>
            
            <Card
              key={item.id}
@@ -114,17 +114,18 @@ const Location = () => {
                style={{ textAlign: "center" }}
              />
              <Card.Title style={{ fontFamily: "OpenSans", fontSize: 18 }}>
-               {item.centre_name}
+               {/* {item.centre_name} */}
+               {item.name}
              </Card.Title>
-             <Text style={{ textAlign: "center", marginBottom: 2 }}>
-               {item.location}
-             </Text>
+             {/* <Text style={{ textAlign: "center", marginBottom: 2,fontFamily: "OpenSans", fontSize: 18 }}>
+               {item.name}
+             </Text> */}
              <Card.Divider />
              <View style={{ alignItems: "center" }}>
                <Image
                  style={{ width: 200, height: 100, resizeMode: "contain" }}
                  resizeMode="contain"
-                 source={require("../assets/clinic/b14.png")}
+                 source={{uri:`http://cureofine.com/new_demo/upload/location/${item.image}`}}
                />
              </View>
            </Card>

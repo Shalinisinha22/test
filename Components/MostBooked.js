@@ -1,8 +1,11 @@
 import { Text, View, ScrollView, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 import { FontAwesome } from "@expo/vector-icons";
+import axios from "axios";
+import { decode } from "html-entities";
+import RenderHTML from "react-native-render-html";
 
 const MostBooked = ({ navigation }) => {
   const mostBook = [
@@ -18,19 +21,70 @@ const MostBooked = ({ navigation }) => {
       id: "2",
       image: require("../assets/MostBook/mostBook7.png"),
       name: "Surgery Appointment",
-      url: "Surgery",
+      url: "SurgeryList",
     
     },
     {
       id: "3",
-      image: require("../assets/MostBook/mostBook6.png"),
-      name: "Physiotherapy At Home",
-      url: "Physiotherapy",
+      image: require("../assets/MostBook/ivf.png"),
+      name: "IVF",
+      url: "IVF",
 
      
-    }
+    },
+    {
+      id: "4",
+      image: require("../assets/MostBook/dental.png"),
+      name: "Dental, Hair & Cosmetic",
+      url: "Dental",
+
+     
+    },
+    {
+      id: "5",
+      image: require("../assets/MostBook/ayurveda.png"),
+      name: "Ayurveda",
+      url: "Ayurveda",
+
+     
+    },
+    // {
+    //   id: "3",
+    //   image: require("../assets/MostBook/mostBook6.png"),
+    //   name: "Physiotherapy At Home",
+    //   url: "Physiotherapy",
+
+     
+    // }
   
   ];
+// http://192.168.0.110:3000/service
+  const [service, setService]= useState(null)
+  const getService = async () => {
+    const res = await axios.get("https://cureofine-azff.onrender.com/service");
+    const data = res.data;
+  
+    setService(data)
+  
+   
+
+};
+
+useEffect(() => {
+    getService();
+
+}, []);
+
+const tagsStyles = {
+
+  h5: {
+    fontSize: 15,
+    textAlign: "justify",
+   
+
+  }
+};
+
   return (
     <>
       <Text
@@ -55,7 +109,8 @@ const MostBooked = ({ navigation }) => {
             fontFamily: "OpenSans",
           }}
         >
-          Most Booked Services
+          Our Trending Services
+          {/* Most Booked Services */}
         </Text>
 
         <View>
@@ -80,42 +135,48 @@ const MostBooked = ({ navigation }) => {
         }}
       />
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {mostBook.map((item, index) => (
+     {
+        // console.log(service)
+     }
+  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {service!= null &&  service.map((item, index) => (
           <TouchableOpacity
             key={item.id}
             style={{
               alignItems: "center",
               justifyContent: "center",
-              marginRight: 3,
-              marginLeft: 3,
+              marginRight: 4,
+              marginLeft: 4,
+              marginTop:10,
+              elevation:5,
             }}
             onPress={() =>
-              navigation.navigate(item.url)
+              navigation.navigate(decode(item.name))
             }
           >
             <Image
-              style={{ width: 150, height: 150, resizeMode: "contain" }}
-              source={item.image}
+              style={{ width: 100, height: 120, resizeMode: "contain" }}
+              source={{
+                uri:`http://cureofine.com/new_demo/upload/service/${item.image}`}}
             />
             <View>
-              <Text style={{ fontWeight: 500, fontFamily: "OpenSans" }}>
-                {item.name}
+              <Text style={{ fontWeight: 600, fontFamily: "OpenSans", fontSize:14 }}>
+              <RenderHTML tagsStyles={tagsStyles} key={item.id} source={{ html: decode(item.name) }}></RenderHTML>
               </Text>
             </View>
 
             <View
               style={{
-                backgroundColor: "black",
+                backgroundColor: "#103042",
                 paddingVertical: 3,
                 width: "auto",
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: 1,
+                marginTop: 7,
                 borderRadius: 2,
-                position: "absolute",
-                top: 20,
-                left: 0,
+                // position: "absolute",
+                // top: 0,
+                // left: 0,
                 paddingHorizontal: 8,
               }}
             >
@@ -123,16 +184,17 @@ const MostBooked = ({ navigation }) => {
                 style={{
                   textAlign: "center",
                   color: "white",
-                  fontSize: 13,
+                  fontSize: 15,
                   fontWeight: "bold",
                 }}
               >
-                Book Now
+             VIEW MORE
               </Text>
             </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
+                                                                                               
     </>
   );
 };

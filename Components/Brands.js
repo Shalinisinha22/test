@@ -17,7 +17,7 @@ const Brands = () => {
 
 
   const getBrand = async () => {
-    const res = await axios.get("https://cureofine-azff.onrender.com/brand");
+    const res = await axios.get("https://cureofine-azff.onrender.com/brands");
     const data = res.data;
     // console.log(data)
     setBrands(data)
@@ -121,7 +121,7 @@ const Brands = () => {
             >
               <Image
                 style={{ width: 80, height: 80, resizeMode: "contain" }}
-                source={{uri:`https://www.cureofine.com/upload/brand/${item.logo}`}}
+                source={{uri:`http://cureofine.com/new_demo/upload/brand/${item.logo}`}}
               />
             </TouchableOpacity>
           

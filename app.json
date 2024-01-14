@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "CureFine",
-    "slug": "CureFine",
+    "name": "CureOFine",
+    "slug": "cureofine",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,11 +29,11 @@
 
     "extra": {
       "eas": {
-        "projectId": "f430409b-8b57-47b1-aaa4-29e6d1e04184"
+        "projectId": "47aa9df6-6c38-4893-936b-fad69f30f084"
       }
     },
 
 
-    "owner": "shalinisinha2"
+    "owner": "shalini2"
   }
 }

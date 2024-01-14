@@ -206,7 +206,7 @@ const Surgery = ({ navigation }) => {
         }}
       />
 
-      <Specialization></Specialization>
+      <Specialization navigation={navigation}></Specialization>
       <Text
         style={{
           height: 1,

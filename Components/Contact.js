@@ -30,7 +30,7 @@ const Contact = () => {
     setContact(data)
     setContact(data)
     // console.log(data[0].mobile_2)
-    setNumber(data[0].mobile_2)
+    setNumber(data[0].mobile_1)
     setEmail(data[0].email)
     setHour(data[0].office_hour)
     
@@ -192,7 +192,7 @@ const Contact = () => {
                    borderColor: "#D0D0D0",
                    marginTop: 12,
                  }}
-   onPress={()=>{ Linking.openURL("tel:7250446555")}} 
+   onPress={()=>{ Linking.openURL(`tel:${phone}`)}} 
 
                  
                >

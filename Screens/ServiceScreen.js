@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Services from "../Components/Services";
 import { AntDesign } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
@@ -21,7 +21,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../Components/Header";
 import Products from "../Components/Products";
 import Deals from "../Components/Deals";
-
+import MostBooked from "../Components/MostBooked";
+import axios from "axios";
+import { decode } from "html-entities";
+import RenderHTML from "react-native-render-html";
 const ServiceScreen = ({ navigation }) => {
   const list = [
     {
@@ -35,7 +38,7 @@ const ServiceScreen = ({ navigation }) => {
       id: "1",
       image: require("../assets/Services/cs2.png"),
       name: "Surgery Appointment",
-      url: "Surgery",
+      url: "SurgeryList",
     },
 
     {
@@ -45,8 +48,8 @@ const ServiceScreen = ({ navigation }) => {
       url: "Physiotherapy",
     },
 
-  
-  
+
+
   ];
 
   const renderItem = (data) => (
@@ -74,22 +77,40 @@ const ServiceScreen = ({ navigation }) => {
       coverImageUri: require("../assets/surgery1.png"),
     },
   ];
+
+  // https://cureofine-azff.onrender.com/
+
+  const [service, setService] = useState(null)
+  const getService = async () => {
+    const res = await axios.get("https://cureofine-azff.onrender.com/service");
+    const data = res.data;
+
+    setService(data)
+
+
+
+  };
+
+  useEffect(() => {
+    getService();
+
+  }, []);
+
+  const tagsStyles = {
+
+    h5: {
+      fontSize: 15,
+      textAlign: "justify",
+
+
+    }
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: "white", paddingBottom: 50 }}>
-    <Header navigation={navigation}></Header>
+      <Header navigation={navigation}></Header>
 
       <ScrollView style={{ backgroundColor: "white" }}>
-      <Text
-          style={{
-            height: 1,
-            borderColor: "whitesmoke",
-            borderWidth: 2,
-            marginTop: 15,
-          }}
-        />
-
-        <Text style={{color:"black", padding:15,fontSize:15,paddingBottom:2}}>Elevate Your Healthcare Experience -</Text>
-        <Text style={{color:"#eb3b5a", paddingLeft:12,fontSize:12}}> Explore a Range of Premium Medical Services on our App.</Text>
         <Text
           style={{
             height: 1,
@@ -98,17 +119,29 @@ const ServiceScreen = ({ navigation }) => {
             marginTop: 15,
           }}
         />
-        <ImageBackground
+
+        <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+        <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+        <Text
+          style={{
+            height: 1,
+            borderColor: "whitesmoke",
+            borderWidth: 2,
+            marginTop: 15,
+          }}
+        />
+        {/* <ImageBackground
           source={require("../assets/bg6.jpg")}
           style={{
             width: "100%",
-            height: 160,
             resizeMode: "cover",
             marginTop: 1,
             opacity: 0.9,
+            height:"auto"
+          
           }}
-        >
-          <FlatList
+        > */}
+          {/* <FlatList
             data={list}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -128,7 +161,6 @@ const ServiceScreen = ({ navigation }) => {
                   name: item.name,
                   carouselImages: item.carouselImages,
                   item: item,
-                
                 })}
               >
                 <Image
@@ -156,17 +188,76 @@ const ServiceScreen = ({ navigation }) => {
                 </Text>
               </TouchableOpacity>
             )}
-          ></FlatList>
-        </ImageBackground>
+          ></FlatList> */}
 
-        <Text
-          style={{
-            height: 1,
-            borderColor: "whitesmoke",
-            borderWidth: 2,
-            marginTop: 1,
-          }}
-        />
+               <FlatList
+            data={service}
+            numColumns={3}
+            scrollEnabled={false}
+            columnWrapperStyle={{
+              flex: 1,
+              justifyContent: "space-between",
+            }}
+            style={{margin:10}}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                key={item.id}
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginRight: 4,
+                  marginLeft: 4,
+                  marginTop: 10,
+                  elevation: 5,
+                }}
+                onPress={() =>
+                  navigation.navigate(decode(item.name))
+                }
+              >
+                <Image
+                  style={{ width: 100, height: 120, resizeMode: "contain" }}
+                  source={{
+                    uri: `http://cureofine.com/new_demo/upload/service/${item.image}`
+                  }}
+                />
+                <View>
+                  <Text style={{ fontWeight: 600, fontFamily: "OpenSans", fontSize: 14 }}>
+                    <RenderHTML tagsStyles={tagsStyles} key={item.id} source={{ html: decode(item.name) }}></RenderHTML>
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    backgroundColor: "#103042",
+                    paddingVertical: 3,
+                    width: "auto",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 7,
+                    borderRadius: 2,
+                    // position: "absolute",
+                    // top: 0,
+                    // left: 0,
+                    paddingHorizontal: 8,
+                  }}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      color: "white",
+                      fontSize: 15,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    VIEW MORE
+                  </Text>
+                </View>
+              </TouchableOpacity>)}>
+
+              </FlatList>
+
+        {/* </ImageBackground> */}
+
 
         {/* banner slider start */}
         <View style={styles.container}>
@@ -189,8 +280,8 @@ const ServiceScreen = ({ navigation }) => {
           }}
         />
 
-<Deals navigation={navigation}></Deals>
-     <Text
+        {/* <Deals navigation={navigation}></Deals> */}
+        <Text
           style={{
             height: 1,
             borderColor: "#D0D0D0",
@@ -290,3 +381,10 @@ const styles = StyleSheet.create({
 });
 
 export default ServiceScreen;
+
+
+
+// $servername = "localhost";
+// $username = "mclinpll_cureofine_new_u";
+// $password = "3{Mg~G39W8MK";
+// $dbname = "mclinpll_cureofine_new";

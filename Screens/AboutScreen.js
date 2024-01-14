@@ -28,6 +28,7 @@ import RenderHtml from "react-native-render-html";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useWindowDimensions } from "react-native";
 import RenderHTML from "react-native-render-html";
+import CallBanner from "../Components/CallBanner"
 SplashScreen.preventAutoHideAsync();
 
 const AboutScreen = ({ navigation }) => {
@@ -144,7 +145,7 @@ const AboutScreen = ({ navigation }) => {
             height: 1.5,
             borderColor: "#eb3b5a",
             borderWidth: 1.5,
-            marginTop: 8,
+            marginTop: 10,
             width: width * 0.6,
             marginLeft: 7,
             borderRadius: 5,
@@ -187,7 +188,7 @@ const AboutScreen = ({ navigation }) => {
           }}
         />
 
-        <ImageBackground
+        {/* <ImageBackground
           source={require("../assets/cure.jpg")}
           style={{
             width: "100%",
@@ -226,7 +227,8 @@ const AboutScreen = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
-        </ImageBackground>
+        </ImageBackground> */}
+        <CallBanner></CallBanner>
 
         <Text
           style={{
