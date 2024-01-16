@@ -131,7 +131,7 @@ const Testimonials = ({ navigation }) => {
                                         <View style={{ alignItems: "center", width: 200 }}>
                                             <Image
                                                 style={{ padding: 0, height: 80, width: 80, resizeMode: "contain", margin: 17, borderRadius: 80 }}
-                                                source={{ uri: `http://cureofine.com/new_demo/upload/testimonial/${item.img}` }}
+                                                source={{ uri: `https://cureofine.com/upload/testimonial/${item.img}` }}
                                             />
                                         </View>
 

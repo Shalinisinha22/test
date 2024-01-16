@@ -92,7 +92,7 @@ renderItem={({ item, index }) => (
 <TouchableOpacity style={{margin:10,width:170,alignItems:"center",margin:10,padding:15,elevation:3,borderRadius:5}}>
 
 <View style={{width:"100%", alignItems:"center"}}>
-<Image style={{width:100,height:100}} source={{ uri: `http://cureofine.com/new_demo/upload/haircat/${item.image}` }} />
+<Image style={{width:100,height:100}} source={{ uri: `https://cureofine.com/upload/haircat/${item.image}` }} />
 
 </View>
 

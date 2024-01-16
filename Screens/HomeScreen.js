@@ -51,6 +51,7 @@ import { ActivityIndicator } from "react-native";
 import HomeBanner from "./HomeBanner";
 import CallBanner from "../Components/CallBanner";
 import Testimonials from "./Testimonials";
+import Hospitals from "../Components/Hospitals";
 
 // import { TouchableOpacity } from "react-native-gesture-handler";
 SplashScreen.preventAutoHideAsync();
@@ -58,7 +59,7 @@ SplashScreen.preventAutoHideAsync();
 
 
 const Home = ({ navigation }) => {
-  
+
   const [modalVisible, setModalVisible] = useState(false);
   const [address, setAdd] = useState("");
   const [state, setState] = useState([]);
@@ -69,7 +70,7 @@ const Home = ({ navigation }) => {
   const [locationServiceEnabled, setLocationServiceEnabled] = useState(false);
   const [selected, setSelected] = React.useState("");
   const [displayCurrentAddress, setDisplayCurrentAddress] = useState(
-    "Wait, we are fetching you location..."
+    "Wait, we are fetching your location"
   );
   const [bannerImage, setBaner] = useState([]);
 
@@ -137,17 +138,21 @@ const Home = ({ navigation }) => {
   //   setCity(data);
   // };
 
-  const [cLoc, setLoc]=useState([])
+  const [cLoc, setLoc] = useState([])
 
-   
-  const getLocation= async()=>{
-          
-     const res = await axios.get("https://cureofine-azff.onrender.com/presence");
-     const data= res.data;
-    //  console.log(data)
-     setLoc(data)
-     setLocationId(data[0].id)
-     setCity(data[0])
+
+  const getLocation = async () => {
+
+    const res = await axios.get("https://cureofine-azff.onrender.com/presence");
+    const data = res.data;
+    console.log("147", data)
+    console.log("147", data)
+    setLoc(data)
+    setLocationId(data[0].location_id)
+    setDisplayCurrentAddress(data[0].name)
+
+    const res1 = await AsyncStorage.setItem("user", JSON.stringify(data[0].name));
+    const res2 = await AsyncStorage.setItem("locationId", JSON.stringify(data[0].location_id));
 
   }
 
@@ -184,18 +189,12 @@ const Home = ({ navigation }) => {
     // console.log("called")
     setModalVisible(false);
     if (address.length > 0 || state !== "" || city !== "") {
-      const fullAdd = city ;
+      const fullAdd = city;
       setDisplayCurrentAddress(fullAdd);
-      let locId;
-       for(let i=0; i<=cLoc.length;i++){
-            if(cLoc[i] == city){
-             locId = cLoc[i].id
-              setLocationId(cLoc[i].id)
-            }
-       }
-      
-      const res = await AsyncStorage.setItem("user", JSON.stringify(fullAdd));
-      const res1 = await AsyncStorage.setItem("locationId", JSON.stringify(locId));
+
+
+      // const res = await AsyncStorage.setItem("user", JSON.stringify(fullAdd));
+      // const res1 = await AsyncStorage.setItem("locationId", JSON.stringify(locId));
     }
 
   };
@@ -207,7 +206,7 @@ const Home = ({ navigation }) => {
     //     CheckIfLocationEnabled();
     //     GetCurrentLocation();
     //   } 
-      
+
     //   else {
     //     setDisplayCurrentAddress(userData);
     //   }
@@ -215,14 +214,16 @@ const Home = ({ navigation }) => {
     //   console.log("182", error);
     // }
     const userData = JSON.parse(await AsyncStorage.getItem("user"));
-    if(userData){
+    const locationId = JSON.parse(await AsyncStorage.getItem("locationId"));
+    if (userData && locationId) {
       // setDisplayCurrentAddress(cLoc!=null ? cLoc[0]: "");
       setDisplayCurrentAddress(userData);
+      setLocationId(locationId)
     }
     // else{
     //   setDisplayCurrentAddress(userData);
     // }
-  
+
   };
 
   useEffect(() => {
@@ -387,12 +388,12 @@ const Home = ({ navigation }) => {
         <ScrollView>
           {/* banner slider start */}
           <View style={styles.container}>
-         <HomeBanner></HomeBanner>
-         </View>
+            <HomeBanner></HomeBanner>
+          </View>
           {/* banner slider end */}
 
           {/* service section start */}
-         <MostBooked navigation={navigation}></MostBooked>  
+          <MostBooked navigation={navigation}></MostBooked>
           {/* <Services navigation={navigation}></Services> */}
           {/* service section end */}
 
@@ -483,12 +484,12 @@ const Home = ({ navigation }) => {
             }}
           /> */}
 
-              {/* teams */}
-
-              <Teams navigation={navigation}></Teams>
           {/* teams */}
 
-          
+          <Teams navigation={navigation}></Teams>
+          {/* teams */}
+
+
           <Text
             style={{
               height: 1,
@@ -497,6 +498,19 @@ const Home = ({ navigation }) => {
               marginTop: 10,
             }}
           />
+
+          <Hospitals navigation={navigation}></Hospitals>
+
+
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 2,
+              marginTop: 10,
+            }}
+          />
+
 
           {/* Testimonials start */}
           <Testimonials></Testimonials>
@@ -543,7 +557,7 @@ const Home = ({ navigation }) => {
           ></FlatList> */}
 
 
-      
+
 
           <Text
             style={{
@@ -557,7 +571,7 @@ const Home = ({ navigation }) => {
           <CallBanner></CallBanner>
 
           {/* banner */}
-       
+
 
           <Text
             style={{
@@ -620,44 +634,12 @@ const Home = ({ navigation }) => {
             </Text>
           </View>
 
-          {/* {state.length != 0 && (
-            <View style={{ marginTop: 10 }}>
-              <Text
-                style={{ color: "#f08080", fontWeight: 500, marginBottom: 5 }}
-              >
-                Choose State
-              </Text>
-              <Select
-                selectedValue={selectedState}
-                minWidth="200"
-                accessibilityLabel="Choose State"
-                placeholder="Choose State"
-                _selectedItem={{
-                  bg: "#f08080",
-                  // endIcon: <CheckIcon size="5" />,
-                }}
-                mt={1}
-                onValueChange={(itemValue) => setSelectedState(itemValue)}
-                style={{ zIndex: 1000 }}
-              >
-                {state.map((item) => (
-                  <Select.Item
-
-                    key={item.id}
-                    label={item.State}
-                    value={item.State}
-                  />
-                ))}
-              </Select>
-            </View>
-          )} */}
-
           {cLoc.length != 0 && (
             <View style={{ marginTop: 10 }}>
               <Text
                 style={{ color: "#f08080", fontWeight: 500, marginBottom: 5 }}
               >
-                Choose City{" "}
+                Choose City
               </Text>
               <Select
                 selectedValue={selectedCity}
@@ -670,15 +652,28 @@ const Home = ({ navigation }) => {
                 }}
                 style={{ zIndex: 1000 }}
                 mt={1}
-                onValueChange={(itemValue) =>
-                  {
-                    // console.log("651",itemValue)
+                onValueChange={async (itemValue) => {
+                  console.log("Selected City:", itemValue);
 
-                    setSelectedCity(itemValue)
+                  // Find the selected item in the cLoc array
+                  const selectedLocation = cLoc.find((item) => item.name === itemValue);
+
+                  // Check if the selectedLocation is found
+                  if (selectedLocation) {
+                    // Set the location_id to the id of the selectedLocation
+                    setLocationId(selectedLocation.location_id);
+                  } else {
+                    console.warn("Selected location not found");
                   }
-                 
-                
-                }
+
+                  // Set the selected city
+                  setSelectedCity(itemValue);
+
+                  // Alert.alert(itemValue, selectedLocation.location_id)
+
+                  const res = await AsyncStorage.setItem("user", JSON.stringify(itemValue));
+                  const res1 = await AsyncStorage.setItem("locationId", JSON.stringify(selectedLocation.location_id));
+                }}
               >
                 {cLoc.map((item) => (
                   <Select.Item
@@ -691,6 +686,7 @@ const Home = ({ navigation }) => {
               </Select>
             </View>
           )}
+
 
           {/* <View >
             <Text style={{ color: "#f08080", fontWeight: 500, marginTop: 10 }}>
@@ -881,4 +877,3 @@ export default Home;
 
 
 // http://192.168.0.164:3000/state
-

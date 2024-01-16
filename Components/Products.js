@@ -144,7 +144,7 @@ const Products = ({navigation}) => {
                 >
                   <Image
                     style={{ width: 150, height: 150, resizeMode: "contain" }}
-                    source={{ uri: `http://cureofine.com/new_demo/upload/ivfcat/${product1.image}` }} 
+                    source={{ uri: `https://cureofine.com/upload/ivfcat/${product1.image}` }} 
                   />
                   <View>
                     <Text
@@ -187,7 +187,7 @@ const Products = ({navigation}) => {
 
                   <View
                     style={{
-                      backgroundColor: "black",
+                      backgroundColor: "#103042",
                       paddingVertical: 3,
                       width: "auto",
                       justifyContent: "center",
@@ -231,7 +231,7 @@ const Products = ({navigation}) => {
                 >
                   <Image
                     style={{ width: 150, height: 150, resizeMode: "contain" }}
-                    source={{ uri: `http://cureofine.com/new_demo/upload/haircat/${product3.image}` }}
+                    source={{ uri: `https://cureofine.com/upload/haircat/${product3.image}` }}
                   />
                   <View>
                     <Text
@@ -275,7 +275,7 @@ const Products = ({navigation}) => {
 
                   <View
                     style={{
-                      backgroundColor: "black",
+                      backgroundColor: "#103042",
                       paddingVertical: 3,
                       width: "auto",
                       justifyContent: "center",
@@ -320,7 +320,7 @@ const Products = ({navigation}) => {
                 >
                   <Image
                     style={{ width: 150, height: 150, resizeMode: "contain" }}
-                    source={{ uri: `http://cureofine.com/new_demo/upload/dentalcat/${product2.image}` }}
+                    source={{ uri: `https://cureofine.com/upload/dentalcat/${product2.image}` }}
                   />
                   <View>
                     <Text
@@ -363,7 +363,7 @@ const Products = ({navigation}) => {
 
                   <View
                     style={{
-                      backgroundColor: "black",
+                      backgroundColor: "#103042",
                       paddingVertical: 3,
                       width: "auto",
                       justifyContent: "center",
@@ -388,9 +388,7 @@ const Products = ({navigation}) => {
                     </Text>
                   </View>
                       </TouchableOpacity>
-                }
-
-              
+                }       
 
 {
                   product4!="" &&    <TouchableOpacity
@@ -410,7 +408,7 @@ const Products = ({navigation}) => {
                 >
                   <Image
                     style={{ width: 150, height: 150, resizeMode: "contain" }}
-                    source={{ uri: `http://cureofine.com/new_demo/upload/ayurveda/${product4.image}` }} 
+                    source={{ uri: `https://cureofine.com/upload/ayurveda/${product4.image}` }} 
                   />
                   <View>
                     <Text
@@ -454,7 +452,7 @@ const Products = ({navigation}) => {
 
                   <View
                     style={{
-                      backgroundColor: "black",
+                      backgroundColor: "#103042",
                       paddingVertical: 3,
                       width: "auto",
                       justifyContent: "center",

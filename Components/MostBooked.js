@@ -58,7 +58,7 @@ const MostBooked = ({ navigation }) => {
     // }
   
   ];
-// http://192.168.0.110:3000/service
+// https://192.168.0.110:3000/service
   const [service, setService]= useState(null)
   const getService = async () => {
     const res = await axios.get("https://cureofine-azff.onrender.com/service");
@@ -157,7 +157,7 @@ const tagsStyles = {
             <Image
               style={{ width: 100, height: 120, resizeMode: "contain" }}
               source={{
-                uri:`http://cureofine.com/new_demo/upload/service/${item.image}`}}
+                uri:`https://cureofine.com/upload/service/${item.image}`}}
             />
             <View>
               <Text style={{ fontWeight: 600, fontFamily: "OpenSans", fontSize:14 }}>

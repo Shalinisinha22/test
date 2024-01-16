@@ -121,7 +121,7 @@ const Brands = () => {
             >
               <Image
                 style={{ width: 80, height: 80, resizeMode: "contain" }}
-                source={{uri:`http://cureofine.com/new_demo/upload/brand/${item.logo}`}}
+                source={{uri:`https://cureofine.com/upload/brand/${item.logo}`}}
               />
             </TouchableOpacity>
           

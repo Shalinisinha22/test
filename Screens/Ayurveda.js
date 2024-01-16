@@ -91,7 +91,7 @@ renderItem={({ item, index }) => (
 <TouchableOpacity style={{margin:10,width:175,alignItems:"center",margin:10,padding:10,elevation:3,borderRadius:5}}>
 
 <View style={{width:"100%", alignItems:"center"}}>
-<Image style={{width:100,height:100}} source={{ uri: `http://cureofine.com/new_demo/upload/ayurveda/${item.image}` }} />
+<Image style={{width:100,height:100}} source={{ uri: `https://cureofine.com/upload/ayurveda/${item.image}` }} />
 
 </View>
 

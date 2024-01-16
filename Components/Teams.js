@@ -59,7 +59,7 @@ const Teams = ({ navigation }) => {
     <>
       <View
         style={{
-          backgroundColor: "whitesmoke",
+          backgroundColor: "white",
           marginTop: 15,
           paddingTop: 4,
           paddingBottom: 10,
@@ -134,7 +134,8 @@ const Teams = ({ navigation }) => {
                     alignItems: "center",
                     marginTop: 15,
                   }}
-                  onPress={() => navigation.navigate("Doctor Consultation")}
+                  // onPress={() => navigation.navigate("Doctor Consultation")}
+                  onPress={()=>navigation.navigate("DoctorInnerScreen", {id:item.doctor_id})}
 
                 >
                   <Image
@@ -144,7 +145,7 @@ const Teams = ({ navigation }) => {
                       resizeMode: "contain",
                       borderRadius: 60,
                     }}
-                    source={{uri:`http://cureofine.com/new_demo/upload/profile/${item.profile_img}`}}
+                    source={{ uri: `https://cureofine.com/upload/profile/${item.profile_img}` }}
                   />
 
                   <Text
@@ -174,6 +175,37 @@ const Teams = ({ navigation }) => {
               ))}
             </ScrollView>
         }
+
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#103042",
+            paddingVertical: 3,
+            width: "auto",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 7,
+            borderRadius: 2,
+            position: "absolute",
+            top: 0,
+            right: 5,
+            paddingHorizontal: 8,
+          }}
+          onPress={()=>navigation.navigate("Doctor Consultation")}
+
+        >
+
+          <Text
+            style={{
+              textAlign: "center",
+              color: "white",
+              fontSize: 15,
+              fontWeight: "bold",
+            }}
+          >
+            SEE ALL
+          </Text>
+        </TouchableOpacity>
 
       </View>
     </>

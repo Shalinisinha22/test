@@ -217,7 +217,7 @@ const ServiceScreen = ({ navigation }) => {
                 <Image
                   style={{ width: 100, height: 120, resizeMode: "contain" }}
                   source={{
-                    uri: `http://cureofine.com/new_demo/upload/service/${item.image}`
+                    uri: `https://cureofine.com/upload/service/${item.image}`
                   }}
                 />
                 <View>

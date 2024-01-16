@@ -99,14 +99,12 @@ const Consultation = ({ navigation }) => {
       <Header navigation={navigation}></Header>
 
  
-       
       {
-        doctorList.length == 0 ? 
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <ActivityIndicator color={"#f08080"} size={"large"} />
-        </View> :
+doctorList.length == 0 ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" ,marginTop:40}}>
+  <ActivityIndicator color={"#f08080"} size={"large"} />
+</View> :
 
-<ScrollView>
+        <ScrollView >
 
 {/* <View style={styles.container}>
 <Carousel
@@ -191,16 +189,15 @@ borderRadius: 5,
 
 
 <View style={{ marginTop: 20, paddingBottom: 50 }}>
-{
-doctorList.length == 0 ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  <ActivityIndicator color={"#f08080"} size={"large"} />
-</View> :
-  doctorList.map((item) => (
+
+ {
+
+ doctorList.map((item) => (
 
     <Card key={item.id} style={{ margin: 10, backgroundColor: "white" }} >
 
       <View style={{ flexDirection: "row", width: "100%", alignItems: "center" }}>
-        <Image source={{ uri: `http://cureofine.com/new_demo/upload/profile/${item.profile_img}` }} style={{ height: 120, width: 108, resizeMode: "cover" }} />
+        <Image source={{ uri: `https://cureofine.com/upload/profile/${item.profile_img}` }} style={{ height: 120, width: 108, resizeMode: "cover" }} />
 
         <View style={{ marginLeft: 8, flexWrap: "wrap" }}>
 
@@ -245,7 +242,7 @@ doctorList.length == 0 ? <View style={{ flex: 1, justifyContent: "center", align
 
   ))
 
-}
+                                    }
 </View>
 
 
@@ -259,6 +256,51 @@ marginTop: 2,
 }}
 />
 
+
+
+<Contact></Contact>
+<Footer></Footer>
+
+</ScrollView>
+     
+}
+             
+ 
+    </SafeAreaView >
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    width: "100%",
+    marginTop: 1,
+  },
+
+  cardContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardWrapper: {
+    overflow: "hidden",
+  },
+  card: {
+    height: width * 0.5,
+    width: width,
+    resizeMode: "contain",
+  },
+
+  imgContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+});
+
+export default Consultation;
 {/* <FlatList
 data={list}
 scrollEnabled={true}
@@ -320,48 +362,3 @@ borderWidth: 2,
 marginTop: 15,
 }}
 /> */}
-
-<Contact></Contact>
-<Footer></Footer>
-
-
-     </ScrollView>
-     }
-
-             
- 
-    </SafeAreaView >
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    width: "100%",
-    marginTop: 1,
-  },
-
-  cardContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  cardWrapper: {
-    overflow: "hidden",
-  },
-  card: {
-    height: width * 0.5,
-    width: width,
-    resizeMode: "contain",
-  },
-
-  imgContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-});
-
-export default Consultation;

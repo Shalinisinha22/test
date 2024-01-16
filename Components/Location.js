@@ -125,7 +125,7 @@ const Location = ({navigation}) => {
                <Image
                  style={{ width: 200, height: 100, resizeMode: "contain" }}
                  resizeMode="contain"
-                 source={{uri:`http://cureofine.com/new_demo/upload/location/${item.image}`}}
+                 source={{uri:`https://cureofine.com/upload/location/${item.image}`}}
                />
              </View>
            </Card>

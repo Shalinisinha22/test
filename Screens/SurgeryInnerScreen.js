@@ -22,6 +22,8 @@ import { useRoute } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { decode } from "html-entities";
 import RenderHTML from "react-native-render-html";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 SplashScreen.preventAutoHideAsync();
 
 
@@ -34,13 +36,17 @@ const SurgeryInnerScreen = ({ navigation}) => {
       const [facility,setFacility] = useState("")
 
        const getSurgeryList= async()=>{
+
+
+        const locationId = JSON.parse(await AsyncStorage.getItem("locationId"));
+        console.log("locationId",locationId)
         //  const res = await axios.get("https://cureofine-azff.onrender.com/hospitals")
         //  const data= res.data;
 
         const res= await axios.get("https://cureofine-azff.onrender.com/surgeryList")
         const data = res.data
         //  console.log(route.params.id)
-         let newArr= await data.filter((item)=>{ return item.category == route.params.id})
+         let newArr= await data.filter((item)=>{ return item.category == route.params.id && item.location == locationId})
         //  console.log("newarr",newArr)
         setSurgery(newArr)
 
@@ -127,7 +133,8 @@ const SurgeryInnerScreen = ({ navigation}) => {
               {
                   surgery == "" ?
                       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                          <ActivityIndicator color={"#f08080"} size={"large"} />
+                          {/* <ActivityIndicator color={"#f08080"} size={"large"} /> */}
+                          <Text style={{fontSize:20, color:"#103042",fontWight:500}}>Hospitals</Text>
                       </View> :
                       surgery.map((item) => (
                           // getSurgeryHospital(item.hospital)
@@ -140,7 +147,7 @@ const SurgeryInnerScreen = ({ navigation}) => {
 
 
                               <View style={{ flexDirection: "row", width: "100%" }}>
-                                  <Image source={{ uri: `http://cureofine.com/new_demo/upload/hospital/${hospitals[0].image}` }} style={{ height: 150, width: 150, resizeMode: "cover" }} />
+                                  <Image source={{ uri: `https://cureofine.com/upload/hospital/${hospitals[0].image}` }} style={{ height: 150, width: 150, resizeMode: "cover" }} />
                                   {
                                       console.log(hospitals[0].image)
                                   }

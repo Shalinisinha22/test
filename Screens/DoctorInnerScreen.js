@@ -27,39 +27,54 @@ import Footer from "../Components/Footer";
 SplashScreen.preventAutoHideAsync();
 
 
-const AyurvedaInnerScreen = ({ navigation }) => {
+const DoctorInnerScreen = ({ navigation }) => {
 
     const route = useRoute();
 
     // console.log(route.params.id)
 
-    const [ayurveda, setAyurveda] = useState('')
+    const [doctor, setDoctor] = useState('')
+    const [languages,setLanguages]= useState('')
 
-    const getAyurveda = async () => {
+    const getDoctor = async () => {
 
-        const res = await axios.get("https://cureofine-azff.onrender.com/ayurveda")
+        const res = await axios.get("https://cureofine-azff.onrender.com/doctorsList")
         const data = res.data
-        let newArr = await data.filter((item) => { return item.ayu_id == route.params.id })
+        let newArr = await data.filter((item) => { return item.doctor_id == route.params.id })
         // console.log(newArr)
-        setAyurveda(newArr)
+        setDoctor(newArr)
+        const LanguageArr = JSON.parse(newArr[0].language)
+        // console.log("46",LanguageArr)
+        getLanguages(LanguageArr)
+     
+
     }
 
+
+    const getLanguages = async(LanguageArr)=>{
+        const res1 = await axios.get("https://cureofine-azff.onrender.com/languages")
+        const data1 = res1.data
+        let langArr1=[]
+        for(let i=0;i<LanguageArr.length;i++){
+            langArr1.push(await data1.filter((item) => { return item.mas_id == LanguageArr[i] }))
+       }
+    //    console.log(langArr1)
+       setLanguages(langArr1)
+       
+    }
     useEffect(() => {
-        getAyurveda()
-    }, [ayurveda])
+        getDoctor()
+    }, [doctor])
 
     return (
         <View style={{ backgroundColor: "white", height: "100%" }}>
             <Header navigation={navigation}></Header>
 
-            {
-                ayurveda == '' ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            { doctor == '' ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                     <ActivityIndicator color={"#f08080"} size={"large"} />
                 </View>
 
                     :
-
-
                     <ScrollView>
 
                         <Text
@@ -86,24 +101,62 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                         <View style={{ marginTop: 20, paddingBottom: 50 }}>
 
                   
-                        <Text style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>Ayurveda</Text>
+                        <Text style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>{doctor[0].name}</Text>
 
                                 <ImageBackground
-                                    style={{ width, height:300, marginTop: 25, resizeMode: "contain",margin:2 }}
-                                    source={{ uri: `https://cureofine.com/upload/ayurveda/${ayurveda[0].image}` }}
+                                    style={{ width, height:300, marginTop: 20, resizeMode: "contain",margin:2 }}
+                                    source={{ uri: `https://cureofine.com/upload/profile/${doctor[0].profile_img}` }}
                                
                                 >
-
-
 
                                 </ImageBackground>
 
                 
 
                             <View style={{ padding: 10, paddingTop: 10 }}>
-                                <Text style={{ fontSize: 18, fontWeight: "500" }}>
-                                    {ayurveda[0].name}
+                                <Text style={{ fontSize: 15 }}>
+                                  Gender:  {doctor[0].gender}
                                 </Text>
+                                <Text style={{ fontSize: 15 }}>
+                                  Department:  {doctor[0].department}
+                                </Text>
+                                <Text style={{ fontSize: 15 }}>
+                                   Registration No: {doctor[0].reg_num}
+                                </Text>
+                                <Text style={{ fontSize: 15 }}>
+                                    Experience:  {doctor[0].experience} years
+                                </Text>
+                                <Text style={{ fontSize: 15 }}>
+                                    Qualification:  {doctor[0].qualification}
+                                </Text>
+                                <View style={{flexDirection:"row" }}>
+                                <Text style={{ fontSize: 15, }}>
+                                 Language:   
+                                </Text>
+
+
+                                <View style={{flexDirection:"row"}}>
+                                {languages!="" &&
+                                
+                                
+                                languages.map(item=>(
+
+                                    <Text style={{ fontSize: 15,marginLeft:5}}> 
+                                       {item[0].name}  </Text>
+                                ))}
+                                </View>
+     
+                            
+                                </View>
+                             
+                           
+                                   
+                                    
+
+                                {/* <Text style={{ fontSize: 18 }}>
+                                   Language:  {doctor[0].language}
+                             
+                                </Text> */}
                                 {/* <View
                             style={{
                                 flexDirection: "row",
@@ -133,7 +186,7 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                                 >
                                     <Text>Description: </Text>
                                     <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
-                                        {ayurveda[0].details}
+                                        {doctor[0].details}
                                     </Text>
                                 </View>
 
@@ -146,51 +199,12 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                                     }}
                                 />
 
-                                <View style={{ padding: 8 }}>
-                                    <Text
-                                        style={{
-                                            fontSize: 15,
-                                            fontWeight: "bold",
-                                            marginVertical: 5,
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                     <FontAwesome name="rupee" size={16} color="#103042" /> {ayurveda[0].offer_price}
-                                    </Text>
-                                </View>
+                       
                             </View>
 
 
 
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: "#f08080",
-                                    padding: 10,
-                                    borderRadius: 20,
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    marginHorizontal: 15,
-                                    marginVertical: 0,
-                                }}
-                                onPress={() => navigation.navigate("Login")}
-                            >
-                                <Text>Book Now</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: "#f08080",
-                                    padding: 10,
-                                    borderRadius: 20,
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    marginHorizontal: 15,
-                                    marginVertical: 0,
-                                    marginTop:10
-                                }}
-                                onPress={() => navigation.navigate("Login")}
-                            >
-                                <Text>EMI</Text>
-                            </TouchableOpacity>
+                     
 
 
 
@@ -212,6 +226,6 @@ const AyurvedaInnerScreen = ({ navigation }) => {
     )
 }
 
-export default AyurvedaInnerScreen
+export default DoctorInnerScreen
 
 

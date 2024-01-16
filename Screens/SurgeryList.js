@@ -91,7 +91,7 @@ renderItem={({ item, index }) => (
 <TouchableOpacity style={{margin:10,width:170,alignItems:"center",margin:10,padding:10,elevation:3,borderRadius:5}}>
 
 <View style={{width:"100%", alignItems:"center"}}>
-<Image style={{width:100,height:100}} source={{ uri: `http://cureofine.com/new_demo/upload/surgerycat/${item.image}` }} />
+<Image style={{width:100,height:100}} source={{ uri: `https://cureofine.com/upload/surgerycat/${item.image}` }} />
 
 </View>
 
@@ -199,7 +199,7 @@ export default SurgeryList
                             //         <Image
                             //           style={{width:"100%",height:100}}
                             //           resizeMode="contain"
-                            //           source={{uri:`http://cureofine.com/new_demo/upload/surgerycat/${item.image}`}}                                    />
+                            //           source={{uri:`https://cureofine.com/upload/surgerycat/${item.image}`}}                                    />
                             //  <Card.Title>{item.name}</Card.Title>
                             //     <Card.Divider/>
                             //     <View style={{position:"relative",alignItems:"center"}}>
@@ -214,8 +214,8 @@ export default SurgeryList
                                 // <Card key={item.id} style={{ margin: 10, backgroundColor:"white" }} >
 
                                 //     <View style={{ flexDirection: "row", width: "100%", alignItems: "center" }}>
-                                //         {/* http://cureofine.com/new_demo/upload/surgerycat/ */}
-                                //         <Image source={{uri:`http://cureofine.com/new_demo/upload/surgerycat/${item.image}`}} style={{ height: 150, width: 168, resizeMode: "cover" }} />
+                                //         {/* https://cureofine.com/upload/surgerycat/ */}
+                                //         <Image source={{uri:`https://cureofine.com/upload/surgerycat/${item.image}`}} style={{ height: 150, width: 168, resizeMode: "cover" }} />
 
                                 //         <View style={{ marginLeft: 8, flexWrap: "wrap" }}>
 

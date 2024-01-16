@@ -16,7 +16,7 @@ const HomeBanner = () => {
         let imgArr = []
         for (let i = 0; i < data.length; i++) {
             if(data[i].page == "main-page"){ 
-                imgArr.push({ image: `http://cureofine.com/new_demo/upload/banner/${data[i].image}`, id: data[i].id });
+                imgArr.push({ image: `https://cureofine.com/upload/banner/${data[i].image}`, id: data[i].id });
             }
     
         }
