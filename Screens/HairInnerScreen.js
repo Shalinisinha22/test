@@ -23,6 +23,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { decode } from "html-entities";
 import RenderHTML from "react-native-render-html";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AntDesign } from '@expo/vector-icons';
 SplashScreen.preventAutoHideAsync();
 
 
@@ -58,47 +59,35 @@ const HairInnerScreen = ({ navigation}) => {
      
 
        const getSurgeryHospital = async(id)=>{
-            const res= await axios.get("https://cureofine-azff.onrender.com/hospitals")
-            const data = res.data
-            let newArr= await data.filter((item)=>{ return item.hos_id == id})
-            // console.log("newarr",newArr)
-           setHospitals(newArr)
-       }
-       useEffect(() => {    
-       surgery!= "" && surgery.map((item) => {
-          getSurgeryHospital(item.hospital);
-        });
-        }, [surgery]);
-
-       const getFacility = async(id)=>{
-        const res= await axios.get("https://cureofine-azff.onrender.com/facilityType")
+        const res= await axios.get("https://cureofine-azff.onrender.com/hospitals")
         const data = res.data
-        let newArr= await data.filter((item)=>{ return item.fac_id == id})
+        let newArr= await data.filter((item)=>{ return item.hos_id == id})
+        let facArr = JSON.parse(newArr[0].facility_type)
+        console.log("69",facArr.length)
+         getFacility(facArr)
+
         // console.log("newarr",newArr)
-       return newArr.name
-       }
+       setHospitals(newArr)
+   }
+   useEffect(() => {    
+   surgery!= "" && surgery.map((item) => {
+      getSurgeryHospital(item.hospital);
+    });
+    }, [surgery]);
+
+   const getFacility = async(facArr)=>{
+    const res= await axios.get("https://cureofine-azff.onrender.com/facilityType")
+    const data = res.data
+    let facArr1 = []
+    for (let i = 0; i < facArr.length; i++) {
+        facArr1.push(await data.filter((item) => { return item.fac_id == facArr[i] }))
+    }
        
-      //  useEffect(() => {    
+    setFacility(facArr1)
+
+   }
+       
     
-      //  hospitals!="" && console.log(hospitals[0].facility_type)
-      //   let facility = hospitals[0].facility_type.split(",")
-      //   console.log(facility[0])
- 
-      // //   for(let i=0;i<=hospitals[0].facility_type.length;i++){
-      // //    facility.push(getFacility(hospitals[0].facility_type[i])) 
-      // //   }
-      // //  console.log("facility",facility)
-      // //   setFacility(facility)
-      //   // hospitals!= "" && hospitals[0].facility_type.map((fid) => {
-      //   //   console.log(fid)
-      //   //    getFacility(fid);
-      //   //  });
-      //    }, [hospitals]);
-
-    // https://cureofine-azff.onrender.com/hospitals
-
-
-    // const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
     return (
         <View style={{ backgroundColor: "white", height: "100%" }}>
         <Header navigation={navigation}></Header>
@@ -132,7 +121,10 @@ const HairInnerScreen = ({ navigation}) => {
                             {/* <ActivityIndicator color={"#f08080"} size={"large"} /> */}
                             <Text style={{fontSize:20, color:"#103042",fontWight:500}}>Hospitals</Text>
                         </View> :
-                        surgery.map((item) => (
+
+<View style={{ flex: 1 }}>
+<Text style={{fontSize:18, color:"#103042",fontWight:500,marginLeft:20}}>{route.params.name} Hospitals</Text>
+                        {surgery.map((item) => (
                             // getSurgeryHospital(item.hospital)
 
                             hospitals != "" &&
@@ -155,12 +147,13 @@ const HairInnerScreen = ({ navigation}) => {
                                         <Card.Content>
                                             <Text style={{ fontWeight: "bold" }}>{decode(hospitals[0].name)}</Text>
 
-                                            <Text variant="bodyMedium">Facilities </Text>
-                                            <Text style={{ color: "#f46b78", fontSize: 10, marginTop: 10 }}>Wifi Facility</Text>
-                                            <Text style={{ color: "#f46b78", fontSize: 10 }} >Diagonostic</Text>
-                                            <Text style={{ color: "#f46b78", fontSize: 10 }}>Pharmacy</Text>
+                                            <Text variant="bodyMedium" style={{color:"gray",marginTop:5}}>Facilities </Text>
+                                          {facility!= "" && facility.map(item=>(
+                                           <Text style={{ color: "#f46b78", fontSize: 10, marginTop: 5 }}>  <AntDesign name="arrowright" size={12} color="#f46b78" />   {item[0].name}</Text>
+                                          ))}
+                                          
 
-                                            <Text style={{ fontWeight: "bold", marginTop: 10 }}>{item.name}</Text>
+                                            <Text style={{ fontWeight: "bold", marginTop: 12 }}>{item.name}</Text>
                                             <Text variant="bodyMedium" style={{ textDecorationLine: "line-through", color: "gray" }}><FontAwesome name="rupee" size={16} color="gray" /> {item.price}</Text>
                                             <Text variant="bodyMedium" style={{ fontSize: 18, fontWeight: 500 }} ><FontAwesome name="rupee" size={16} color="#103042" /> {item.offer_price}</Text>
                                             {/* <Text style={{textAlign:"justify"}}>{item.details} </Text> */}
@@ -178,13 +171,14 @@ const HairInnerScreen = ({ navigation}) => {
                                 <Card.Actions style={{ marginTop: 10,marginRight:30 }}>
 
 
-                                    <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() => navigation.navigate("Login")}><Text style={{ color: "white" }}>Book Now</Text></Button>
-                                    <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() => navigation.navigate("Login")}><Text style={{ color: "white" }}>EMI</Text></Button>
+                                <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() => navigation.navigate("BookingScreen",{id:item.ser_id,name:item.name,price:item.offer_price})}><Text style={{ color: "white" }}>Book Now</Text></Button>
+                            <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() =>  navigation.navigate("EmiScreen",{id:item.ser_id,name:item.name,price:item.offer_price})}><Text style={{ color: "white" }}>EMI</Text></Button>
                                 </Card.Actions>
                             </Card>
 
 
-                        ))
+                        ))}
+                        </View>
 
                 }
             </View>

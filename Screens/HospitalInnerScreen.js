@@ -147,6 +147,9 @@ const HospitalInnerScreen = ({ navigation }) => {
                                      <AntDesign name="arrowright" size={20} color="#f46b78" />   {item[0].name}  </Text>
                                 ))}
 
+
+<Text style={{fontWight:500,color:"gray",marginTop:5}}>{hospital[0].hospital_time}</Text>
+{/* 
                             <Text
                                 style={{
                                     height: 1,
@@ -154,7 +157,7 @@ const HospitalInnerScreen = ({ navigation }) => {
                                     borderWidth: 1,
                                     marginTop: 10,
                                 }}
-                            />
+                            /> */}
 
                         </View>
 

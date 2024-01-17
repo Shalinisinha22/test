@@ -108,7 +108,7 @@ renderItem={({ item, index }) => (
                       marginTop: 10,
                       borderRadius: 4,
                     }}
-                    onPress={()=>navigation.navigate("IvfInnerScreen", {id:item.cat_id})}
+                    onPress={()=>navigation.navigate("IvfInnerScreen", {id:item.cat_id,name:item.name})}
                   
                   >
                     <Text

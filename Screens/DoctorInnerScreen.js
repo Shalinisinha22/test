@@ -186,7 +186,7 @@ const DoctorInnerScreen = ({ navigation }) => {
                                 >
                                     <Text>Description: </Text>
                                     <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
-                                        {doctor[0].details}
+                                        {decode(doctor[0].details)}
                                     </Text>
                                 </View>
 

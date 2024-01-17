@@ -109,7 +109,7 @@ const Dental = ({ navigation }) => {
                                                 marginTop: 10,
                                                 borderRadius: 4,
                                             }}
-                                            onPress={()=>navigation.navigate("DentalInnerScreen", {id:item.cat_id})}
+                                            onPress={()=>navigation.navigate("DentalInnerScreen", {id:item.cat_id,name:item.name})}
 
                                         >
                                             <Text

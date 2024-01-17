@@ -62,6 +62,8 @@ import HairInnerScreen from "../Screens/HairInnerScreen";
 import AyurvedaInnerScreen from "../Screens/AyurvedaInnerScreen";
 import DoctorInnerScreen from "../Screens/DoctorInnerScreen";
 import HospitalInnerScreen from "../Screens/HospitalInnerScreen";
+import BookingScreen from "../Screens/BookingScreen";
+import EmiScreen from "../Screens/EmiScreen";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -338,6 +340,16 @@ const AppNavigator = () => {
         <Stack.Screen
           name="HospitalInnerScreen"
           component={HospitalInnerScreen}
+          options={{ headerShown: false }}
+        />
+           <Stack.Screen
+          name="BookingScreen"
+          component={BookingScreen}
+          options={{ headerShown: false }}
+        />
+            <Stack.Screen
+          name="EmiScreen"
+          component={EmiScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

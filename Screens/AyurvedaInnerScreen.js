@@ -172,7 +172,7 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                                     marginHorizontal: 15,
                                     marginVertical: 0,
                                 }}
-                                onPress={() => navigation.navigate("Login")}
+                                onPress={() => navigation.navigate("BookingScreen",{id:ayurveda[0].ayu_id,name:ayurveda[0].name,price:ayurveda[0].offer_price})}
                             >
                                 <Text>Book Now</Text>
                             </TouchableOpacity>
@@ -187,7 +187,7 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                                     marginVertical: 0,
                                     marginTop:10
                                 }}
-                                onPress={() => navigation.navigate("Login")}
+                                onPress={() => navigation.navigate("EmiScreen",{id:ayurveda[0].ayu_id,name:ayurveda[0].name,price:ayurveda[0].offer_price})}
                             >
                                 <Text>EMI</Text>
                             </TouchableOpacity>

@@ -223,16 +223,16 @@ borderRadius: 5,
 
       <Card.Actions style={{ marginTop: 10 }}>
         <View>
-          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() => navigation.navigate("SurgeryInner", { id: item.hid })}><Text style={{ color: "white", fontSize: 10, justifyContent: "space-between" }}><Feather name="phone-call" size={18} color="white" />  On Call</Text></Button>
+          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() => navigation.navigate("BookingScreen", { id: item.doctor_id })}><Text style={{ color: "white", fontSize: 10, justifyContent: "space-between" }}><Feather name="phone-call" size={18} color="white" />  On Call</Text></Button>
           <Text style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}> <FontAwesome name="rupee" size={20} color="#103042" />  {item.voice_fee}/-</Text>
         </View>
         <View>
-          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() => navigation.navigate("SurgeryInner", { id: item.hid })}><Text style={{ color: "white", fontSize: 10 }}><Feather name="video" size={18} color="white" />  Video Call</Text></Button>
+          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() => navigation.navigate("BookingScreen", { id: item.doctor_id })}><Text style={{ color: "white", fontSize: 10 }}><Feather name="video" size={18} color="white" />  Video Call</Text></Button>
           <Text style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}> <FontAwesome name="rupee" size={20} color="#103042" />  {item.video_fee}/-</Text>
 
         </View>
         <View>
-          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() => navigation.navigate("SurgeryInner", { id: item.hid })}><Text style={{ color: "white", fontSize: 10 }}><Ionicons name="chatbubble-ellipses-outline" size={18} color="white" />  On Chat</Text></Button>
+          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() => navigation.navigate("BookingScreen", { id: item.doctor_id })}><Text style={{ color: "white", fontSize: 10 }}><Ionicons name="chatbubble-ellipses-outline" size={18} color="white" />  On Chat</Text></Button>
           <Text style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}> <FontAwesome name="rupee" size={20} color="#103042" />  {item.chat_fee}/-</Text>
 
         </View>

@@ -110,7 +110,7 @@ renderItem={({ item, index }) => (
                       marginTop: 10,
                       borderRadius: 4,
                     }}
-                    onPress={()=>navigation.navigate("HairInnerScreen", {id:item.cat_id})}
+                    onPress={()=>navigation.navigate("HairInnerScreen", {id:item.cat_id,name:item.name})}
                   
                   >
                     <Text
