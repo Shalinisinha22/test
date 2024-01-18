@@ -52,6 +52,7 @@ import HomeBanner from "./HomeBanner";
 import CallBanner from "../Components/CallBanner";
 import Testimonials from "./Testimonials";
 import Hospitals from "../Components/Hospitals";
+import OfferBanner from "./OfferBanner";
 
 // import { TouchableOpacity } from "react-native-gesture-handler";
 SplashScreen.preventAutoHideAsync();
@@ -494,8 +495,22 @@ const Home = ({ navigation }) => {
             style={{
               height: 1,
               borderColor: "#D0D0D0",
-              borderWidth: 2,
+              borderWidth: 1,
               marginTop: 10,
+              marginBottom:10
+            }}
+          />
+
+          <OfferBanner></OfferBanner>
+
+
+          <Text
+            style={{
+              height: 1,
+              borderColor: "#D0D0D0",
+              borderWidth: 1,
+              marginTop: 10,
+              marginBottom:10
             }}
           />
 
@@ -594,7 +609,7 @@ const Home = ({ navigation }) => {
               marginTop: 15,
             }}
           />
-
+        
 
 
           {/* contact */}

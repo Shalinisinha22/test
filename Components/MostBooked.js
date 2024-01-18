@@ -148,7 +148,8 @@ const tagsStyles = {
               marginRight: 4,
               marginLeft: 4,
               marginTop:10,
-              elevation:5,
+              
+              
             }}
             onPress={() =>
               navigation.navigate(decode(item.name))

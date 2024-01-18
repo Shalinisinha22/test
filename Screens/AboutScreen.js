@@ -29,6 +29,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useWindowDimensions } from "react-native";
 import RenderHTML from "react-native-render-html";
 import CallBanner from "../Components/CallBanner"
+import OfferBanner from "./OfferBanner";
 SplashScreen.preventAutoHideAsync();
 
 const AboutScreen = ({ navigation }) => {
@@ -95,7 +96,7 @@ const AboutScreen = ({ navigation }) => {
         onLayout={onLayoutRootView}
         style={{ backgroundColor: "white" }}
       >
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
           <Carousel
             pagination={PaginationLight}
             renderItem={renderItem}
@@ -103,7 +104,8 @@ const AboutScreen = ({ navigation }) => {
             loop
             autoplay
           />
-        </View>
+        </View> */}
+       
 
         <Text
           style={{
@@ -175,9 +177,19 @@ const AboutScreen = ({ navigation }) => {
             borderColor: "#D0D0D0",
             borderWidth: 2,
             marginTop: 15,
+            marginBottom: 15,
           }}
         />
 
+<OfferBanner></OfferBanner>
+<Text
+          style={{
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15,
+          }}
+        />
         <Teams navigation={navigation}></Teams>
         <Text
           style={{

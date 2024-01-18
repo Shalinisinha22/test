@@ -24,8 +24,9 @@ import { useRoute } from "@react-navigation/native";
 
 const BookingScreen = ({ navigation }) => {
     const route = useRoute()
-
-
+    console.log(route.params.price)
+    const [service,setService]= useState(route.params.name);
+    const [price,setPrice] = useState(route.params.price)
     const [gender, setGender] = React.useState("");
     const {
         register,
@@ -80,13 +81,13 @@ const BookingScreen = ({ navigation }) => {
                     borderWidth: 2,
                     marginTop: 15,
                 }}
-            />
+            ></Text>
             <ScrollView>
                 <View style={styles.safeArea}>
                     <KeyboardAvoidingView>
                         <View style={{ alignItems: "center", marginTop: 5 }}>
                             <Text style={{ color: "gray", fontSize: 15 }}>
-                                Book Now
+                                Book Now  
                             </Text>
                         </View>
 
@@ -216,6 +217,27 @@ const BookingScreen = ({ navigation }) => {
 
 
 
+                            </View>
+
+                        </View>
+
+                        {console.log(route.params.price)}
+
+                        <View style={styles.inputCont}>
+                            <Text>Surgery Cost</Text>
+                            <View style={styles.inputBoxCont}>
+                            <TextInput
+                                    autoFocus={true}
+                                   
+                                    style={{
+                                        color: "gray",
+                                        marginVertical: 5,
+                                        width: 300,
+                                        fontSize: 16,
+                                    }}
+                                    value={`Rs ${route.params.price}`}
+                                />
+                             
                             </View>
 
                         </View>

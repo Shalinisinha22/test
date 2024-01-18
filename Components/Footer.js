@@ -37,7 +37,7 @@ Making healthcare
   Affordable
 </Text>
 <Text style={{ textAlign: "center", fontSize: 10 , marginTop:15}}>
-  Made with ❤ by Cureo Fine
+  Made with ❤ by CureOFine
 </Text>
 </View>
 </View>

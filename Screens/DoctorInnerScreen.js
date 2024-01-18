@@ -34,7 +34,9 @@ const DoctorInnerScreen = ({ navigation }) => {
     // console.log(route.params.id)
 
     const [doctor, setDoctor] = useState('')
-    const [languages,setLanguages]= useState('')
+    const [languages, setLanguages] = useState('')
+    const [department, setDepartment] = useState('')
+    const [qualification, setQualification] = useState('')
 
     const getDoctor = async () => {
 
@@ -43,24 +45,41 @@ const DoctorInnerScreen = ({ navigation }) => {
         let newArr = await data.filter((item) => { return item.doctor_id == route.params.id })
         // console.log(newArr)
         setDoctor(newArr)
+        const department = newArr[0].department
+        const qualification = newArr[0].qualification
         const LanguageArr = JSON.parse(newArr[0].language)
-        // console.log("46",LanguageArr)
+        // console.log("46",department)
+        getDepartment(department)
+        getQualification(qualification)
         getLanguages(LanguageArr)
-     
+
 
     }
+    const getDepartment = async (department) => {
+        const res1 = await axios.get("https://cureofine-azff.onrender.com/dept")
+        const data1 = res1.data
+        let newArr = await data1.filter((item) => { return item.mas_id == department })
+        // console.log(newArr)
+        setDepartment(newArr)
 
+    }
+    const getQualification = async (qualification) => {
+        const res1 = await axios.get("https://cureofine-azff.onrender.com/qualification")
+        const data1 = res1.data
+        let newArr = await data1.filter((item) => { return item.mas_id == department })
+        // console.log(newArr)
+        setQualification(newArr)
 
-    const getLanguages = async(LanguageArr)=>{
+    }
+    const getLanguages = async (LanguageArr) => {
         const res1 = await axios.get("https://cureofine-azff.onrender.com/languages")
         const data1 = res1.data
-        let langArr1=[]
-        for(let i=0;i<LanguageArr.length;i++){
+        let langArr1 = []
+        for (let i = 0; i < LanguageArr.length; i++) {
             langArr1.push(await data1.filter((item) => { return item.mas_id == LanguageArr[i] }))
-       }
-    //    console.log(langArr1)
-       setLanguages(langArr1)
-       
+        }
+        //    console.log(langArr1)
+        setLanguages(langArr1)
     }
     useEffect(() => {
         getDoctor()
@@ -70,94 +89,104 @@ const DoctorInnerScreen = ({ navigation }) => {
         <View style={{ backgroundColor: "white", height: "100%" }}>
             <Header navigation={navigation}></Header>
 
-            { doctor == '' ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                    <ActivityIndicator color={"#f08080"} size={"large"} />
-                </View>
+            {doctor == '' ? <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <ActivityIndicator color={"#f08080"} size={"large"} />
+            </View>
 
-                    :
-                    <ScrollView>
+                :
+                <ScrollView>
 
-                        <Text
-                            style={{
-                                height: 1,
-                                borderColor: "whitesmoke",
-                                borderWidth: 2,
-                                marginTop: 15,
-                            }}
-                        />
+                    <Text
+                        style={{
+                            height: 1,
+                            borderColor: "whitesmoke",
+                            borderWidth: 2,
+                            marginTop: 15,
+                        }}
+                    />
 
-                        <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                        <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
-                        <Text
-                            style={{
-                                height: 1,
-                                borderColor: "whitesmoke",
-                                borderWidth: 2,
-                                marginTop: 15,
-                            }}
-                        />
+                    <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                    <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                    <Text
+                        style={{
+                            height: 1,
+                            borderColor: "whitesmoke",
+                            borderWidth: 2,
+                            marginTop: 15,
+                        }}
+                    />
 
 
-                        <View style={{ marginTop: 20, paddingBottom: 50 }}>
+                    <View style={{ marginTop: 20, paddingBottom: 50 }}>
 
-                  
+
                         <Text style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>{doctor[0].name}</Text>
 
-                                <ImageBackground
-                                    style={{ width, height:300, marginTop: 20, resizeMode: "contain",margin:2 }}
-                                    source={{ uri: `https://cureofine.com/upload/profile/${doctor[0].profile_img}` }}
-                               
-                                >
+                        <ImageBackground
+                            style={{ width, height: 300, marginTop: 20, resizeMode: "contain", margin: 2 }}
+                            source={{ uri: `https://cureofine.com/upload/profile/${doctor[0].profile_img}` }}
 
-                                </ImageBackground>
+                        >
 
-                
+                        </ImageBackground>
 
-                            <View style={{ padding: 10, paddingTop: 10 }}>
+
+
+                        <View style={{ padding: 10, paddingTop: 10 }}>
+                            <Text style={{ fontSize: 15 }}>
+                                Gender:  {doctor[0].gender}
+                            </Text>
+                            {
+                                department != "" &&
+
                                 <Text style={{ fontSize: 15 }}>
-                                  Gender:  {doctor[0].gender}
+                                    Department:  {decode(department[0].name)}
                                 </Text>
+                            }
+
+                            <Text style={{ fontSize: 15 }}>
+                                Registration No: {doctor[0].reg_num}
+                            </Text>
+                            <Text style={{ fontSize: 15 }}>
+                                Experience:  {doctor[0].experience} years
+                            </Text>
+
+                            {
+                                qualification != "" &&
                                 <Text style={{ fontSize: 15 }}>
-                                  Department:  {doctor[0].department}
+                                    Qualification:  {qualification[0].name}
                                 </Text>
-                                <Text style={{ fontSize: 15 }}>
-                                   Registration No: {doctor[0].reg_num}
-                                </Text>
-                                <Text style={{ fontSize: 15 }}>
-                                    Experience:  {doctor[0].experience} years
-                                </Text>
-                                <Text style={{ fontSize: 15 }}>
-                                    Qualification:  {doctor[0].qualification}
-                                </Text>
-                                <View style={{flexDirection:"row" }}>
+                            }
+
+                            <View style={{ flexDirection: "row" }}>
                                 <Text style={{ fontSize: 15, }}>
-                                 Language:   
+                                    Language:
                                 </Text>
 
 
-                                <View style={{flexDirection:"row"}}>
-                                {languages!="" &&
-                                
-                                
-                                languages.map(item=>(
+                                <View style={{ flexDirection: "row" }}>
+                                    {languages != "" &&
 
-                                    <Text style={{ fontSize: 15,marginLeft:5}}> 
-                                       {item[0].name}  </Text>
-                                ))}
-                                </View>
-     
-                            
-                                </View>
-                             
-                           
-                                   
-                                    
 
-                                {/* <Text style={{ fontSize: 18 }}>
+                                        languages.map(item => (
+
+                                            <Text style={{ fontSize: 15, marginLeft: 5 }}>
+                                                {item[0].name}  </Text>
+                                        ))}
+                                </View>
+
+
+                            </View>
+
+
+
+
+
+                            {/* <Text style={{ fontSize: 18 }}>
                                    Language:  {doctor[0].language}
                              
                                 </Text> */}
-                                {/* <View
+                            {/* <View
                             style={{
                                 flexDirection: "row",
                                 justifyContent: "flex-start",
@@ -168,59 +197,59 @@ const DoctorInnerScreen = ({ navigation }) => {
                             <Text>Session: </Text>
                             <Text style={{ color: "#eb3b5a" }}>{route.params.item?.duration} minutes</Text>
                         </View> */}
-                                <Text
-                                    style={{
-                                        height: 1,
-                                        borderColor: "#D0D0D0",
-                                        borderWidth: 1,
-                                        marginTop: 10,
-                                    }}
-                                />
+                            <Text
+                                style={{
+                                    height: 1,
+                                    borderColor: "#D0D0D0",
+                                    borderWidth: 1,
+                                    marginTop: 10,
+                                }}
+                            />
 
-                                <View
-                                    style={{
-                                        flexDirection: "column",
-                                        alignItems: "flex-start",
-                                        padding: 2,
-                                    }}
-                                >
-                                    <Text>Description: </Text>
-                                    <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
-                                        {decode(doctor[0].details)}
-                                    </Text>
-                                </View>
-
-                                <Text
-                                    style={{
-                                        height: 1,
-                                        borderColor: "#D0D0D0",
-                                        borderWidth: 1,
-                                        marginTop: 10,
-                                    }}
-                                />
-
-                       
+                            <View
+                                style={{
+                                    flexDirection: "column",
+                                    alignItems: "flex-start",
+                                    padding: 2,
+                                }}
+                            >
+                                <Text>Description: </Text>
+                                <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
+                                    {decode(doctor[0].details)}
+                                </Text>
                             </View>
 
-
-
-                     
-
+                            <Text
+                                style={{
+                                    height: 1,
+                                    borderColor: "#D0D0D0",
+                                    borderWidth: 1,
+                                    marginTop: 10,
+                                }}
+                            />
 
 
                         </View>
 
 
 
-                        <Contact></Contact>
-            <Footer></Footer>
 
-                    </ScrollView>
+
+
+
+                    </View>
+
+
+
+                    <Contact></Contact>
+                    <Footer></Footer>
+
+                </ScrollView>
 
             }
 
 
-        
+
 
         </View>
     )

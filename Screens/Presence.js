@@ -9,6 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import Contact from '../Components/Contact'
 import Footer from '../Components/Footer'
 import Location from '../Components/Location'
+import OfferBanner from './OfferBanner';
 
 const Presence = ({navigation}) => {
 
@@ -57,7 +58,7 @@ const Presence = ({navigation}) => {
   <ScrollView>
 
         {/* banner slider start */}
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
             <Carousel
               pagination={PaginationLight}
               renderItem={renderItem}
@@ -65,9 +66,29 @@ const Presence = ({navigation}) => {
               loop
               autoplay
             />
-          </View>
+          </View> */}
           {/* banner slider end */}
+       
     <Location navigation={navigation}></Location>
+    <Text
+          style={{
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15,
+            marginBottom: 15,
+          }}
+        />
+    <OfferBanner></OfferBanner>
+    <Text
+          style={{
+            height: 1,
+            borderColor: "#D0D0D0",
+            borderWidth: 2,
+            marginTop: 15,
+           
+          }}
+        />
     <Contact></Contact>
     <Footer></Footer>
   </ScrollView>

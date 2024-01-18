@@ -25,6 +25,8 @@ import MostBooked from "../Components/MostBooked";
 import axios from "axios";
 import { decode } from "html-entities";
 import RenderHTML from "react-native-render-html";
+import HomeBanner from "./HomeBanner";
+import OfferBanner from "./OfferBanner";
 const ServiceScreen = ({ navigation }) => {
   const list = [
     {
@@ -260,7 +262,7 @@ const ServiceScreen = ({ navigation }) => {
 
 
         {/* banner slider start */}
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
           <Carousel
             pagination={PaginationLight}
             renderItem={renderItem}
@@ -268,17 +270,21 @@ const ServiceScreen = ({ navigation }) => {
             loop
             autoplay
           />
-        </View>
-        {/* banner slider end */}
-
-        <Text
+        </View> */}
+{/* <Text
           style={{
             height: 1,
             borderColor: "#D0D0D0",
             borderWidth: 2,
             marginTop: 5,
+            marginBottom:10
           }}
         />
+        <HomeBanner></HomeBanner> */}
+    
+        {/* banner slider end */}
+
+        
 
         {/* <Deals navigation={navigation}></Deals> */}
         <Text
@@ -298,11 +304,12 @@ const ServiceScreen = ({ navigation }) => {
             borderColor: "#D0D0D0",
             borderWidth: 2,
             marginTop: 15,
+            marginBottom: 10,
           }}
         />
 
         {/* banner slider start */}
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
           <Carousel
             pagination={PaginationLight}
             renderItem={renderItem}
@@ -310,7 +317,8 @@ const ServiceScreen = ({ navigation }) => {
             loop
             autoplay
           />
-        </View>
+        </View> */}
+        <OfferBanner></OfferBanner>
         {/* banner slider end */}
 
         <Text
@@ -318,7 +326,7 @@ const ServiceScreen = ({ navigation }) => {
             height: 1,
             borderColor: "#D0D0D0",
             borderWidth: 2,
-            marginTop: 5,
+            marginTop: 10,
           }}
         />
         <Contact></Contact>
