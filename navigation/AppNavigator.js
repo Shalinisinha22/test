@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import React, { useState, UseEffect, useMemo, useRef } from "react";
+import React, { useState, UseEffect, useMemo, useRef, useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -33,6 +33,7 @@ import Refund from "../Screens/Refund";
 import { Foundation } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+
 import Refer from "../Screens/Refer";
 import ShareScreen from "../Screens/Share";
 import Consultation from "../Screens/Consultation";
@@ -64,12 +65,19 @@ import DoctorInnerScreen from "../Screens/DoctorInnerScreen";
 import HospitalInnerScreen from "../Screens/HospitalInnerScreen";
 import BookingScreen from "../Screens/BookingScreen";
 import EmiScreen from "../Screens/EmiScreen";
-
+import SignInScreen from "../Screens/SignInScreen";
+import { useSelector, useDispatch } from 'react-redux';
+import LogoutScreen from "../Screens/LogoutScreen";
+import { logoutUser } from "../redux/actions/userActions";
+import ProfileScreen from "../Screens/ProfileScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
+
 const AppNavigator = () => {
+
 
 
   const drawerMenu = [
@@ -83,10 +91,10 @@ const AppNavigator = () => {
         { id: 3, name: "Dental", url: "Dental" },
         { id: 4, name: "Hair & Cosmetic", url: "Hair & Cosmetic" },
         { id: 5, name: "Ayurveda", url: "Ayurveda" }
- 
+
       ],
       icon: <MaterialIcons name="medical-services" size={24} color="white" />,
-      dropdownIcon: <AntDesign name="down" size={20} color="white"/>,
+      dropdownIcon: <AntDesign name="down" size={20} color="white" />,
       url: "Consulation",
     },
     {
@@ -147,7 +155,15 @@ const AppNavigator = () => {
     }
   ];
 
-  
+
+  const dispatch = useDispatch();
+  const userInfo = useSelector(state => state.user.userInfo);
+
+  const handleLogout = () => {
+    // Dispatch the logoutUser action to set userInfo to null
+    dispatch({ type: 'CLEAR_USER_INFO' });
+  };
+
   const onShare = async (url) => {
     try {
       const result = await Share.share({
@@ -249,7 +265,7 @@ const AppNavigator = () => {
           component={RegisterScreen}
           options={{ headerShown: false }}
         />
-       <Stack.Screen
+        <Stack.Screen
           name="OtpScreen"
           component={OtpScreen}
           options={{ headerShown: false }}
@@ -271,63 +287,63 @@ const AppNavigator = () => {
           component={SurgeryInfoScreen}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="Payment"
           component={PaymentScreen}
           options={{ headerShown: false }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="SingleTeam"
           component={SingleTeamScreen}
           options={{ headerShown: false }}
         />
-           <Stack.Screen
+        <Stack.Screen
           name="SurgeryInner"
           component={SurgeryInnerScreen}
           options={{ headerShown: false }}
         />
-           <Stack.Screen
+        <Stack.Screen
           name="SurgeryList"
           component={SurgeryList}
           options={{ headerShown: false }}
         />
-            <Stack.Screen
+        <Stack.Screen
           name="IVF"
           component={IVF}
           options={{ headerShown: false }}
         />
-            <Stack.Screen
+        <Stack.Screen
           name="Dental"
           component={Dental}
           options={{ headerShown: false }}
         />
-            <Stack.Screen
+        <Stack.Screen
           name="Hair & Cosmetic"
           component={HairCosmetic}
           options={{ headerShown: false }}
         />
-            <Stack.Screen
+        <Stack.Screen
           name="Ayurveda"
           component={Ayurveda}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="IvfInnerScreen"
           component={IvfInnerScreen}
           options={{ headerShown: false }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="DentalInnerScreen"
           component={DentalInnerScreen}
           options={{ headerShown: false }}
         />
-            <Stack.Screen
+        <Stack.Screen
           name="HairInnerScreen"
           component={HairInnerScreen}
           options={{ headerShown: false }}
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="AyurvedaInnerScreen"
           component={AyurvedaInnerScreen}
           options={{ headerShown: false }}
@@ -342,14 +358,20 @@ const AppNavigator = () => {
           component={HospitalInnerScreen}
           options={{ headerShown: false }}
         />
-           <Stack.Screen
+        <Stack.Screen
           name="BookingScreen"
           component={BookingScreen}
           options={{ headerShown: false }}
         />
-            <Stack.Screen
+        <Stack.Screen
           name="EmiScreen"
           component={EmiScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
@@ -436,10 +458,10 @@ const AppNavigator = () => {
                     onPress={() => {
                       item.name == "Share"
                         ? onShare(
-                            `https://expo.dev/artifacts/eas/5ua1tSJD4RS22HLuiVNHzJ.apk`
-                          )
+                          `https://expo.dev/artifacts/eas/5ua1tSJD4RS22HLuiVNHzJ.apk`
+                        )
                         :
-                     navigation.navigate(item.url);
+                        navigation.navigate(item.url);
                     }}
                   >
                     {item.icon}
@@ -466,100 +488,112 @@ const AppNavigator = () => {
     );
   };
 
-  const BottomNavigator = () => (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Home"
-        component={StackNavigator}
+  const BottomNavigator = () => {
+
+
+    return (
+      <Tab.Navigator>
+        <Tab.Screen
+          name="Home"
+          component={StackNavigator}
+          options={{
+            tabBarLabel: "Home",
+            tabBarLabelStyle: { color: "black" },
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <FontAwesome5 name="clinic-medical" size={24} color="#f08080" />
+              ) : (
+                <FontAwesome5 name="clinic-medical" size={24} color="gray" />
+              ),
+          }}
+        />
+        <Tab.Screen
+          name="About"
+          component={AboutScreen}
+          options={{
+            tabBarLabel: "About",
+            headerShown: false,
+            tabBarLabelStyle: { color: "black" },
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <Ionicons
+                  name="md-information-circle"
+                  size={24}
+                  color="#f08080"
+                />
+              ) : (
+                <Ionicons name="md-information-circle" size={24} color="gray" />
+              ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Services"
+          component={ServiceScreen}
+          options={{
+            tabBarLabel: "Services",
+            tabBarLabelStyle: { color: "black" },
+            headerShown: false,
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <Fontisto name="doctor" size={24} color="#f08080" />
+              ) : (
+                <Fontisto name="doctor" size={24} color="gray" />
+              ),
+          }}
+        />
+
+        <Tab.Screen
+          name="Enquiry"
+          component={EnquiryScreen}
+          options={{
+            headerShown: false,
+            tabBarLabel: "Enquiry",
+            tabBarLabelStyle: { color: "black" },
+            tabBarIcon: ({ focused }) =>
+              focused ? (
+                <MaterialCommunityIcons
+                  name="file-question"
+                  size={24}
+                  color="#f08080"
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="file-question"
+                  size={24}
+                  color="gray"
+                />
+              ),
+          }}
+        />
+
+
+<Tab.Screen
+        name={userInfo ? "ProfileScreen" : "Login"}
+        component={userInfo ? ProfileScreen : LoginScreen}
         options={{
-          tabBarLabel: "Home",
-          tabBarLabelStyle: { color: "black" },
           headerShown: false,
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <FontAwesome5 name="clinic-medical" size={24} color="#f08080" />
-            ) : (
-              <FontAwesome5 name="clinic-medical" size={24} color="gray" />
-            ),
-        }}
-      />
-      <Tab.Screen
-        name="About"
-        component={AboutScreen}
-        options={{
-          tabBarLabel: "About",
-          headerShown: false,
+          tabBarLabel: userInfo ? "Profile" : "Login",
           tabBarLabelStyle: { color: "black" },
-          tabBarIcon: ({ focused }) =>
+          tabBarIcon: ({ focused }) => (
             focused ? (
-              <Ionicons
-                name="md-information-circle"
-                size={24}
-                color="#f08080"
-              />
+            userInfo? <FontAwesome5 name="hospital-user" size={24} color="#f08080" />: <Ionicons name="enter" size={24} color="#f08080"  />
             ) : (
-              <Ionicons name="md-information-circle" size={24} color="gray" />
-            ),
+              userInfo? <FontAwesome5 name="hospital-user" size={24} color="#f08080" />: <Ionicons name="enter" size={24} color="gray"  />
+            )
+          ),
         }}
       />
 
-      <Tab.Screen
-        name="Services"
-        component={ServiceScreen}
-        options={{
-          tabBarLabel: "Services",
-          tabBarLabelStyle: { color: "black" },
-          headerShown: false,
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <Fontisto name="doctor" size={24} color="#f08080" />
-            ) : (
-              <Fontisto name="doctor" size={24} color="gray" />
-            ),
-        }}
-      />
+      </Tab.Navigator>
+    )
+  }
 
-      <Tab.Screen
-        name="Enquiry"
-        component={EnquiryScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: "Enquiry",
-          tabBarLabelStyle: { color: "black" },
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <MaterialCommunityIcons
-                name="file-question"
-                size={24}
-                color="#f08080"
-              />
-            ) : (
-              <MaterialCommunityIcons
-                name="file-question"
-                size={24}
-                color="gray"
-              />
-            ),
-        }}
-      />
 
-      <Tab.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{
-          headerShown: false,
-          tabBarLabel: "Login",
-          tabBarLabelStyle: { color: "black" },
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <Ionicons name="enter" size={24} color="#f08080" />
-            ) : (
-              <Ionicons name="enter" size={24} color="gray" />
-            ),
-        }}
-      />
-    </Tab.Navigator>
-  );
+
+
+
 
   return (
     <NavigationContainer>

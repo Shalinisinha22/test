@@ -82,7 +82,7 @@ const HairCosmetic = ({ navigation }) => {
 data={hairCosmetics}
 // horizontal
 // showsHorizontalScrollIndicator={false}
-      numColumns={3}
+      numColumns={2}
       scrollEnabled={false}
       columnWrapperStyle={{
         flex: 1,

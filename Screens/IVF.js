@@ -81,7 +81,7 @@ const IVF = ({ navigation }) => {
 data={ivfList}
 // horizontal
 // showsHorizontalScrollIndicator={false}
-      numColumns={3}
+      numColumns={2}
       scrollEnabled={false}
       columnWrapperStyle={{
         flex: 1,

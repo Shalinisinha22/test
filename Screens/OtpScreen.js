@@ -12,52 +12,114 @@ import React, { useState } from "react";
 import axios from "axios";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { TextInput } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from 'react-redux';
+import { setUser } from "../redux/actions/userActions";
+import { useRoute } from "@react-navigation/native";
 
 const OtpScreen = ({ navigation }) => {
+
+  const route = useRoute()
+  console.log(route.params.number)
   const [code, setCode] = useState("");
-  const [err,setErr] = useState("")
+  const [err, setErr] = useState("")
+  const dispatch = useDispatch();
+
+
+
 
   const onSubmit = async () => {
 
-
-    if(code.length==6){
+    if (code.length == 6) {
       try {
-        const response = await axios.post("https://cureofine-azff.onrender.com/verify", {
-          otp: code,
-        });
-  
-        console.log(response.data);
-  
-    
-        if (response.data.message === "OTP verification successful") {
+        const res = await axios.post("https://cureofine-azff.onrender.com/verifyOTP", {
+          phone: route.params.number,
+          otp: code
+        })
+
+        if (res.data.message == "OTP verification successful") {
           console.log("OTP verification was successful");
+          console.log(res.data.number)
+          dispatch({ type: 'SET_USER_INFO', payload: route.params.number  });
+    
           // You can navigate to the next page here if the OTP is verified.
           await navigation.navigate("Home");
         } else {
           console.log("OTP verification failed");
-           setErr("Incorrect OTP");
-           setTimeout(()=>{
-             setErr("")
-           },3000)
+          setErr("Incorrect OTP")
+          setTimeout(() => {
+            setErr("")
+          }, 3000)
+
+
+
           // navigation.navigate("Login");
           // Handle the case where the OTP verification failed, e.g., show an error message to the user.
         }
-      } catch (error) {
+      }
+
+      catch (error) {
         console.error("An error occurred:", error);
         setErr("Invalid OTP")
-        setTimeout(()=>{
+        setTimeout(() => {
           setErr("")
-        },3000)
-        
+        }, 3000)
+
       }
     }
 
-    else{
+    else {
       setErr("Incorrect OTP");
-      setTimeout(()=>{
+      setTimeout(() => {
         setErr("")
-      },3000)
+      }, 3000)
     }
+
+
+
+
+    // if (code.length == 6) {
+    //   try {
+    //     const response = await axios.post("https://cureofine-azff.onrender.com/verify", {
+    //       otp: code,
+    //     });
+
+    //     console.log(response.data);
+
+
+    //     if (response.data.message === "OTP verification successful") {
+    //       console.log("OTP verification was successful");
+    //       console.log(response.data.number)
+    //       dispatch(setUser(response.data.number));
+    //       storeData(response.data.number)
+    //       // You can navigate to the next page here if the OTP is verified.
+    //       await navigation.navigate("Home");
+    //     } else {
+    //       console.log("OTP verification failed");
+    //       setErr("Incorrect OTP")
+    //       setTimeout(() => {
+    //         setErr("")
+    //       }, 3000)
+    //       // navigation.navigate("Login");
+    //       // Handle the case where the OTP verification failed, e.g., show an error message to the user.
+    //     }
+    //   }
+    //    catch (error) {
+    //     console.error("An error occurred:", error);
+    //     setErr("Invalid OTP")
+    //     setTimeout(() => {
+    //       setErr("")
+    //     }, 3000)
+
+    //   }
+    // }
+
+    // else {
+    //   setErr("Incorrect OTP");
+    //   setTimeout(() => {
+    //     setErr("")
+    //   }, 3000)
+    // }
 
 
 
@@ -93,7 +155,7 @@ const OtpScreen = ({ navigation }) => {
               keyboardType="numeric"
             ></TextInput>
 
-            {err!=="" && <Text style={{color:"red"}}>{err}</Text>}
+            {err !== "" && <Text style={{ color: "red" }}>{err}</Text>}
           </View>
 
           <View style={{ marginTop: 85 }} />

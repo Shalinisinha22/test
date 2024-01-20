@@ -123,7 +123,7 @@ const Home = ({ navigation }) => {
   }, []);
 
 
-
+ 
 
 
   // const getState = async () => {
@@ -146,8 +146,8 @@ const Home = ({ navigation }) => {
 
     const res = await axios.get("https://cureofine-azff.onrender.com/presence");
     const data = res.data;
-    console.log("147", data)
-    console.log("147", data)
+    // console.log("147", data)
+    // console.log("147", data)
     setLoc(data)
     setLocationId(data[0].location_id)
     setDisplayCurrentAddress(data[0].name)

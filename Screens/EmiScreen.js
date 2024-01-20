@@ -127,7 +127,7 @@ const EmiScreen = ({ navigation }) => {
                     <KeyboardAvoidingView>
                         <View style={{ alignItems: "center", marginTop: 5 }}>
                             <Text style={{ color: "gray", fontSize: 15 }}>
-                                Book Now
+                               EMI FORM
                             </Text>
                         </View>
 
@@ -434,7 +434,7 @@ const EmiScreen = ({ navigation }) => {
                                         width: 300,
                                         fontSize: 16,
                                     }}
-                                    value={route.params.price}
+                                    value={`Rs ${route.params.price}`}
                                 />
                                 {/* <Controller
                                     control={control}

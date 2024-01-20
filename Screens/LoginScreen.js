@@ -25,7 +25,6 @@ const LoginScreen = ({ navigation }) => {
 
 
 
-
   const {
     register,
     setValue,
@@ -65,30 +64,37 @@ const LoginScreen = ({ navigation }) => {
 
 
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log(data.phone);
 
     var phoneno = /^\d{10}$/;
     if ((data.phone.match(phoneno))) {
-      const res = await axios.post("https://cureofine-azff.onrender.com/signup", {
-        phone: data.phone,
-      })
-      console.log("75",res.data)
+      const res = await axios.post("https://cureofine-azff.onrender.com/generateOtp", {
+      
+          phone: data.phone
+        })
+   
 
-      if (res.data.message == "Valid Number") {
-        await navigation.navigate("OtpScreen");
+      if(res.data.message == "OTP generated and sent successfully"){
+        await navigation.navigate("OtpScreen", {number:res.data.number});
       }
-    }
-    else {
-      setErr("Inavalid Number");
-      setTimeout(() => {
-        setErr("")
-      }, 3000)
-      reset();
-    }
 
 
+      // console.log("75",res.data)
 
-  };
+    //   if (res.data.message == "Valid Number") {
+    //     await navigation.navigate("OtpScreen");
+    //   }
+    // }
+    // else {
+    //   setErr("Inavalid Number");
+    //   setTimeout(() => {
+    //     setErr("")
+    //   }, 3000)
+    //   reset();
+    // }
+
+     };
+  }
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
     return console.log(errors);
@@ -191,10 +197,10 @@ const LoginScreen = ({ navigation }) => {
             </Text>
           </Pressable> */}
 
-          <Toast
+          {/* <Toast
             position='bottom'
             bottomOffset={80}
-          />
+          /> */}
         </KeyboardAvoidingView>
       </SafeAreaView>
     </ScrollView>
@@ -211,8 +217,8 @@ const styles = StyleSheet.create({
     marginTop: 70,
   },
   img: {
-    width: 200,
-    height: 120,
+    width: 150,
+    height: 100,
     resizeMode: "contain",
   },
   heading: {
@@ -245,3 +251,16 @@ const styles = StyleSheet.create({
     padding: 15,
   },
 });
+
+
+// create a login form which takes number if number is present in my database then i generate a otp and store that otp in my table if that mobile number is not present 
+//  then insert number and otp too then i send otp to user number const sdk = require('api')('@msg91api/v5.0#6n91xmlhu4pcnz');
+
+// sdk.auth('authkey');
+// sdk.sendSms({
+//   template_id: '659e5ebeb6ea785bac43ae09',
+//   short_url: '1 (On) or 0 (Off)',
+//   recipients: [{mobiles: '919XXXXXXXXX', VAR1: 'VALUE1', VAR2: 'VALUE2'}]
+// })
+//   .then(({ data }) => console.log(data))
+//   .catch(err => console.error(err)); if that otp matches  then i proceed
