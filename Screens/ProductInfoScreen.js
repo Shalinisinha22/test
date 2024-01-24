@@ -149,7 +149,7 @@ const ProductInfoScreen = ({ navigation }) => {
       </ScrollView>
 
       <View style={{ padding: 10, paddingTop: 10 }}>
-        <Text style={{ fontSize: 15, fontWeight: "500" }}>
+        <Text  allowFontScaling={false} style={{ fontSize: 15, fontWeight: "500" }}>
           {route?.params?.name}
         </Text>
         <View
@@ -161,7 +161,7 @@ const ProductInfoScreen = ({ navigation }) => {
           }}
         >
           <Text>Session: </Text>
-          <Text style={{ color: "#eb3b5a" }}>{route.params.item?.duration} minutes</Text>
+          <Text  allowFontScaling={false} style={{ color: "#eb3b5a" }}>{route.params.item?.duration} minutes</Text>
         </View>
         <Text
           style={{
@@ -180,7 +180,7 @@ const ProductInfoScreen = ({ navigation }) => {
           }}
         >
           <Text>Description: </Text>
-          <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
+          <Text  allowFontScaling={false} style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
             {route.params.item?.details}
           </Text>
         </View>
@@ -208,7 +208,7 @@ const ProductInfoScreen = ({ navigation }) => {
         </View>
       </View>
 
-      {/* <Text style={{ height: 1, borderColor: "#D0D0D0", borderWidth: 0.5 }} /> */}
+      {/* <Text  allowFontScaling={false} style={{ height: 1, borderColor: "#D0D0D0", borderWidth: 0.5 }} /> */}
 
       <TouchableOpacity
         style={{

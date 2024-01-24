@@ -17,9 +17,10 @@ import { ActivityIndicator } from "react-native";
 import Header from "../Components/Header";
 import Contact from "../Components/Contact";
 import Footer from "../Components/Footer";
+import { useSelector } from "react-redux";
 
 const Ayurveda = ({ navigation }) => {
-
+  const userInfo = useSelector(state => state.user.userInfo);
     const [ayurvedaList, setAyurvedaList] = useState([])
     // https://cureofine-azff.onrender.com/surgeryList
     const getAyurvedaList = async () => {
@@ -50,7 +51,7 @@ const Ayurveda = ({ navigation }) => {
             <ScrollView>
 
 
-                <Text
+                   <Text  allowFontScaling={false}
                     style={{
                         height: 1,
                         borderColor: "whitesmoke",
@@ -59,9 +60,9 @@ const Ayurveda = ({ navigation }) => {
                     }}
                 />
 
-                <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
-                <Text
+                   <Text  allowFontScaling={false} style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                   <Text  allowFontScaling={false} style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                   <Text  allowFontScaling={false}
                     style={{
                         height: 1,
                         borderColor: "whitesmoke",
@@ -95,9 +96,9 @@ renderItem={({ item, index }) => (
 
 </View>
 
-<Text style={{textAlign:"center",fontSize:15,marginTop:5}} variant="titleLarge">{item.name}</Text>
-<Text style={{textAlign:"center",fontSize:17,marginTop:5, textDecorationLine:"line-through",color:"gray"}} variant="titleLarge"><FontAwesome name="rupee" size={20} color="gray" /> {item.price}</Text>
-<Text style={{textAlign:"center",fontSize:17,marginTop:5}} variant="titleLarge"><FontAwesome name="rupee" size={20} color="#103042" /> {item.offer_price}</Text>
+   <Text  allowFontScaling={false} style={{textAlign:"center",fontSize:15,marginTop:5}} variant="titleLarge">{item.name}</Text>
+   <Text  allowFontScaling={false} style={{textAlign:"center",fontSize:17,marginTop:5, textDecorationLine:"line-through",color:"gray"}} variant="titleLarge"><FontAwesome name="rupee" size={20} color="gray" /> {item.price}</Text>
+   <Text  allowFontScaling={false} style={{textAlign:"center",fontSize:17,marginTop:5}} variant="titleLarge"><FontAwesome name="rupee" size={20} color="#103042" /> {item.offer_price}</Text>
 
   
                <TouchableOpacity
@@ -110,10 +111,10 @@ renderItem={({ item, index }) => (
                       marginTop: 10,
                       borderRadius: 4,
                     }}
-                    onPress={()=>navigation.navigate("AyurvedaInnerScreen", {id:item.ayu_id})}
+                    onPress={()=> navigation.navigate("AyurvedaInnerScreen", {id:item.ayu_id})}
                   
                   >
-                    <Text
+                       <Text  allowFontScaling={false}
                       style={{
                         textAlign: "center",
                         color: "white",

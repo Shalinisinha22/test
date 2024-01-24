@@ -5,6 +5,7 @@ import {
     TouchableOpacity
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 import { Avatar, Button, Card, Text } from 'react-native-paper';
@@ -17,15 +18,37 @@ import { ActivityIndicator } from "react-native";
 import Header from "../Components/Header";
 import Contact from "../Components/Contact";
 import Footer from "../Components/Footer";
-
+import { useSelector } from "react-redux";
 const SurgeryList = ({ navigation }) => {
+
+  const userInfo = useSelector(state => state.user.userInfo);
+  const isFocused = useIsFocused();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const userLoggedIn = userInfo ? true : false;
+    setIsLoggedIn(userLoggedIn);
+  }, [isFocused]);
+
+  const handlePress = (item) => {
+    if (isLoggedIn) {
+      navigation.navigate("SurgeryInner", { id: item.cat_id, name: item.name });
+    } else {
+      // Navigate to the login screen and pass the callback to navigate to SurgeryInner after login
+      navigation.navigate("Login", { onLoginSuccess: () => handleLoginSuccess(item) });
+    }
+  };
+  const handleLoginSuccess = (item) => {
+    // Navigate to SurgeryInner after successful login
+    navigation.navigate("SurgeryInner", { id: item.cat_id, name: item.name });
+  };
 
     const [surgeryList, setSurgeryList] = useState("")
     // https://cureofine-azff.onrender.com/surgeryList
     const getSurgeryList = async () => {
         const res = await axios.get("https://cureofine-azff.onrender.com/surgeryCategory")
         const data = res.data;
-        setSurgeryList(data)
+        setSurgeryList(data);
     }
 
     useEffect(() => {
@@ -41,7 +64,7 @@ const SurgeryList = ({ navigation }) => {
          
     
         }
-      };
+    };
 
 
     return (
@@ -59,8 +82,8 @@ const SurgeryList = ({ navigation }) => {
                     }}
                 />
 
-                <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                <Text  allowFontScaling={false} style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                <Text  allowFontScaling={false} style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
                 <Text
                     style={{
                         height: 1,
@@ -95,7 +118,7 @@ renderItem={({ item, index }) => (
 
 </View>
 
-<Text style={{textAlign:"center",fontSize:17,marginTop:5}} variant="titleLarge">{item.name}</Text>
+<Text  allowFontScaling={false} style={{textAlign:"center",fontSize:17,marginTop:5}} variant="titleLarge">{item.name}</Text>
 
 
   
@@ -109,8 +132,8 @@ renderItem={({ item, index }) => (
                       marginTop: 10,
                       borderRadius: 4,
                     }} 
-                    onPress={()=>navigation.navigate("SurgeryInner", {id:item.cat_id,name:item.name})}
-                  
+                    // onPress={()=>handlePress(item)}
+                    onPress={()=> navigation.navigate("SurgeryInner", {id:item.cat_id,name:item.name}) }  
                   >
                     <Text
                       style={{
@@ -174,16 +197,16 @@ export default SurgeryList
 
                                 //     <Card.Content>
 
-                                //         <Text variant="bodyMedium" style={{ color: "gray" }}>Original Price- {item.price}</Text>
-                                //         <Text variant="bodyMedium" style={{ fontWeight: "bold" }}>Offer Price- Rs {item.offer_price}</Text>
-                                //         <Text variant="bodyMedium">Description: </Text>
+                                //         <Text  allowFontScaling={false} variant="bodyMedium" style={{ color: "gray" }}>Original Price- {item.price}</Text>
+                                //         <Text  allowFontScaling={false} variant="bodyMedium" style={{ fontWeight: "bold" }}>Offer Price- Rs {item.offer_price}</Text>
+                                //         <Text  allowFontScaling={false} variant="bodyMedium">Description: </Text>
                                 //      {item.details!="" && <RenderHTML key={item.id} source={{ html: decode(item.details) }}></RenderHTML> }   
                                 //     </Card.Content>
 
 
                                 //     <Card.Actions style={{ marginTop: 10, borderColor: "#f08080" }}>
-                                //         <Button onPress={() => navigation.navigate("Login")}><Text style={{ color: "#f08080" }}>EMI With No Interest</Text></Button>
-                                //         <Button onPress={() => navigation.navigate("Login")} theme={{ colors: { primary: '#f08080' } }}><Text style={{ color: "white" }}>Book Now</Text></Button>
+                                //         <Button onPress={() => navigation.navigate("Login")}><Text  allowFontScaling={false} style={{ color: "#f08080" }}>EMI With No Interest</Text></Button>
+                                //         <Button onPress={() => navigation.navigate("Login")} theme={{ colors: { primary: '#f08080' } }}><Text  allowFontScaling={false} style={{ color: "white" }}>Book Now</Text></Button>
                                 //     </Card.Actions>
 
 
@@ -207,7 +230,7 @@ export default SurgeryList
                             //      </View>
 
                             //          <Card.Actions style={{ marginTop: 10 }}>
-                            //            <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} ><Text style={{ color: "white" }}>Show Hospitals</Text></Button>
+                            //            <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} ><Text  allowFontScaling={false} style={{ color: "white" }}>Show Hospitals</Text></Button>
                             //         </Card.Actions>
                             //      </Card>   
 // onPress={()=>navigation.navigate("SurgeryInner", {id:item.cby})}
@@ -220,10 +243,10 @@ export default SurgeryList
                                 //         <View style={{ marginLeft: 8, flexWrap: "wrap" }}>
 
                                 //             <Card.Content>
-                                //                 <Text style={{ fontSize: 12}}>{item.name}</Text>
-                                //                 <Text variant="bodyMedium" style={{ color: "gray", fontSize: 12 }}>Original Price- Rs {item.price}</Text>
-                                //                 <Text variant="bodyMedium" style={{ fontWeight: "bold", fontSize: 12 }}>Offer Price- Rs {item.offer_price}</Text>
-                                //                 <Text variant="bodyMedium">Description: </Text>
+                                //                 <Text  allowFontScaling={false} style={{ fontSize: 12}}>{item.name}</Text>
+                                //                 <Text  allowFontScaling={false} variant="bodyMedium" style={{ color: "gray", fontSize: 12 }}>Original Price- Rs {item.price}</Text>
+                                //                 <Text  allowFontScaling={false} variant="bodyMedium" style={{ fontWeight: "bold", fontSize: 12 }}>Offer Price- Rs {item.offer_price}</Text>
+                                //                 <Text  allowFontScaling={false} variant="bodyMedium">Description: </Text>
                                 //                 {item.details != "" && <RenderHTML tagsStyles={tagsStyles} key={item.id} source={{ html: decode(item.details) }}></RenderHTML>}
 
                                                

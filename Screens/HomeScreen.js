@@ -378,7 +378,7 @@ const Home = ({ navigation }) => {
           <Ionicons name="location-outline" size={20} color="white" />
 
           <Pressable onPress={() => setModalVisible(!modalVisible)}>
-            <Text style={{ color: "white", fontSize: 15, textAlign: "center" }}>
+               <Text  allowFontScaling={false} style={{ color: "white", fontSize: 15, textAlign: "center" }}>
               {displayCurrentAddress}
             </Text>
           </Pressable>
@@ -399,7 +399,7 @@ const Home = ({ navigation }) => {
           {/* service section end */}
 
 
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -413,7 +413,7 @@ const Home = ({ navigation }) => {
           {/* products section end */}
 
           {/* offers & deals start */}
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -432,7 +432,7 @@ const Home = ({ navigation }) => {
             />
           </View> */}
 
-          {/* <Text
+          {/*    <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -448,7 +448,7 @@ const Home = ({ navigation }) => {
 
           {/* most booked services section end */}
 
-          {/* <Text
+          {/*    <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -463,7 +463,7 @@ const Home = ({ navigation }) => {
 
           {/* shop by category end */}
 
-          {/* <Text
+          {/*    <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -476,7 +476,7 @@ const Home = ({ navigation }) => {
           {/* <Specialization navigation={navigation}></Specialization> */}
           {/* specialization section end */}
 
-          {/* <Text
+          {/*    <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -491,7 +491,7 @@ const Home = ({ navigation }) => {
           {/* teams */}
 
 
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -504,7 +504,7 @@ const Home = ({ navigation }) => {
           <OfferBanner></OfferBanner>
 
 
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -517,7 +517,7 @@ const Home = ({ navigation }) => {
           <Hospitals navigation={navigation}></Hospitals>
 
 
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -530,7 +530,7 @@ const Home = ({ navigation }) => {
           {/* Testimonials start */}
           <Testimonials></Testimonials>
           {/* Testimonials end */}
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -543,7 +543,7 @@ const Home = ({ navigation }) => {
           <Brands></Brands>
           {/* brands */}
 
-          {/* <Text
+          {/*    <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -574,7 +574,7 @@ const Home = ({ navigation }) => {
 
 
 
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -588,7 +588,7 @@ const Home = ({ navigation }) => {
           {/* banner */}
 
 
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               height: 3,
               borderColor: "#D0D0D0",
@@ -601,7 +601,7 @@ const Home = ({ navigation }) => {
           <Location1 navigation={navigation}></Location1>
           {/* our presence */}
 
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               height: 1,
               borderColor: "#D0D0D0",
@@ -644,14 +644,14 @@ const Home = ({ navigation }) => {
           </Pressable>
 
           <View style={{ marginBottom: 8, marginTop: 8 }}>
-            <Text style={{ fontSize: 16, fontWeight: "500" }}>
+               <Text  allowFontScaling={false} style={{ fontSize: 16, fontWeight: "500" }}>
               Choose your Location
             </Text>
           </View>
 
           {cLoc.length != 0 && (
             <View style={{ marginTop: 10 }}>
-              <Text
+                 <Text  allowFontScaling={false}
                 style={{ color: "#f08080", fontWeight: 500, marginBottom: 5 }}
               >
                 Choose City
@@ -704,11 +704,11 @@ const Home = ({ navigation }) => {
 
 
           {/* <View >
-            <Text style={{ color: "#f08080", fontWeight: 500, marginTop: 10 }}>
+               <Text  allowFontScaling={false} style={{ color: "#f08080", fontWeight: 500, marginTop: 10 }}>
               Your Address
             </Text>
             <View style={styles.inputBoxCont}>
-              <TextInput
+                 <Text  allowFontScaling={false}Input
                 editable
                 multiline
                 numberOfLines={3}
@@ -735,7 +735,7 @@ const Home = ({ navigation }) => {
             unstable_pressDelay={0}
             style={{ backgroundColor: "#f08080", padding: 18, zIndex: 1005 }}
           >
-            <Text style={{ textAlign: "center", fontSize: 18, color: "white" }}>
+               <Text  allowFontScaling={false} style={{ textAlign: "center", fontSize: 18, color: "white" }}>
               Add Your Address
             </Text>
           </Pressable>
@@ -857,13 +857,13 @@ export default Home;
 //     alignItems: "center",
 //   }}
 // >
-//   <Text
+//      <Text  allowFontScaling={false}
 //     style={{ fontWeight: "bold", fontSize: 26, color: "white" }}
 //   >
 //     {/* Need a Doctor for Checkup? */}
 //     {pageMenu}
 //   </Text>
-//   <Text style={{ fontWeight: "bold", color: "white", fontSize: 10 }}>
+//      <Text  allowFontScaling={false} style={{ fontWeight: "bold", color: "white", fontSize: 10 }}>
 //     {/* Just make an Appointment & You're Done! */}
 
 
@@ -875,7 +875,7 @@ export default Home;
 //     style={styles.button}
 //     onPress={() => Linking.openURL("tel:7250446555")}
 //   >
-//     <Text
+//        <Text  allowFontScaling={false}
 //       style={{
 //         textAlign: "center",
 //         color: "#f08080",

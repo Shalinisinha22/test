@@ -25,11 +25,13 @@ import RenderHTML from "react-native-render-html";
 import Contact from "../Components/Contact";
 import Footer from "../Components/Footer";
 SplashScreen.preventAutoHideAsync();
-
+import { useSelector } from "react-redux";
 
 const AyurvedaInnerScreen = ({ navigation }) => {
 
     const route = useRoute();
+
+    const userInfo = useSelector(state => state.user.userInfo);
 
     // console.log(route.params.id)
 
@@ -71,8 +73,8 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                             }}
                         />
 
-                        <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                        <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                        <Text  allowFontScaling={false}style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                        <Text  allowFontScaling={false}style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
                         <Text
                             style={{
                                 height: 1,
@@ -86,7 +88,7 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                         <View style={{ marginTop: 20, paddingBottom: 50 }}>
 
                   
-                        <Text style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>Ayurveda</Text>
+                        <Text  allowFontScaling={false}style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>Ayurveda</Text>
 
                                 <ImageBackground
                                     style={{ width, height:300, marginTop: 25, resizeMode: "contain",margin:2 }}
@@ -101,7 +103,7 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                 
 
                             <View style={{ padding: 10, paddingTop: 10 }}>
-                                <Text style={{ fontSize: 18, fontWeight: "500" }}>
+                                <Text  allowFontScaling={false}style={{ fontSize: 18, fontWeight: "500" }}>
                                     {ayurveda[0].name}
                                 </Text>
                                 {/* <View
@@ -113,7 +115,7 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                             }}
                         >
                             <Text>Session: </Text>
-                            <Text style={{ color: "#eb3b5a" }}>{route.params.item?.duration} minutes</Text>
+                            <Text  allowFontScaling={false}style={{ color: "#eb3b5a" }}>{route.params.item?.duration} minutes</Text>
                         </View> */}
                                 <Text
                                     style={{
@@ -132,7 +134,7 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                                     }}
                                 >
                                     <Text>Description: </Text>
-                                    <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
+                                    <Text  allowFontScaling={false}style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
                                         {ayurveda[0].details}
                                     </Text>
                                 </View>
@@ -172,7 +174,7 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                                     marginHorizontal: 15,
                                     marginVertical: 0,
                                 }}
-                                onPress={() => navigation.navigate("BookingScreen",{id:ayurveda[0].ayu_id,name:ayurveda[0].name,price:ayurveda[0].offer_price})}
+                                onPress={() =>!userInfo? navigation.navigate("Login") : navigation.navigate("BookingScreen",{id:ayurveda[0].ayu_id,name:ayurveda[0].name,price:ayurveda[0].offer_price,cat_id:ayurveda[0].ayu_id, cat_name:ayurveda[0].name})}
                             >
                                 <Text>Book Now</Text>
                             </TouchableOpacity>
@@ -187,7 +189,7 @@ const AyurvedaInnerScreen = ({ navigation }) => {
                                     marginVertical: 0,
                                     marginTop:10
                                 }}
-                                onPress={() => navigation.navigate("EmiScreen",{id:ayurveda[0].ayu_id,name:ayurveda[0].name,price:ayurveda[0].offer_price})}
+                                onPress={() =>!userInfo? navigation.navigate("Login") : navigation.navigate("EmiScreen",{id:ayurveda[0].ayu_id,name:ayurveda[0].name,price:ayurveda[0].offer_price,cat_id:ayurveda[0].ayu_id, cat_name:ayurveda[0].name})}
                             >
                                 <Text>EMI</Text>
                             </TouchableOpacity>

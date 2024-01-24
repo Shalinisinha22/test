@@ -103,7 +103,7 @@ import {
   
           <KeyboardAvoidingView>
             <View style={{ alignItems: "center" }}>
-              <Text style={styles.heading}>Register to your Account</Text>
+              <Text  allowFontScaling={false} style={styles.heading}>Register to your Account</Text>
             </View>
           
   
@@ -129,7 +129,7 @@ import {
   
               </View>
   
-              {error.name  && flag && <Text style={{color:"red"}}>{error.name}</Text>}
+              {error.name  && flag && <Text  allowFontScaling={false} style={{color:"red"}}>{error.name}</Text>}
               </View>
   
              <View>
@@ -153,7 +153,7 @@ import {
                   placeholder="enter your Email"
                 />
               </View>
-              {error.email && flag && <Text style={{color:"red"}}>{error.email}</Text>}
+              {error.email && flag && <Text  allowFontScaling={false} style={{color:"red"}}>{error.email}</Text>}
             </View>
              
   
@@ -181,13 +181,13 @@ import {
                   placeholder="enter your Password"
                 />
               </View>
-              {error.password && flag && <Text style={{color:"red"}}>{error.password}</Text>}
+              {error.password && flag && <Text  allowFontScaling={false} style={{color:"red"}}>{error.password}</Text>}
             </View>
   
             <View style={styles.forgotCont}>
               <Text>Keep me logged in</Text>
   
-              <Text style={{ color: "#007FFF", fontWeight: "500" }}>
+              <Text  allowFontScaling={false} style={{ color: "#007FFF", fontWeight: "500" }}>
                 Forgot Password
               </Text>
             </View>
@@ -215,7 +215,7 @@ import {
               onPress={() => navigation.navigate("Login")}
               style={{ marginTop: 15 }}
             >
-              <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
+              <Text  allowFontScaling={false} style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
                 Already have an account? Sign In
               </Text>
             </Pressable>

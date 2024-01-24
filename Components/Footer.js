@@ -36,7 +36,7 @@ Making healthcare
 >
   Affordable
 </Text>
-<Text style={{ textAlign: "center", fontSize: 10 , marginTop:15}}>
+<Text  allowFontScaling={false} style={{ textAlign: "center", fontSize: 10 , marginTop:15}}>
   Made with ❤ by CureOFine
 </Text>
 </View>

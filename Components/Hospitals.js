@@ -111,7 +111,7 @@ const Hospitals = ({navigation}) => {
                   source={{ uri: `https://cureofine.com/upload/hospital/${item.image}` }}
                 />
                 <View>
-                  <Text style={{ fontWeight: 600, fontFamily: "OpenSans", fontSize:14 }}>
+                  <Text  allowFontScaling={false} style={{ fontWeight: 600, fontFamily: "OpenSans", fontSize:14 }}>
                   <RenderHTML  key={item.id} source={{ html: decode(item.name) }}></RenderHTML>
                   </Text>
                 </View>

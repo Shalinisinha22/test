@@ -4,7 +4,7 @@ import React from 'react'
 const LogoutScreen = () => {
   return (
     <View>
-      <Text>LogoutScreen</Text>
+         <Text  allowFontScaling={false}>LogoutScreen</Text>
     </View>
   )
 }

@@ -71,6 +71,7 @@ import LogoutScreen from "../Screens/LogoutScreen";
 import { logoutUser } from "../redux/actions/userActions";
 import ProfileScreen from "../Screens/ProfileScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import PaymentStatusScreen from "../Screens/PaymentStatusScreen";
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
@@ -374,6 +375,12 @@ const AppNavigator = () => {
           component={ProfileScreen}
           options={{ headerShown: false }}
         />
+
+<Stack.Screen
+          name="PaymentStatusScreen"
+          component={PaymentStatusScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     );
   }
@@ -414,7 +421,7 @@ const AppNavigator = () => {
                       }}
                     >
                       {item.icon}
-                      <Text style={{ fontSize: 17, color: "white" }}>
+                         <Text  allowFontScaling={false} style={{ fontSize: 17, color: "white" }}>
                         {item.name}
                       </Text>
                       <View style={{ marginLeft: 10 }}>
@@ -439,7 +446,7 @@ const AppNavigator = () => {
                               size={24}
                               color="white"
                             />
-                            <Text style={{ fontSize: 15, color: "white" }}>
+                               <Text  allowFontScaling={false} style={{ fontSize: 15, color: "white" }}>
                               {subitem.name}
                             </Text>
                           </TouchableOpacity>
@@ -465,13 +472,13 @@ const AppNavigator = () => {
                     }}
                   >
                     {item.icon}
-                    <Text style={{ fontSize: 17, color: "white" }}>
+                       <Text  allowFontScaling={false} style={{ fontSize: 17, color: "white" }}>
                       {item.name}
                     </Text>
                   </TouchableOpacity>
                 )}
 
-                <Text
+                   <Text  allowFontScaling={false}
                   style={{
                     height: 1,
                     borderColor: "#ffe4c4",
@@ -567,12 +574,10 @@ const AppNavigator = () => {
               ),
           }}
         />
-
-
-<Tab.Screen
-        name={userInfo ? "ProfileScreen" : "Login"}
-        component={userInfo ? ProfileScreen : LoginScreen}
-        options={{
+        <Tab.Screen
+          name={userInfo ? "ProfileScreen" : "Login"}
+          component={userInfo ? ProfileScreen : LoginScreen}
+          options={{
           headerShown: false,
           tabBarLabel: userInfo ? "Profile" : "Login",
           tabBarLabelStyle: { color: "black" },

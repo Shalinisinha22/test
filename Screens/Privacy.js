@@ -47,7 +47,7 @@ const Privacy = ({navigation}) => {
     <SafeAreaView  onLayout={onLayoutRootView} style={{backgroundColor:"white", height:"100%"}}>
       <Header navigation={navigation}></Header>
    <ScrollView >
-      <Text style={{textAlign:"center", marginTop:20, fontSize:18, color:"#f08080",borderBottomWidth:2,borderColor:"whitesmoke"}}>Privacy Policy</Text>
+      <Text  allowFontScaling={false} style={{textAlign:"center", marginTop:20, fontSize:18, color:"#f08080",borderBottomWidth:2,borderColor:"whitesmoke"}}>Privacy Policy</Text>
      {/* {cont.length!=0 && <Text>{cont.content}</Text>} */}
 
      <View style={{ marginTop: 10, padding: 12 }}>

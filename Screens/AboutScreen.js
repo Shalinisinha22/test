@@ -107,7 +107,7 @@ const AboutScreen = ({ navigation }) => {
         </View> */}
        
 
-        <Text
+           <Text  allowFontScaling={false}
           style={{
             paddingTop: 10,
             fontSize: 12,
@@ -121,7 +121,7 @@ const AboutScreen = ({ navigation }) => {
         </Text>
 
         <View style={{ flexDirection: "row", marginTop: 10 }}>
-          <Text
+             <Text  allowFontScaling={false}
             style={{
               fontSize: 18,
               fontWeight: "bold",
@@ -142,7 +142,7 @@ const AboutScreen = ({ navigation }) => {
           </View>
         </View>
 
-        <Text
+           <Text  allowFontScaling={false}
           style={{
             height: 1.5,
             borderColor: "#eb3b5a",
@@ -157,7 +157,7 @@ const AboutScreen = ({ navigation }) => {
         <View style={{ padding: 10 }}>
           {cont.length !== 0 ? (
             cont.map((item) => (
-              // <Text key={item.id} style={{ textAlign: "justify", fontFamily: "EB" }}>{decode(item.content)}</Text>
+              //    <Text  allowFontScaling={false} key={item.id} style={{ textAlign: "justify", fontFamily: "EB" }}>{decode(item.content)}</Text>
 
               <RenderHtml
                 key={item.id}
@@ -171,7 +171,7 @@ const AboutScreen = ({ navigation }) => {
           )}
 
         </View>
-        <Text
+           <Text  allowFontScaling={false}
           style={{
             height: 1,
             borderColor: "#D0D0D0",
@@ -182,7 +182,7 @@ const AboutScreen = ({ navigation }) => {
         />
 
 <OfferBanner></OfferBanner>
-<Text
+   <Text  allowFontScaling={false}
           style={{
             height: 1,
             borderColor: "#D0D0D0",
@@ -191,7 +191,7 @@ const AboutScreen = ({ navigation }) => {
           }}
         />
         <Teams navigation={navigation}></Teams>
-        <Text
+           <Text  allowFontScaling={false}
           style={{
             height: 1,
             borderColor: "#D0D0D0",
@@ -220,14 +220,14 @@ const AboutScreen = ({ navigation }) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontWeight: "bold", fontSize: 26, color: "white" }}>
+               <Text  allowFontScaling={false} style={{ fontWeight: "bold", fontSize: 26, color: "white" }}>
               Need a Doctor for Checkup?
             </Text>
-            <Text style={{ fontWeight: "bold", color: "white" }}>
+               <Text  allowFontScaling={false} style={{ fontWeight: "bold", color: "white" }}>
               Just make an Appointment & You're Done!
             </Text>
             <TouchableOpacity style={styles.button}>
-              <Text
+                 <Text  allowFontScaling={false}
                 style={{
                   textAlign: "center",
                   color: "#f08080",
@@ -242,7 +242,7 @@ const AboutScreen = ({ navigation }) => {
         </ImageBackground> */}
         <CallBanner></CallBanner>
 
-        <Text
+           <Text  allowFontScaling={false}
           style={{
             height: 1,
             borderColor: "#D0D0D0",
@@ -252,7 +252,7 @@ const AboutScreen = ({ navigation }) => {
         />
         <Contact></Contact>
 
-        <Text
+           <Text  allowFontScaling={false}
           style={{
             height: 1,
             borderColor: "#D0D0D0",

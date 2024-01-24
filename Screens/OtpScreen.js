@@ -19,15 +19,18 @@ import { useRoute } from "@react-navigation/native";
 
 const OtpScreen = ({ navigation }) => {
 
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const route = useRoute()
   console.log(route.params.number)
   const [code, setCode] = useState("");
   const [err, setErr] = useState("")
   const dispatch = useDispatch();
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-
-
+  
   const onSubmit = async () => {
 
     if (code.length == 6) {
@@ -42,8 +45,9 @@ const OtpScreen = ({ navigation }) => {
           console.log(res.data.number)
           dispatch({ type: 'SET_USER_INFO', payload: route.params.number  });
     
-          // You can navigate to the next page here if the OTP is verified.
-          await navigation.navigate("Home");
+ // You can navigate to the next page here if the OTP is verified.
+        await navigation.navigate("Home");
+      
         } else {
           console.log("OTP verification failed");
           setErr("Incorrect OTP")
@@ -125,6 +129,10 @@ const OtpScreen = ({ navigation }) => {
 
   };
 
+
+
+
+
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       <SafeAreaView style={styles.safeArea}>
@@ -134,11 +142,11 @@ const OtpScreen = ({ navigation }) => {
 
         <KeyboardAvoidingView>
           <View style={{ alignItems: "center" }}>
-            <Text style={styles.heading}>Enter Your OTP</Text>
+               <Text  allowFontScaling={false} style={styles.heading}>Enter Your OTP</Text>
           </View>
 
           <View>
-            <TextInput
+               <TextInput
               onChangeText={(value) => setCode(value)}
               style={{
                 color: "gray",
@@ -155,13 +163,13 @@ const OtpScreen = ({ navigation }) => {
               keyboardType="numeric"
             ></TextInput>
 
-            {err !== "" && <Text style={{ color: "red" }}>{err}</Text>}
+            {err !== "" &&    <Text  allowFontScaling={false} style={{ color: "red" }}>{err}</Text>}
           </View>
 
           <View style={{ marginTop: 85 }} />
 
           <TouchableOpacity delayPressIn={0} style={styles.button} onPress={onSubmit}>
-            <Text
+               <Text  allowFontScaling={false}
               style={{
                 textAlign: "center",
                 color: "white",

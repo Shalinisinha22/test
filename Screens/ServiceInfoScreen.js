@@ -131,7 +131,7 @@ const ServiceInfoScreen = ({navigation}) => {
       </ScrollView>
 
       <View style={{ padding: 10, paddingTop: 10 }}>
-        <Text style={{ fontSize: 15, fontWeight: "500" }}>
+        <Text  allowFontScaling={false} style={{ fontSize: 15, fontWeight: "500" }}>
           {route?.params?.name}
         </Text>
         <Text
@@ -150,20 +150,20 @@ const ServiceInfoScreen = ({navigation}) => {
           }}
         >
           <Text>Description: </Text>
-          <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
+          <Text  allowFontScaling={false} style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
             {route.params.item?.heading}
           </Text>
-          <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
+          <Text  allowFontScaling={false} style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
             {route.params.item?.subHeading}
           </Text>
 
-          <Text style={{ fontSize: 12, textAlign: "justify", color: "#f08080" }}>
+          <Text  allowFontScaling={false} style={{ fontSize: 12, textAlign: "justify", color: "#f08080" }}>
             {route.params.item?.bodyHeading}
           </Text>
-          <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
+          <Text  allowFontScaling={false} style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
             {route.params.item?.body}
           </Text>
-          <Text style={{ fontSize: 11, textAlign: "justify", color: "black", marginTop:5 }}>
+          <Text  allowFontScaling={false} style={{ fontSize: 11, textAlign: "justify", color: "black", marginTop:5 }}>
             {route.params.item?.conclusion}
           </Text>
 
@@ -173,14 +173,14 @@ const ServiceInfoScreen = ({navigation}) => {
 
  
 
-      <Text style={{ height: 1, borderColor: "#D0D0D0", borderWidth: 1 }} />
+      <Text  allowFontScaling={false} style={{ height: 1, borderColor: "#D0D0D0", borderWidth: 1 }} />
 
       <View style={{ padding: 8 }}>
-        <Text style={{ fontSize: 17, fontWeight: "bold", marginVertical: 5, textAlign:"center" }}>
+        <Text  allowFontScaling={false} style={{ fontSize: 17, fontWeight: "bold", marginVertical: 5, textAlign:"center" }}>
           Total : Rs 1000
         </Text>
 
-        {/* <Text style={{ color: "#00CED1" }}>
+        {/* <Text  allowFontScaling={false} style={{ color: "#00CED1" }}>
             FREE delivery Tomorrow by 3 PM.Order within 10hrs 30 mins
           </Text> */}
 
@@ -194,7 +194,7 @@ const ServiceInfoScreen = ({navigation}) => {
           >
             <Ionicons name="location" size={24} color="black" />
   
-            <Text style={{ fontSize: 15, fontWeight: "500" }}>
+            <Text  allowFontScaling={false} style={{ fontSize: 15, fontWeight: "500" }}>
               Deliver To Sujan - Bangalore 560019
             </Text>
           </View> */}

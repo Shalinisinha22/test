@@ -17,9 +17,9 @@ import { ActivityIndicator } from "react-native";
 import Header from "../Components/Header";
 import Contact from "../Components/Contact";
 import Footer from "../Components/Footer";
-
+import { useSelector } from "react-redux";
 const Dental = ({ navigation }) => {
-
+    const userInfo = useSelector(state => state.user.userInfo);
 
     const [dentalList, setDentalList] = useState([])
     // https://cureofine-azff.onrender.com/surgeryList
@@ -60,8 +60,8 @@ const Dental = ({ navigation }) => {
                     }}
                 />
 
-                <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                <Text  allowFontScaling={false}style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                <Text  allowFontScaling={false}style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
                 <Text
                     style={{
                         height: 1,
@@ -95,7 +95,7 @@ const Dental = ({ navigation }) => {
 
                                         </View>
 
-                                        <Text style={{ textAlign: "center", fontSize: 17 ,marginTop:5}} variant="titleLarge">{item.name}</Text>
+                                        <Text  allowFontScaling={false}style={{ textAlign: "center", fontSize: 17 ,marginTop:5}} variant="titleLarge">{item.name}</Text>
 
 
 

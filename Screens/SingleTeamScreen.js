@@ -54,8 +54,8 @@ const SingleTeamScreen = () => {
                     }}
                 />
 
-                <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                <Text  allowFontScaling={false} style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                <Text  allowFontScaling={false} style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
                 <Text
                     style={{
                         height: 1,
@@ -91,7 +91,7 @@ const SingleTeamScreen = () => {
                                 source={require("../assets/team1.jpg")}
                             />
                         </View>
-                        <Text style={{ margin: 10, textAlign: "justify" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id lorem in nibh fermentum lacinia sed eu risus. Nam suscipit eros ut neque mollis rhoncus. Curabitur dapibus tortor vel tellus dapibus posuere. Nullam porttitor ullamcorper hendrerit. Aliquam a sapien nec justo semper interdum at sit amet diam. Proin id dignissim lacus. Curabitur porta blandit eros et mollis. Donec dapibus porttitor porttitor. Quisque bibendum orci at elit sagittis, efficitur pellentesque leo tempus.</Text>
+                        <Text  allowFontScaling={false} style={{ margin: 10, textAlign: "justify" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id lorem in nibh fermentum lacinia sed eu risus. Nam suscipit eros ut neque mollis rhoncus. Curabitur dapibus tortor vel tellus dapibus posuere. Nullam porttitor ullamcorper hendrerit. Aliquam a sapien nec justo semper interdum at sit amet diam. Proin id dignissim lacus. Curabitur porta blandit eros et mollis. Donec dapibus porttitor porttitor. Quisque bibendum orci at elit sagittis, efficitur pellentesque leo tempus.</Text>
                     </Card>
 
 

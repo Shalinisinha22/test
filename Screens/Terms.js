@@ -43,7 +43,7 @@ const Terms = ({navigation}) => {
     <SafeAreaView  onLayout={onLayoutRootView} style={{backgroundColor:"white", height:"100%"}}>
       <Header navigation={navigation}></Header>
    <ScrollView>
-   <Text style={{textAlign:"center", margin:15, fontSize:18, color:"#f08080",borderBottomWidth:2,borderColor:"whitesmoke"}}>Terms & Conditions</Text>
+   <Text  allowFontScaling={false} style={{textAlign:"center", margin:15, fontSize:18, color:"#f08080",borderBottomWidth:2,borderColor:"whitesmoke"}}>Terms & Conditions</Text>
 
       <View style={{ marginTop: 10, padding: 12 }}>
         {cont.length !== 0 ? (

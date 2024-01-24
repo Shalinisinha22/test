@@ -22,12 +22,13 @@ import { Select } from "native-base";
 import Toast from 'react-native-toast-message';
 import { useRoute } from "@react-navigation/native";
 import * as ImagePicker from 'expo-image-picker';
-
+import { useSelector } from "react-redux";
 const EmiScreen = ({ navigation }) => {
     const route = useRoute()
-
+    const userInfo = useSelector(state => state.user.userInfo);
     const [photo, setPhoto] = useState(null);
     const [aadhar, setAadhar] = useState(null);
+
 
 
     const pickImage = async () => {
@@ -44,10 +45,10 @@ const EmiScreen = ({ navigation }) => {
         if (!result.canceled) {
             setPhoto(result.assets[0].uri);
         }
-        else{
+        else {
             Alert.alert('You did not select any image.');
         }
-        
+
     };
 
     const pickAadhar = async () => {
@@ -63,9 +64,9 @@ const EmiScreen = ({ navigation }) => {
 
         if (!result.canceled) {
             setAadhar(result.assets[0].uri);
-        }else {
+        } else {
             Alert.alert('You did not select any image.');
-          }
+        }
     };
     const [gender, setGender] = React.useState("");
     const {
@@ -78,23 +79,100 @@ const EmiScreen = ({ navigation }) => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log("75", data,photo,aadhar,gender);
-        reset()
-        showToast()
-        setPhoto(null)
-        setAadhar(null)
-        // const res = await axios
-        //   .post("https://cureofine-azff.onrender.com/contact", {
-        //     name: data.fullname,
-        //     email: data.email,
-        //     message: data.message,
-        //     phone: data.phone,
-        //     subject: data.subject,
-        //   })
-        //   .then((response) => response.json())
-        //   .then((serverResponse) => console.warn(serverResponse));
+        console.log("75", data, photo, aadhar, gender);
+
+       await uploadImages(data,photo,aadhar)
+
+        // const photopathParts = photo.split(/[\\/]/);
+        // const aadharpathparts = aadhar.split(/[\\/]/);
+        // const aadharName = aadharpathparts[aadharpathparts.length - 1];
+
+        // // Get the last part of the path, which is the image name
+        // const imageName = photopathParts[photopathParts.length - 1];
 
 
+      
+
+    };
+
+
+const submitData = async(data,uploadedImages)=>{
+    try {
+        const res = await axios.post("https://cureofine-azff.onrender.com/emiForm", {
+
+            name: data.fullname,
+            attendant_name: data.guardian,
+            age: data.age,
+            gender: gender,
+            mobile: userInfo,
+            email: data.email,
+            reason_emi: data.reason,
+            selfi: uploadedImages[0],
+            aadhaar:uploadedImages[1],
+            amount: route.params.price,
+            required_amount: data.amount,
+            address: data.address,
+            service_name: route.params.name,
+            service_id: route.params.cat_id,
+            book_type: route.params.cat_name
+        });
+        if (res.status === 200 && res.data.message === "Insertion successful") {
+
+          
+            
+            // uploadImages(photo,aadhar);
+            reset();
+            setPhoto(null)
+            setAadhar(null)
+            showToast();
+
+
+            navigation.navigate("Home");
+        } else {
+            // Handle other response statuses or messages
+            console.error("Server response:", res.status, res.data.message);
+        }
+    } catch (error) {
+        // Handle network errors
+        console.error("Network error:", error.message);
+    }
+}
+
+
+    const uploadImages = async (data,photo,aadhar) => {
+        try {
+            const formData = new FormData();
+            formData.append('photo', {
+                uri: photo,
+                type: 'image/jpeg',
+                name: 'photo.jpg',
+            });
+            formData.append('aadhar', {
+                uri: aadhar,
+                type: 'image/jpeg',
+                name: 'aadhar.jpg',
+            });
+    
+            const response = await axios.post('https://cureofine-azff.onrender.com/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+    
+            if (response.data.message === 'Images uploaded successfully') {
+                console.log('Images uploaded successfully');
+                console.log(response.data.uploadedImages)
+                submitData(data,response.data.uploadedImages )
+               
+                // Handle success as needed
+            } else {
+                console.error('Failed to upload images:', response.data.message);
+                // Handle failure as needed
+            }
+        } catch (error) {
+            console.error('Error uploading images:', error.message);
+            // Handle error as needed
+        }
     };
 
     const showToast = () => {
@@ -126,8 +204,8 @@ const EmiScreen = ({ navigation }) => {
                 <View style={styles.safeArea}>
                     <KeyboardAvoidingView>
                         <View style={{ alignItems: "center", marginTop: 5 }}>
-                            <Text style={{ color: "gray", fontSize: 15 }}>
-                               EMI FORM
+                            <Text allowFontScaling={false} style={{ color: "gray", fontSize: 15 }}>
+                                EMI FORM
                             </Text>
                         </View>
 
@@ -161,7 +239,7 @@ const EmiScreen = ({ navigation }) => {
                                 />
                             </View>
                             {errors.fullname && (
-                                <Text style={{ color: "red" }}>{errors.fullname.message}</Text>
+                                <Text allowFontScaling={false} style={{ color: "red" }}>{errors.fullname.message}</Text>
                             )}
                         </View>
                         <View style={{ marginTop: 20 }}>
@@ -194,7 +272,7 @@ const EmiScreen = ({ navigation }) => {
                                 />
                             </View>
                             {errors.guardian && (
-                                <Text style={{ color: "red" }}>{errors.guardian.message}</Text>
+                                <Text allowFontScaling={false} style={{ color: "red" }}>{errors.guardian.message}</Text>
                             )}
                         </View>
 
@@ -232,7 +310,7 @@ const EmiScreen = ({ navigation }) => {
                                 />
                             </View>
                             {errors.email && (
-                                <Text style={{ color: "red" }}>{errors.email.message}</Text>
+                                <Text allowFontScaling={false} style={{ color: "red" }}>{errors.email.message}</Text>
                             )}
                         </View>
 
@@ -254,46 +332,21 @@ const EmiScreen = ({ navigation }) => {
                                             // placeholder="enter your Phone Number"
                                             onBlur={onBlur}
                                             onChangeText={(value) => onChange(value)}
-                                            value={value}
+                                            value={userInfo}
                                         />
                                     )}
                                     name="phone"
-                                    rules={{
-                                        required: {
-                                            value: true,
-                                            message: "Phone number is required!",
-                                        },
-                                    }}
+
                                 />
                             </View>
-                            {errors.phone && (
-                                <Text style={{ color: "red" }}>{errors.phone.message}</Text>
-                            )}
+
                         </View>
 
 
                         <View style={{ marginTop: 20 }}>
                             <Text>Service Name</Text>
                             <View style={styles.inputBoxCont}>
-                                {/* <Controller
-                                    control={control}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                      autoFocus={true}
-                                    style={{
-                                        color: "gray",
-                                        marginVertical: 5,
-                                        width: 300,
-                                        fontSize: 16,
-                                    }}
 
-
-                                       value={route.params.name}
-                                     />
-                                       ) }
-                                      name="service"
-                                     
-                                     /> */}
 
 
                                 <TextInput
@@ -329,7 +382,7 @@ const EmiScreen = ({ navigation }) => {
                                             value={value}
                                         />
                                     )}
-                                    name="Address"
+                                    name="address"
                                     rules={{
                                         required: {
                                             value: true,
@@ -339,7 +392,7 @@ const EmiScreen = ({ navigation }) => {
                                 />
                             </View>
                             {errors.message && (
-                                <Text style={{ color: "red" }}>{errors.message.message}</Text>
+                                <Text allowFontScaling={false} style={{ color: "red" }}>{errors.message.message}</Text>
                             )}
                         </View>
 
@@ -374,7 +427,7 @@ const EmiScreen = ({ navigation }) => {
                                 />
                             </View>
                             {errors.age && (
-                                <Text style={{ color: "red" }}>{errors.age.message}</Text>
+                                <Text allowFontScaling={false} style={{ color: "red" }}>{errors.age.message}</Text>
                             )}
                         </View>
 
@@ -418,7 +471,7 @@ const EmiScreen = ({ navigation }) => {
                                 />
                             </View>
                             {errors.reason && (
-                                <Text style={{ color: "red" }}>{errors.reason.message}</Text>
+                                <Text allowFontScaling={false} style={{ color: "red" }}>{errors.reason.message}</Text>
                             )}
                         </View>
 
@@ -436,23 +489,7 @@ const EmiScreen = ({ navigation }) => {
                                     }}
                                     value={`Rs ${route.params.price}`}
                                 />
-                                {/* <Controller
-                                    control={control}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                <TextInput
-                                    keyboardType="numeric"
-                                    autoFocus={true}
-                                    style={{
-                                        color: "gray",
-                                        marginVertical: 5,
-                                        width: 300,
-                                        fontSize: 16,
-                                    }}
-                                    value={route.params.price}
-                                />
-                                )}
-                                   name="price"
-                              /> */}
+
                             </View>
 
                         </View>
@@ -481,7 +518,7 @@ const EmiScreen = ({ navigation }) => {
                                 />
                             </View>
                             {errors.amount && (
-                                <Text style={{ color: "red" }}>{errors.amount.message}</Text>
+                                <Text allowFontScaling={false} style={{ color: "red" }}>{errors.amount.message}</Text>
                             )}
                         </View>
                         <View style={styles.inputCont}>
@@ -594,3 +631,6 @@ const styles = StyleSheet.create({
 });
 
 export default EmiScreen;
+
+
+// i want to pass the photo and aadhar image to backend and store this on backend upload folder when user submit the form

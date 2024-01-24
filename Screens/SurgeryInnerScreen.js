@@ -4,8 +4,8 @@ import {
     Image,
     ImageBackground,
     Pressable,
-  
- 
+
+
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Dimensions } from "react-native";
@@ -24,178 +24,182 @@ import { decode } from "html-entities";
 import RenderHTML from "react-native-render-html";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign } from '@expo/vector-icons';
+import { useSelector } from "react-redux";
 SplashScreen.preventAutoHideAsync();
 
 
-const SurgeryInnerScreen = ({ navigation}) => {
+const SurgeryInnerScreen = ({ navigation }) => {
 
-  const route = useRoute();
+    const route = useRoute();
 
-      const [hospitals,setHospitals] = useState("")
-      const [surgery, setSurgery] = useState("")
-      const [facility,setFacility] = useState("")
-
-       const getSurgeryList= async()=>{
+    const [hospitals, setHospitals] = useState("")
+    const [surgery, setSurgery] = useState("")
+    const [facility, setFacility] = useState("")
+    const userInfo = useSelector(state => state.user.userInfo);
+    console.log(userInfo)
+    const getSurgeryList = async () => {
 
 
         const locationId = JSON.parse(await AsyncStorage.getItem("locationId"));
-        console.log("locationId",locationId)
+        // console.log("locationId",locationId)
         //  const res = await axios.get("https://cureofine-azff.onrender.com/hospitals")
         //  const data= res.data;
 
-        const res= await axios.get("https://cureofine-azff.onrender.com/surgeryList")
+        const res = await axios.get("https://cureofine-azff.onrender.com/surgeryList")
         const data = res.data
         //  console.log(route.params.id)
-         let newArr= await data.filter((item)=>{ return item.category == route.params.id && item.location == locationId})
+        let newArr = await data.filter((item) => { return item.category == route.params.id && item.location == locationId })
         //  console.log("newarr",newArr)
         setSurgery(newArr)
 
-      
+
         //  setHospitals(newArr)
-       }
+    }
 
-       useEffect(()=>{
+    useEffect(() => {
         getSurgeryList()
-       },[])
+    }, [])
 
 
-     
 
-       const getSurgeryHospital = async(id)=>{
-            const res= await axios.get("https://cureofine-azff.onrender.com/hospitals")
-            const data = res.data
-            let newArr= await data.filter((item)=>{ return item.hos_id == id})
-            let facArr = JSON.parse(newArr[0].facility_type)
-            console.log("69",facArr.length)
-             getFacility(facArr)
 
-            // console.log("newarr",newArr)
-           setHospitals(newArr)
-       }
-       useEffect(() => {    
-       surgery!= "" && surgery.map((item) => {
-          getSurgeryHospital(item.hospital);
+    const getSurgeryHospital = async (id) => {
+        const res = await axios.get("https://cureofine-azff.onrender.com/hospitals")
+        const data = res.data
+        let newArr = await data.filter((item) => { return item.hos_id == id })
+        let facArr = JSON.parse(newArr[0].facility_type)
+        // console.log("69",facArr.length)
+        getFacility(facArr)
+
+        // console.log("newarr",newArr)
+        setHospitals(newArr)
+    }
+    useEffect(() => {
+        surgery != "" && surgery.map((item) => {
+            getSurgeryHospital(item.hospital);
         });
-        }, [surgery]);
+    }, [surgery]);
 
-       const getFacility = async(facArr)=>{
-        const res= await axios.get("https://cureofine-azff.onrender.com/facilityType")
+    const getFacility = async (facArr) => {
+        const res = await axios.get("https://cureofine-azff.onrender.com/facilityType")
         const data = res.data
         let facArr1 = []
         for (let i = 0; i < facArr.length; i++) {
             facArr1.push(await data.filter((item) => { return item.fac_id == facArr[i] }))
         }
-        
+
         setFacility(facArr1)
-    
-       }
-       
-    
+
+    }
+
+
     return (
-      <View style={{ backgroundColor: "white", height: "100%" }}>
-      <Header navigation={navigation}></Header>
-      <ScrollView>
+        <View style={{ backgroundColor: "white", height: "100%" }}>
+            <Header navigation={navigation}></Header>
+            <ScrollView>
 
-          <Text
-              style={{
-                  height: 1,
-                  borderColor: "whitesmoke",
-                  borderWidth: 2,
-                  marginTop: 15,
-              }}
-          />
+                <Text
+                    style={{
+                        height: 1,
+                        borderColor: "whitesmoke",
+                        borderWidth: 2,
+                        marginTop: 15,
+                    }}
+                />
 
-          <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-          <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
-          <Text
-              style={{
-                  height: 1,
-                  borderColor: "whitesmoke",
-                  borderWidth: 2,
-                  marginTop: 15,
-              }}
-          />
-
-
-          <View style={{ marginTop: 20, paddingBottom: 50 }}>
-              {
-                  surgery == "" ?
-                      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                          {/* <ActivityIndicator color={"#f08080"} size={"large"} /> */}
-                          <Text style={{fontSize:20, color:"#103042",fontWight:500}}>Hospitals</Text>
-                      </View> :
-
-                     <View style={{ flex: 1 }}>
-                     <Text style={{fontSize:18, color:"#103042",fontWight:500,marginLeft:20}}>{route.params.name} Hospitals</Text>
-                  
-                
-                      { surgery.map((item) => (
-                    
-
-                    hospitals != "" &&
+                <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                <Text
+                    style={{
+                        height: 1,
+                        borderColor: "whitesmoke",
+                        borderWidth: 2,
+                        marginTop: 15,
+                    }}
+                />
 
 
-                    <Card key={item.id} style={{ margin: 10, backgroundColor: "white" }}  >
+                <View style={{ marginTop: 20, paddingBottom: 50 }}>
+                    {
+                        surgery == "" ?
+                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                {/* <ActivityIndicator color={"#f08080"} size={"large"} /> */}
+                                <Text style={{ fontSize: 20, color: "#103042", fontWight: 500 }}>Hospitals</Text>
+                            </View> :
+
+                            <View style={{ flex: 1 }}>
+                                <Text style={{ fontSize: 18, color: "#103042", fontWight: 500, marginLeft: 20 }}>{route.params.name} Hospitals</Text>
 
 
-
-                        <View style={{ flexDirection: "row", width: "100%" }}>
-                            <Image source={{ uri: `https://cureofine.com/upload/hospital/${hospitals[0].image}` }} style={{ height: 150, width: 150, resizeMode: "cover" }} />
-                            {
-                                console.log(hospitals[0].image)
-                            }
+                                {surgery.map((item) => (
 
 
+                                    hospitals != "" &&
 
-                            <View style={{ marginLeft: 5, flexWrap: "wrap", marginTop: 20 }}>
 
-                                <Card.Content>
-                                    <Text style={{ fontWeight: "bold" }}>{decode(hospitals[0].name)}</Text>
+                                    <Card key={item.id} style={{ margin: 10, backgroundColor: "white" }}  >
 
-                                    <Text variant="bodyMedium" style={{color:"gray",marginTop:5}}>Facilities </Text>
-                                    {facility!= "" && facility.map(item=>(
-                                     <Text style={{ color: "#f46b78", fontSize: 10, marginTop: 5 }}>  <AntDesign name="arrowright" size={12} color="#f46b78" />   {item[0].name}</Text>
-                                    ))}
-                                   
-                               
+                                        <View style={{ flexDirection: "row", width: "100%" }}>
 
-                                    <Text style={{ fontWeight: "bold", marginTop: 12 }}>{item.name}</Text>
-                                    <Text variant="bodyMedium" style={{ textDecorationLine: "line-through", color: "gray" }}><FontAwesome name="rupee" size={16} color="gray" /> {item.price}</Text>
-                                    <Text variant="bodyMedium" style={{ fontSize: 18, fontWeight: 500 }} ><FontAwesome name="rupee" size={16} color="#103042" /> {item.offer_price}</Text>
-                                    {/* <Text style={{textAlign:"justify"}}>{item.details} </Text> */}
-                                </Card.Content>
+
+                                            <Image source={{ uri: `https://cureofine.com/upload/hospital/${hospitals[0].image}` }} style={{ height: 150, width: 150, resizeMode: "cover" }} />
+                                            {
+                                                // console.log(hospitals[0].image)
+                                            }
 
 
 
+                                            <View style={{ marginLeft: 5, flexWrap: "wrap", marginTop: 20 }}>
+
+                                                <Card.Content>
+                                                    <Text style={{ fontWeight: "bold" }}>{decode(hospitals[0].name)}</Text>
+
+                                                    <Text variant="bodyMedium" style={{ color: "gray", marginTop: 5 }}>Facilities </Text>
+                                                    {facility != "" && facility.map(item => (
+                                                        <Text style={{ color: "#f46b78", fontSize: 10, marginTop: 5 }}>  <AntDesign name="arrowright" size={12} color="#f46b78" />   {item[0].name}</Text>
+                                                    ))}
+
+
+
+                                                    <Text style={{ fontWeight: "bold", marginTop: 12 }}>{item.name}</Text>
+                                                    <Text variant="bodyMedium" style={{ textDecorationLine: "line-through", color: "gray" }}><FontAwesome name="rupee" size={16} color="gray" /> {item.price}</Text>
+                                                    <Text variant="bodyMedium" style={{ fontSize: 18, fontWeight: 500 }} ><FontAwesome name="rupee" size={16} color="#103042" /> {item.offer_price}</Text>
+                                                    {/* <Text style={{textAlign:"justify"}}>{item.details} </Text> */}
+                                                </Card.Content>
+
+
+
+
+                                            </View>
+
+
+
+                                        </View>
+
+                                        <Card.Actions style={{ marginTop: 10, marginRight: 30 }}>
+
+
+                                            <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() => !userInfo ? navigation.navigate("Login") : navigation.navigate("BookingScreen", { id: item.ser_id, name: item.name, price: item.offer_price, cat_id: route.params.id, cat_name: route.params.name })}><Text style={{ color: "white" }}>Book Now</Text></Button>
+                                            <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() => !userInfo ? navigation.navigate("Login") : navigation.navigate("EmiScreen", { id: item.ser_id, name: item.name, price: item.offer_price, cat_id: route.params.id, cat_name: route.params.name })}><Text style={{ color: "white" }}>EMI</Text></Button>
+                                        </Card.Actions>
+                                    </Card>
+
+                                ))}
+
+                                {/* <Text style={{ fontWeight: "bold" }}>{decode(hospitals[0].name)}</Text> */}
 
                             </View>
 
 
-
-                        </View>
-
-                        <Card.Actions style={{ marginTop: 10,marginRight:30 }}>
-
-
-                            <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() => navigation.navigate("BookingScreen",{id:item.ser_id,name:item.name,price:item.offer_price})}><Text style={{ color: "white" }}>Book Now</Text></Button>
-                            <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() =>  navigation.navigate("EmiScreen",{id:item.ser_id,name:item.name,price:item.offer_price})}><Text style={{ color: "white" }}>EMI</Text></Button>
-                        </Card.Actions>
-                    </Card>
-
-                ))}  
-
-                      </View>
-                      
-
-              }
-          </View>
+                    }
+                </View>
 
 
 
 
 
-      </ScrollView>
-  </View>
+            </ScrollView>
+        </View>
     )
 }
 

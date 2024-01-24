@@ -81,10 +81,10 @@ const EnquiryScreen = ({ navigation }) => {
         <View style={styles.safeArea}>
           <KeyboardAvoidingView>
             <View style={{ alignItems: "center", marginTop: 10 }}>
-              <Text style={{ color: "gray", fontSize: 10 }}>
+              <Text  allowFontScaling={false} style={{ color: "gray", fontSize: 10 }}>
                 Have any Enquiry?
               </Text>
-              <Text style={{ color: "gray", fontSize: 15 }}>
+              <Text  allowFontScaling={false} style={{ color: "gray", fontSize: 15 }}>
                 Feel free to contact us
               </Text>
             </View>
@@ -130,7 +130,7 @@ const EnquiryScreen = ({ navigation }) => {
               </View>
 
               {errors.phone && (
-                <Text style={{ color: "red" }}>{errors.phone.message}</Text>
+                <Text  allowFontScaling={false} style={{ color: "red" }}>{errors.phone.message}</Text>
               )}
             </View>
 
@@ -172,7 +172,7 @@ const EnquiryScreen = ({ navigation }) => {
               </View>
 
               {errors.fullname && (
-                <Text style={{ color: "red" }}>{errors.fullname.message}</Text>
+                <Text  allowFontScaling={false} style={{ color: "red" }}>{errors.fullname.message}</Text>
               )}
             </View>
 
@@ -213,7 +213,7 @@ const EnquiryScreen = ({ navigation }) => {
               </View>
 
               {errors.email && (
-                <Text style={{ color: "red" }}>{errors.email.message}</Text>
+                <Text  allowFontScaling={false} style={{ color: "red" }}>{errors.email.message}</Text>
               )}
             </View>
 
@@ -255,7 +255,7 @@ const EnquiryScreen = ({ navigation }) => {
                 />
               </View>
               {errors.city && (
-                <Text style={{ color: "red" }}>{errors.city.message}</Text>
+                <Text  allowFontScaling={false} style={{ color: "red" }}>{errors.city.message}</Text>
               )}
             </View>
 
@@ -296,7 +296,7 @@ const EnquiryScreen = ({ navigation }) => {
               </View>
 
               {errors.address && (
-                <Text style={{ color: "red" }}>{errors.address.message}</Text>
+                <Text  allowFontScaling={false} style={{ color: "red" }}>{errors.address.message}</Text>
               )}
 
 
@@ -336,7 +336,7 @@ const EnquiryScreen = ({ navigation }) => {
               </View>
 
               {errors.message && (
-                <Text style={{ color: "red" }}>{errors.message.message}</Text>
+                <Text  allowFontScaling={false} style={{ color: "red" }}>{errors.message.message}</Text>
               )}
             </View>
 

@@ -8,56 +8,7 @@ import { decode } from "html-entities";
 import RenderHTML from "react-native-render-html";
 
 const MostBooked = ({ navigation }) => {
-  const mostBook = [
-  
-    {
-      id: "1",
-      image: require("../assets/MostBook/mostBook1.png"),
-      name: "Doctor Consultation",
-      url: "Consultation",
-   
-    },
-    {
-      id: "2",
-      image: require("../assets/MostBook/mostBook7.png"),
-      name: "Surgery Appointment",
-      url: "SurgeryList",
-    
-    },
-    {
-      id: "3",
-      image: require("../assets/MostBook/ivf.png"),
-      name: "IVF",
-      url: "IVF",
 
-     
-    },
-    {
-      id: "4",
-      image: require("../assets/MostBook/dental.png"),
-      name: "Dental, Hair & Cosmetic",
-      url: "Dental",
-
-     
-    },
-    {
-      id: "5",
-      image: require("../assets/MostBook/ayurveda.png"),
-      name: "Ayurveda",
-      url: "Ayurveda",
-
-     
-    },
-    // {
-    //   id: "3",
-    //   image: require("../assets/MostBook/mostBook6.png"),
-    //   name: "Physiotherapy At Home",
-    //   url: "Physiotherapy",
-
-     
-    // }
-  
-  ];
 // https://192.168.0.110:3000/service
   const [service, setService]= useState(null)
   const getService = async () => {
@@ -161,7 +112,7 @@ const tagsStyles = {
                 uri:`https://cureofine.com/upload/service/${item.image}`}}
             />
             <View>
-              <Text style={{ fontWeight: 600, fontFamily: "OpenSans", fontSize:14 }}>
+              <Text  allowFontScaling={false} style={{ fontWeight: 600, fontFamily: "OpenSans", fontSize:14 }}>
               <RenderHTML tagsStyles={tagsStyles} key={item.id} source={{ html: decode(item.name) }}></RenderHTML>
               </Text>
             </View>

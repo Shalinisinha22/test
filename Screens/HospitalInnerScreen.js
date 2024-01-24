@@ -98,8 +98,8 @@ const HospitalInnerScreen = ({ navigation }) => {
                         }}
                     />
 
-                    <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                    <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                    <Text  allowFontScaling={false} style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                    <Text  allowFontScaling={false} style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
                     <Text
                         style={{
                             height: 1,
@@ -113,7 +113,7 @@ const HospitalInnerScreen = ({ navigation }) => {
                     <View style={{ marginTop: 20, paddingBottom: 50 }}>
 
 
-                        <Text style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>{hospital[0].name}</Text>
+                        <Text  allowFontScaling={false} style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>{hospital[0].name}</Text>
 
                         <ImageBackground
                             style={{ width, height: 300, marginTop: 20, resizeMode: "contain", margin: 2 }}
@@ -128,7 +128,7 @@ const HospitalInnerScreen = ({ navigation }) => {
                         <View style={{ padding: 10, paddingTop: 10 }}>
 
                             {
-                                location!="" && <Text style={{fontWight:500,color:"gray"}}>  <Ionicons
+                                location!="" && <Text  allowFontScaling={false} style={{fontWight:500,color:"gray"}}>  <Ionicons
                                 name="location-sharp"
                                 size={20}
                                 color="#f08080"
@@ -138,17 +138,17 @@ const HospitalInnerScreen = ({ navigation }) => {
 
 
 
-<Text style={{fontWight:500,color:"gray",marginTop:5}}>Facilities</Text>
+<Text  allowFontScaling={false} style={{fontWight:500,color:"gray",marginTop:5}}>Facilities</Text>
 
                             {facilities != "" &&
                                 facilities.map(item => (
 
-                                    <Text style={{ fontSize: 15, marginLeft: 5 }}>
+                                    <Text  allowFontScaling={false} style={{ fontSize: 15, marginLeft: 5 }}>
                                      <AntDesign name="arrowright" size={20} color="#f46b78" />   {item[0].name}  </Text>
                                 ))}
 
 
-<Text style={{fontWight:500,color:"gray",marginTop:5}}>{hospital[0].hospital_time}</Text>
+<Text  allowFontScaling={false} style={{fontWight:500,color:"gray",marginTop:5}}>{hospital[0].hospital_time}</Text>
 {/* 
                             <Text
                                 style={{

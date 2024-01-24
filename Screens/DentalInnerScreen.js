@@ -24,13 +24,14 @@ import { decode } from "html-entities";
 import RenderHTML from "react-native-render-html";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AntDesign } from '@expo/vector-icons';
+import { useSelector } from "react-redux";
 SplashScreen.preventAutoHideAsync();
 
 
 const DentalInnerScreen = ({ navigation }) => {
 
     const route = useRoute();
-
+    const userInfo = useSelector(state => state.user.userInfo);
     const [hospitals, setHospitals] = useState("")
     const [surgery, setSurgery] = useState("")
     const [facility, setFacility] = useState("")
@@ -104,8 +105,8 @@ const DentalInnerScreen = ({ navigation }) => {
                     }}
                 />
 
-                <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                <Text  allowFontScaling={false} style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                <Text  allowFontScaling={false} style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
                 <Text
                     style={{
                         height: 1,
@@ -121,12 +122,12 @@ const DentalInnerScreen = ({ navigation }) => {
                         surgery == "" ?
                             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                                 {/* <ActivityIndicator color={"#f08080"} size={"large"} /> */}
-                                <Text style={{fontSize:20, color:"#103042",fontWight:500}}>Hospitals</Text>
+                                <Text  allowFontScaling={false} style={{fontSize:20, color:"#103042",fontWight:500}}>Hospitals</Text>
                             </View> :
 
 
 <View style={{ flex: 1 }}>
-<Text style={{fontSize:18, color:"#103042",fontWight:500,marginLeft:20}}>{route.params.name} Hospitals</Text>
+<Text  allowFontScaling={false} style={{fontSize:18, color:"#103042",fontWight:500,marginLeft:20}}>{route.params.name} Hospitals</Text>
                          {   surgery.map((item) => (
                                 // getSurgeryHospital(item.hospital)
 
@@ -148,18 +149,18 @@ const DentalInnerScreen = ({ navigation }) => {
                                         <View style={{ marginLeft: 5, flexWrap: "wrap", marginTop: 20 }}>
 
                                             <Card.Content>
-                                                <Text style={{ fontWeight: "bold" }}>{decode(hospitals[0].name)}</Text>
+                                                <Text  allowFontScaling={false} style={{ fontWeight: "bold",fontSize:10 }}>{decode(hospitals[0].name)}</Text>
 
-                                                <Text variant="bodyMedium" style={{color:"gray",marginTop:5}}>Facilities </Text>
+                                                <Text  allowFontScaling={false} variant="bodyMedium" style={{color:"gray",marginTop:5}}>Facilities </Text>
                                           {facility!= "" && facility.map(item=>(
-                                           <Text style={{ color: "#f46b78", fontSize: 10, marginTop: 5 }}>  <AntDesign name="arrowright" size={12} color="#f46b78" />   {item[0].name}</Text>
+                                           <Text  allowFontScaling={false} style={{ color: "#f46b78", fontSize: 10, marginTop: 5 }}>  <AntDesign name="arrowright" size={12} color="#f46b78" />   {item[0].name}</Text>
                                           ))}
                                               
 
-                                                <Text style={{ fontWeight: "bold", marginTop: 12 }}>{item.name}</Text>
-                                                <Text variant="bodyMedium" style={{ textDecorationLine: "line-through", color: "gray" }}><FontAwesome name="rupee" size={16} color="gray" /> {item.price}</Text>
-                                                <Text variant="bodyMedium" style={{ fontSize: 18, fontWeight: 500 }} ><FontAwesome name="rupee" size={16} color="#103042" /> {item.offer_price}</Text>
-                                                {/* <Text style={{textAlign:"justify"}}>{item.details} </Text> */}
+                                                <Text  allowFontScaling={false} style={{ fontWeight: "bold", marginTop: 12 }}>{item.name}</Text>
+                                                <Text  allowFontScaling={false} variant="bodyMedium" style={{ textDecorationLine: "line-through", color: "gray" }}><FontAwesome name="rupee" size={16} color="gray" /> {item.price}</Text>
+                                                <Text  allowFontScaling={false} variant="bodyMedium" style={{ fontSize: 18, fontWeight: 500 }} ><FontAwesome name="rupee" size={16} color="#103042" /> {item.offer_price}</Text>
+                                                {/* <Text  allowFontScaling={false} style={{textAlign:"justify"}}>{item.details} </Text> */}
                                             </Card.Content>
 
 
@@ -174,8 +175,8 @@ const DentalInnerScreen = ({ navigation }) => {
                                     <Card.Actions style={{ marginTop: 10,marginRight:30 }}>
 
 
-                                    <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() => navigation.navigate("BookingScreen",{id:item.ser_id,name:item.name,price:item.offer_price})}><Text style={{ color: "white" }}>Book Now</Text></Button>
-                            <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() =>  navigation.navigate("EmiScreen",{id:item.ser_id,name:item.name,price:item.offer_price})}><Text style={{ color: "white" }}>EMI</Text></Button>
+                                    <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() =>!userInfo? navigation.navigate("Login") : navigation.navigate("BookingScreen",{id:item.ser_id,name:item.name,price:item.offer_price,cat_id:route.params.id, cat_name:route.params.name})}><Text  allowFontScaling={false} style={{ color: "white" }}>Book Now</Text></Button>
+                                   <Button mode="contained" theme={{ colors: { primary: '#f08080' } }} onPress={() =>!userInfo? navigation.navigate("Login") :  navigation.navigate("EmiScreen",{id:item.ser_id,name:item.name,price:item.offer_price,cat_id:route.params.id, cat_name:route.params.name})}><Text  allowFontScaling={false} style={{ color: "white" }}>EMI</Text></Button>
                                     </Card.Actions>
                                 </Card>
 

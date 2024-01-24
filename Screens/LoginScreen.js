@@ -34,33 +34,7 @@ const LoginScreen = ({ navigation }) => {
     formState: { errors },
   } = useForm();
 
-  // const onSubmit = async (phone) => {
 
-  //   const checkValid = phoneInput.current?.isValidNumber(phone);
-
-  //   setValid(checkValid ? checkValid : false);
-
-  //   if(valid){
-  //     const res = await axios.post("http://192.168.0.164:3000/signup", {
-  //       phone: data.phone,
-  //     })
-  //     console.log(res.data)
-  //     showToast();
-  //     //  .then((response) => response.json())
-  //     //  .then((serverResponse) => console.warn(serverResponse));
-
-  //    await navigation.navigate("OtpScreen");
-  //   }
-
-  //   else{
-
-  //     setErr("Inavalid Number")
-  //      setTimeout(()=>{
-  //            setErr("")
-  //      },3000)
-  //   }
-
-  // };
 
 
   const onSubmit = async (data) => {
@@ -119,7 +93,7 @@ const LoginScreen = ({ navigation }) => {
 
         <KeyboardAvoidingView>
           <View style={{ alignItems: "center" }}>
-            <Text style={styles.heading}>Login In to your Account</Text>
+            <Text  allowFontScaling={false} style={styles.heading}>Login In to your Account</Text>
           </View>
 
 
@@ -161,9 +135,9 @@ const LoginScreen = ({ navigation }) => {
             </View>
 
             {errors.phone && (
-              <Text style={{ color: "red" }}>{errors.phone.message}</Text>
+              <Text  allowFontScaling={false} style={{ color: "red" }}>{errors.phone.message}</Text>
             )}
-            {err !== "" && <Text style={{ color: "red" }}>{err}</Text>}
+            {err !== "" && <Text  allowFontScaling={false} style={{ color: "red" }}>{err}</Text>}
           </View>
 
 
@@ -192,7 +166,7 @@ const LoginScreen = ({ navigation }) => {
             onPress={() => navigation.navigate("Register")}
             style={{ marginTop: 15 }}
           >
-            <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
+            <Text  allowFontScaling={false} style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
               Don't have an account? Sign Up
             </Text>
           </Pressable> */}

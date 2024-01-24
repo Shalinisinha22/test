@@ -122,8 +122,8 @@ const ServiceScreen = ({ navigation }) => {
           }}
         />
 
-        <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-        <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+        <Text  allowFontScaling={false} style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+        <Text  allowFontScaling={false} style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
         <Text
           style={{
             height: 1,
@@ -223,7 +223,7 @@ const ServiceScreen = ({ navigation }) => {
                   }}
                 />
                 <View>
-                  <Text style={{ fontWeight: 600, fontFamily: "OpenSans", fontSize: 14 }}>
+                  <Text  allowFontScaling={false} style={{ fontWeight: 600, fontFamily: "OpenSans", fontSize: 14 }}>
                     <RenderHTML tagsStyles={tagsStyles} key={item.id} source={{ html: decode(item.name) }}></RenderHTML>
                   </Text>
                 </View>

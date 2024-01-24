@@ -82,7 +82,7 @@ const CallBanner = () => {
                 {/* Need a Doctor for Checkup? */}
                 {pageMenu}
               </Text>
-              <Text style={{ fontWeight: "bold", color: "white", fontSize: 10 }}>
+              <Text  allowFontScaling={false} style={{ fontWeight: "bold", color: "white", fontSize: 10 }}>
                 {/* Just make an Appointment & You're Done! */}
 
 

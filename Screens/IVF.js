@@ -59,8 +59,8 @@ const IVF = ({ navigation }) => {
                     }}
                 />
 
-                <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                <Text  allowFontScaling={false} style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                <Text  allowFontScaling={false} style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
                 <Text
                     style={{
                         height: 1,
@@ -94,7 +94,7 @@ renderItem={({ item, index }) => (
 <Image style={{width:100,height:100}} source={{ uri: `https://cureofine.com/upload/ivfcat/${item.image}` }} />
 </View>
 
-<Text style={{textAlign:"center",fontSize:17,marginTop:5}} variant="titleLarge">{item.name}</Text>
+<Text  allowFontScaling={false} style={{textAlign:"center",fontSize:17,marginTop:5}} variant="titleLarge">{item.name}</Text>
 
 
   

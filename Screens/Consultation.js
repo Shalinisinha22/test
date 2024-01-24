@@ -29,8 +29,10 @@ import { ActivityIndicator } from "react-native";
 import axios from "axios";
 import { Avatar, Button, Card } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
+import { useSelector } from "react-redux";
 
 const Consultation = ({ navigation }) => {
+  const userInfo = useSelector(state => state.user.userInfo);
   const DATA = [
     {
       coverImageUri: require("../assets/Banner/consult1.png"),
@@ -202,10 +204,10 @@ borderRadius: 5,
         <View style={{ marginLeft: 8, flexWrap: "wrap" }}>
 
           <Card.Content>
-            <Text style={{ fontSize: 12 }}>{item.name}</Text>
-            {/* <Text variant="bodyMedium" style={{ color: "gray", fontSize: 12 }}>Original Price- Rs {item.price}</Text>
-                                      <Text variant="bodyMedium" style={{ fontWeight: "bold", fontSize: 12 }}>Offer Price- Rs {item.offer_price}</Text> */}
-            <Text variant="bodyMedium">Description: </Text>
+            <Text  allowFontScaling={false}style={{ fontSize: 12 }}>{item.name}</Text>
+            {/* <Text  allowFontScaling={false}variant="bodyMedium" style={{ color: "gray", fontSize: 12 }}>Original Price- Rs {item.price}</Text>
+                                      <Text  allowFontScaling={false}variant="bodyMedium" style={{ fontWeight: "bold", fontSize: 12 }}>Offer Price- Rs {item.offer_price}</Text> */}
+            <Text  allowFontScaling={false}variant="bodyMedium">Description: </Text>
             <View style={{ textAlign: "center", width: 230, height: 80 }}>
               {item.details != "" && <RenderHTML tagsStyles={tagsStyles} key={item.id} source={{ html: decode(item.details) }}></RenderHTML>}
 
@@ -223,17 +225,17 @@ borderRadius: 5,
 
       <Card.Actions style={{ marginTop: 10 }}>
         <View>
-          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() => navigation.navigate("BookingScreen", { id: item.doctor_id,name:"Voice Consultation",price:item.voice_fee })}><Text style={{ color: "white", fontSize: 10, justifyContent: "space-between" }}><Feather name="phone-call" size={18} color="white" />  On Call</Text></Button>
-          <Text style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}> <FontAwesome name="rupee" size={20} color="#103042" />  {item.voice_fee}/-</Text>
+          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() =>!userInfo?navigation.navigate("Login"):navigation.navigate("BookingScreen", { id: item.doctor_id,name:"Voice Consultation",price:item.voice_fee })}><Text  allowFontScaling={false}style={{ color: "white", fontSize: 10, justifyContent: "space-between" }}><Feather name="phone-call" size={18} color="white" />  On Call</Text></Button>
+          <Text  allowFontScaling={false}style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}> <FontAwesome name="rupee" size={20} color="#103042" />  {item.voice_fee}/-</Text>
         </View>
         <View>
-          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() => navigation.navigate("BookingScreen", { id: item.doctor_id ,name:"Video Consultation",price:item.video_fee})}><Text style={{ color: "white", fontSize: 10 }}><Feather name="video" size={18} color="white" />  Video Call</Text></Button>
-          <Text style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}> <FontAwesome name="rupee" size={20} color="#103042" />  {item.video_fee}/-</Text>
+          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() =>!userInfo?navigation.navigate("Login"):navigation.navigate("BookingScreen", { id: item.doctor_id ,name:"Video Consultation",price:item.video_fee})}><Text  allowFontScaling={false}style={{ color: "white", fontSize: 10 }}><Feather name="video" size={18} color="white" /> Video Call</Text></Button>
+          <Text  allowFontScaling={false}style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}> <FontAwesome name="rupee" size={20} color="#103042" />  {item.video_fee}/-</Text>
 
         </View>
         <View>
-          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() => navigation.navigate("BookingScreen", { id: item.doctor_id,name:"Chat Consultation",price:item.chat_fee })}><Text style={{ color: "white", fontSize: 10 }}><Ionicons name="chatbubble-ellipses-outline" size={18} color="white" />  On Chat</Text></Button>
-          <Text style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}> <FontAwesome name="rupee" size={20} color="#103042" />  {item.chat_fee}/-</Text>
+          <Button mode="contained" theme={{ colors: { primary: '#f46b78' } }} onPress={() =>!userInfo?navigation.navigate("Login"):navigation.navigate("BookingScreen", { id: item.doctor_id,name:"Chat Consultation",price:item.chat_fee })}><Text  allowFontScaling={false}style={{ color: "white", fontSize: 10 }}><Ionicons name="chatbubble-ellipses-outline" size={18} color="white" />  On Chat</Text></Button>
+          <Text  allowFontScaling={false}style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}> <FontAwesome name="rupee" size={20} color="#103042" />  {item.chat_fee}/-</Text>
 
         </View>
       </Card.Actions>

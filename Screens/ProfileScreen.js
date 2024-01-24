@@ -148,7 +148,7 @@ const ProfileScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={{ backgroundColor: "white", paddingBottom: 50 }}>
             <Header navigation={navigation}></Header>
-            <Text
+               <Text  allowFontScaling={false}
                 style={{
                     height: 1,
                     borderColor: "whitesmoke",
@@ -160,19 +160,19 @@ const ProfileScreen = ({ navigation }) => {
                 <View style={styles.safeArea}>
                     <KeyboardAvoidingView>
                         <View style={{ alignItems: "center", marginTop: 5 }}>
-                            <Text style={{ color: "gray", fontSize: 15 }}>
+                               <Text  allowFontScaling={false} style={{ color: "gray", fontSize: 15 }}>
                                 ACCOUNT DETAILS
                             </Text>
                         </View>
 
                         <View style={{ marginTop: 20 }}>
-                            <Text>FullName</Text>
+                               <Text  allowFontScaling={false} >FullName</Text>
                             <View style={styles.inputBoxCont}>
                                 <Controller
                                     control={control}
                                     editable
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                        <TextInput
+                                           <Text  allowFontScaling={false}Input
                                             autoFocus={true}
                                             style={{
                                                 color: "gray",
@@ -193,12 +193,12 @@ const ProfileScreen = ({ navigation }) => {
 
                         </View>
                         <View style={{ marginTop: 20 }}>
-                            <Text>City</Text>
+                               <Text  allowFontScaling={false}>City</Text>
                             <View style={styles.inputBoxCont}>
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                        <TextInput
+                                           <Text  allowFontScaling={false}Input
                                             autoFocus={true}
                                             style={{
                                                 color: "gray",
@@ -219,12 +219,12 @@ const ProfileScreen = ({ navigation }) => {
 
                         </View>
                         <View style={{ marginTop: 20 }}>
-                            <Text>State</Text>
+                               <Text  allowFontScaling={false} >State</Text>
                             <View style={styles.inputBoxCont}>
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                        <TextInput
+                                           <Text  allowFontScaling={false}Input
                                             autoFocus={true}
                                             style={{
                                                 color: "gray",
@@ -245,12 +245,12 @@ const ProfileScreen = ({ navigation }) => {
 
                         </View>
                         <View style={{ marginTop: 20 }}>
-                            <Text>Country</Text>
+                               <Text  allowFontScaling={false} >Country</Text>
                             <View style={styles.inputBoxCont}>
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                        <TextInput
+                                           <Text  allowFontScaling={false}Input
                                             autoFocus={true}
                                             style={{
                                                 color: "gray",
@@ -271,12 +271,12 @@ const ProfileScreen = ({ navigation }) => {
 
                         </View>
                         <View style={styles.inputCont}>
-                            <Text>your Email</Text>
+                               <Text  allowFontScaling={false} >your Email</Text>
                             <View style={styles.inputBoxCont}>
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                        <TextInput
+                                           <Text  allowFontScaling={false}Input
                                             style={{
                                                 color: "gray",
                                                 marginVertical: 5,
@@ -297,12 +297,12 @@ const ProfileScreen = ({ navigation }) => {
                         </View>
 
                         <View style={styles.inputCont}>
-                            <Text>Mobile Number</Text>
+                               <Text  allowFontScaling={false} >Mobile Number</Text>
                             <View style={styles.inputBoxCont}>
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                        <TextInput
+                                           <Text  allowFontScaling={false}Input
                                             keyboardType="numeric"
                                             autoFocus={true}
                                             style={{
@@ -325,12 +325,12 @@ const ProfileScreen = ({ navigation }) => {
                         </View>
 
                         <View style={styles.inputCont}>
-                            <Text>Pincode</Text>
+                               <Text  allowFontScaling={false} >Pincode</Text>
                             <View style={styles.inputBoxCont}>
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                        <TextInput
+                                           <Text  allowFontScaling={false}Input
                                             keyboardType="numeric"
                                             autoFocus={true}
                                             style={{
@@ -353,7 +353,7 @@ const ProfileScreen = ({ navigation }) => {
                         </View>
 
                         <View style={styles.inputCont}>
-                            <Text>Gender</Text>
+                               <Text  allowFontScaling={false} >Gender</Text>
                             <Select style={{ backgroundColor: "#D0D0D0" }} selectedValue={profileData!=null && profileData.gender!="" ? profileData.gender : gender} minWidth="200" accessibilityLabel="Select Gender" placeholder="Select Gender" _selectedItem={{
                                 bg: "#D0D0D0"
                                 // endIcon: <CheckIcon size="5"/>
@@ -366,7 +366,7 @@ const ProfileScreen = ({ navigation }) => {
 
 
                         <View style={styles.inputCont}>
-                            <Text>Profile Image</Text>
+                               <Text  allowFontScaling={false} >Profile Image</Text>
 
                             <View style={styles.inputBoxCont}>
                                 {photo && <Image source={{ uri: photo }} style={{ width: 200, height: 200 }} />}
@@ -379,7 +379,7 @@ const ProfileScreen = ({ navigation }) => {
 
 
                         {/* <View style={{ marginTop: 20 }}>
-                            <Text>DOB</Text>
+                               <Text  allowFontScaling={false}>DOB</Text>
                             <TouchableOpacity style={styles.inputBoxCont} onPress={()=>setShowPicker(!showDatepicker)} >
                                 <Controller
                                     control={control}
@@ -411,7 +411,8 @@ const ProfileScreen = ({ navigation }) => {
                         // onPress={showToast}
 
                         >
-                            <Text
+                               <Text  allowFontScaling={false}
+                            
                                 style={{
                                     textAlign: "center",
                                     color: "white",

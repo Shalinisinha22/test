@@ -114,7 +114,7 @@ import {
         </ScrollView>
   
         <View style={{ padding: 10, paddingTop: 10 }}>
-          <Text style={{ fontSize: 15, fontWeight: "500" }}>
+          <Text  allowFontScaling={false} style={{ fontSize: 15, fontWeight: "500" }}>
             {route?.params?.name}
           </Text>
        
@@ -135,7 +135,7 @@ import {
             }}
           >
             <Text>Description: </Text>
-            <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
+            <Text  allowFontScaling={false} style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
               {route.params?.desc}
             </Text>
           
@@ -145,10 +145,10 @@ import {
 
 
    
-          <Text style={{ height: 1, borderColor: "#D0D0D0", borderWidth: 1 ,marginTop:10}} />
+          <Text  allowFontScaling={false} style={{ height: 1, borderColor: "#D0D0D0", borderWidth: 1 ,marginTop:10}} />
   
   <View style={{ padding: 8 }}>
-    <Text style={{ fontSize: 15, fontWeight: "bold", marginVertical: 5, textAlign:"center" }}>
+    <Text  allowFontScaling={false} style={{ fontSize: 15, fontWeight: "bold", marginVertical: 5, textAlign:"center" }}>
       Total : Rs 3000
     </Text>
     </View>

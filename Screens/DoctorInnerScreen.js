@@ -105,8 +105,8 @@ const DoctorInnerScreen = ({ navigation }) => {
                         }}
                     />
 
-                    <Text style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
-                    <Text style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
+                    <Text  allowFontScaling={false} style={{ color: "black", padding: 15, fontSize: 15, paddingBottom: 2 }}>Elevate Your Healthcare Experience -</Text>
+                    <Text  allowFontScaling={false} style={{ color: "#eb3b5a", paddingLeft: 12, fontSize: 12 }}> Explore a Range of Premium Medical Services on our App.</Text>
                     <Text
                         style={{
                             height: 1,
@@ -120,7 +120,7 @@ const DoctorInnerScreen = ({ navigation }) => {
                     <View style={{ marginTop: 20, paddingBottom: 50 }}>
 
 
-                        <Text style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>{doctor[0].name}</Text>
+                        <Text  allowFontScaling={false} style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>{doctor[0].name}</Text>
 
                         <ImageBackground
                             style={{ width, height: 300, marginTop: 20, resizeMode: "contain", margin: 2 }}
@@ -133,33 +133,33 @@ const DoctorInnerScreen = ({ navigation }) => {
 
 
                         <View style={{ padding: 10, paddingTop: 10 }}>
-                            <Text style={{ fontSize: 15 }}>
+                            <Text  allowFontScaling={false} style={{ fontSize: 15 }}>
                                 Gender:  {doctor[0].gender}
                             </Text>
                             {
                                 department != "" &&
 
-                                <Text style={{ fontSize: 15 }}>
+                                <Text  allowFontScaling={false} style={{ fontSize: 15 }}>
                                     Department:  {decode(department[0].name)}
                                 </Text>
                             }
 
-                            <Text style={{ fontSize: 15 }}>
+                            <Text  allowFontScaling={false} style={{ fontSize: 15 }}>
                                 Registration No: {doctor[0].reg_num}
                             </Text>
-                            <Text style={{ fontSize: 15 }}>
+                            <Text  allowFontScaling={false} style={{ fontSize: 15 }}>
                                 Experience:  {doctor[0].experience} years
                             </Text>
 
                             {
                                 qualification != "" &&
-                                <Text style={{ fontSize: 15 }}>
+                                <Text  allowFontScaling={false} style={{ fontSize: 15 }}>
                                     Qualification:  {qualification[0].name}
                                 </Text>
                             }
 
                             <View style={{ flexDirection: "row" }}>
-                                <Text style={{ fontSize: 15, }}>
+                                <Text  allowFontScaling={false} style={{ fontSize: 15, }}>
                                     Language:
                                 </Text>
 
@@ -170,7 +170,7 @@ const DoctorInnerScreen = ({ navigation }) => {
 
                                         languages.map(item => (
 
-                                            <Text style={{ fontSize: 15, marginLeft: 5 }}>
+                                            <Text  allowFontScaling={false} style={{ fontSize: 15, marginLeft: 5 }}>
                                                 {item[0].name}  </Text>
                                         ))}
                                 </View>
@@ -182,7 +182,7 @@ const DoctorInnerScreen = ({ navigation }) => {
 
 
 
-                            {/* <Text style={{ fontSize: 18 }}>
+                            {/* <Text  allowFontScaling={false} style={{ fontSize: 18 }}>
                                    Language:  {doctor[0].language}
                              
                                 </Text> */}
@@ -195,7 +195,7 @@ const DoctorInnerScreen = ({ navigation }) => {
                             }}
                         >
                             <Text>Session: </Text>
-                            <Text style={{ color: "#eb3b5a" }}>{route.params.item?.duration} minutes</Text>
+                            <Text  allowFontScaling={false} style={{ color: "#eb3b5a" }}>{route.params.item?.duration} minutes</Text>
                         </View> */}
                             <Text
                                 style={{
@@ -214,7 +214,7 @@ const DoctorInnerScreen = ({ navigation }) => {
                                 }}
                             >
                                 <Text>Description: </Text>
-                                <Text style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
+                                <Text  allowFontScaling={false} style={{ fontSize: 12, textAlign: "justify", color: "gray" }}>
                                     {decode(doctor[0].details)}
                                 </Text>
                             </View>
