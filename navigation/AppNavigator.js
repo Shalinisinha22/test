@@ -79,7 +79,10 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
 
+  const userInfo = useSelector(state => state.user.userInfo);
+  useEffect(()=>{
 
+  },[userInfo])
 
   const drawerMenu = [
     {
@@ -150,15 +153,15 @@ const AppNavigator = () => {
     // },
     {
       id: 7,
-      name: "Logout",
-      url: "LogoutScreen",
-      icon: <MaterialCommunityIcons name="logout" size={24} color="white" />,
+      name: userInfo?"Logout":"Login",
+      url: "Login",
+      icon: userInfo?<MaterialCommunityIcons name="logout" size={24} color="white" />:<Ionicons name="enter" size={24} color="white"></Ionicons> ,
     }
   ];
 
 
   const dispatch = useDispatch();
-  const userInfo = useSelector(state => state.user.userInfo);
+
 
   const handleLogout = () => {
     // Dispatch the logoutUser action to set userInfo to null
