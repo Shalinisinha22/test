@@ -9,7 +9,7 @@ const PaymentStatusScreen = ({navigation}) => {
   return (
     <View style={{marginTop:30,alignItems:"center"}}>
       <Text>PaymentStatusScreen</Text>
-      <Text>{route.params.status}</Text>
+      {/* <Text>{route.params.status}</Text> */}
    <TouchableOpacity onPress={()=>navigation.navigate("Home")}><Text>Back to Home</Text></TouchableOpacity>
     </View>
   )

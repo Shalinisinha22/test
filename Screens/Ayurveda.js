@@ -138,9 +138,10 @@ renderItem={({ item, index }) => (
 }
                                   
                 </View>
+{ayurvedaList.length!=0 && <Contact></Contact> }
+{ayurvedaList.length!=0 && <Footer></Footer> }
+             
 
-                <Contact></Contact>
-<Footer></Footer>
 
             </ScrollView>
         </View>

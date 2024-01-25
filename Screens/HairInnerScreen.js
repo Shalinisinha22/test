@@ -44,9 +44,12 @@ const HairInnerScreen = ({ navigation}) => {
         const res= await axios.get("https://cureofine-azff.onrender.com/hairList")
         const data = res.data
         //  console.log(route.params.id)
-         let newArr= await data.filter((item)=>{ return item.category == route.params.id && item.location == locationId})
+         let newArr= await data.filter((item)=>{ return item.category == route.params.id && item.hair_location == locationId})
         //  console.log("newarr",newArr)
         setSurgery(newArr)
+        let facArr = JSON.parse(newArr[0].facility_type)
+        // console.log("69",facArr.length)
+        getFacility(facArr)
 
       
         //  setHospitals(newArr)
@@ -59,22 +62,22 @@ const HairInnerScreen = ({ navigation}) => {
 
      
 
-       const getSurgeryHospital = async(id)=>{
-        const res= await axios.get("https://cureofine-azff.onrender.com/hospitals")
-        const data = res.data
-        let newArr= await data.filter((item)=>{ return item.hos_id == id})
-        let facArr = JSON.parse(newArr[0].facility_type)
-        console.log("69",facArr.length)
-         getFacility(facArr)
+//        const getSurgeryHospital = async(id)=>{
+//         const res= await axios.get("https://cureofine-azff.onrender.com/hospitals")
+//         const data = res.data
+//         let newArr= await data.filter((item)=>{ return item.hos_id == id})
+//         let facArr = JSON.parse(newArr[0].facility_type)
+//         console.log("69",facArr.length)
+//          getFacility(facArr)
 
-        // console.log("newarr",newArr)
-       setHospitals(newArr)
-   }
-   useEffect(() => {    
-   surgery!= "" && surgery.map((item) => {
-      getSurgeryHospital(item.hospital);
-    });
-    }, [surgery]);
+//         // console.log("newarr",newArr)
+//        setHospitals(newArr)
+//    }
+//    useEffect(() => {    
+//    surgery!= "" && surgery.map((item) => {
+//       getSurgeryHospital(item.hospital);
+//     });
+//     }, [surgery]);
 
    const getFacility = async(facArr)=>{
     const res= await axios.get("https://cureofine-azff.onrender.com/facilityType")
@@ -126,27 +129,22 @@ const HairInnerScreen = ({ navigation}) => {
 <View style={{ flex: 1 }}>
 <Text  allowFontScaling={false} style={{fontSize:18, color:"#103042",fontWight:500,marginLeft:20}}>{route.params.name} Hospitals</Text>
                         {surgery.map((item) => (
-                            // getSurgeryHospital(item.hospital)
-
-                            hospitals != "" &&
-
+                           
 
                             <Card key={item.id} style={{ margin: 10, backgroundColor: "white" }}  >
 
 
 
                                 <View style={{ flexDirection: "row", width: "100%" }}>
-                                    <Image source={{ uri: `https://cureofine.com/upload/hospital/${hospitals[0].image}` }} style={{ height: 120, width: 120, resizeMode: "cover" }} />
-                                    {
-                                        console.log(hospitals[0].image)
-                                    }
+                                    <Image source={{ uri: `https://cureofine.com/upload/hospital/${item.hospital_image}` }} style={{ height: 120, width: 120, resizeMode: "cover" }} />
+                                 
 
 
 
                                     <View style={{ marginLeft: 5, flexWrap: "wrap", marginTop: 20 }}>
 
                                         <Card.Content>
-                                            <Text  allowFontScaling={false} style={{ fontWeight: "bold" }}>{decode(hospitals[0].name)}</Text>
+                                            <Text  allowFontScaling={false} style={{ fontWeight: "bold" }}>{decode(item.hospital_name)}</Text>
 
                                             <Text  allowFontScaling={false} variant="bodyMedium" style={{color:"gray",marginTop:5}}>Facilities </Text>
                                           {facility!= "" && facility.map(item=>(

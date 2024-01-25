@@ -7,7 +7,8 @@ import {
     TextInput,
     ImageBackground,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -115,13 +116,13 @@ const HospitalInnerScreen = ({ navigation }) => {
 
                         <Text  allowFontScaling={false} style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>{hospital[0].name}</Text>
 
-                        <ImageBackground
-                            style={{ width, height: 300, marginTop: 20, resizeMode: "contain", margin: 2 }}
+                        <Image
+                            style={{ width,height:200,  marginTop: 20, resizeMode: "contain", margin: 2 }}
                             source={{ uri: `https://cureofine.com/upload/hospital/${hospital[0].image}` }}
 
                         >
 
-                        </ImageBackground>
+                        </Image>
 
 
 

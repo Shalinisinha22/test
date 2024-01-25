@@ -133,6 +133,7 @@ const Teams = ({ navigation }) => {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: 15,
+                  
                   }}
                   // onPress={() => navigation.navigate("Doctor Consultation")}
                   onPress={()=>navigation.navigate("DoctorInnerScreen", {id:item.doctor_id})}
@@ -143,7 +144,7 @@ const Teams = ({ navigation }) => {
                       width: 95,
                       height: 95,
                       resizeMode: "contain",
-                      borderRadius: 60,
+                       borderRadius:20
                     }}
                     source={{ uri: `https://cureofine.com/upload/profile/${item.profile_img}` }}
                   />

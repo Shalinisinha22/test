@@ -176,8 +176,21 @@ renderItem={({ item, index }) => (
                 
                 </View>
 
-                <Contact></Contact>
-<Footer></Footer>
+
+                {
+                  surgeryList!= "" && 
+
+                  <Contact></Contact>
+                 
+                }
+                     {
+                  surgeryList!= "" && 
+
+                  <Footer></Footer>
+                 
+                }
+
+
 
             </ScrollView>
         </View>

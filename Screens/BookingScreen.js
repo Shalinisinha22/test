@@ -87,7 +87,7 @@ const BookingScreen = ({ navigation }) => {
 
 
         try {
-            const res = await axios.post("http://192.168.0.110:3000/bookSurgery", {
+            const res = await axios.post("https://cureofine-azff.onrender.com/bookSurgery", {
                 service_id: route.params.cat_id,
                 name: data.fullname,
                 gender: gender,
@@ -104,10 +104,11 @@ const BookingScreen = ({ navigation }) => {
 
             if (res.status === 200 && res.data.message === "Insertion successful") {
                 reset();
-                showToast();
+                setGender("")
+                // showToast();
     
                 try {
-                    const paymentResponse = await axios.post('http://192.168.0.110:3000/api/payment', {
+                    const paymentResponse = await axios.post('https://cureofine-azff.onrender.com/api/payment', {
                         transactionId: transactionId,
                         MUID:MUID,
                         name: data.fullname,
@@ -119,9 +120,70 @@ const BookingScreen = ({ navigation }) => {
                         console.log("119",paymentResponse.data.message);
                         if (paymentResponse.data.result) {
                             setPaymentResult(paymentResponse.data.result);
+
+                            const tId = paymentResponse.data.transactionId;
+                            const mId = paymentResponse.data.merchantId;
+                            console.log(tId)
+                            console.log(mId)
                         
-                         const res1=     await Linking.openURL(paymentResponse.data.result);
-                         console.log(res1.data)
+                         const res1 = await Linking.openURL(paymentResponse.data.result);
+                       
+
+
+                         const intervalId = setInterval(async () => {
+                            try {
+                              const statusResponse = await axios.post(`https://cureofine-azff.onrender.com/api/status/${tId}`);
+                  
+                              console.log("Payment Status:", statusResponse.data);
+                  
+                              if (statusResponse.data.status == "success") {
+                                // Payment successful, navigate to the next screen
+                                clearInterval(intervalId); // Stop the interval
+
+                                   try{
+
+                                    const updateRes = await axios.post("https://cureofine-azff.onrender.com/updatePaymentTransactionSuccess", {
+                                      
+                                        phone: userInfo,
+                                        transaction_id: tId,
+                                        service_name: route.params.name
+                                      
+                                    });
+
+                                    console.log(updateRes.data.message)
+                                      
+                                   }
+                                   catch(err){
+                                         console.log(err)
+                                   }
+                                navigation.navigate("Home");
+                                Alert.alert("Payment Status:", statusResponse.data.status)
+                              } else if (statusResponse.data.status == "failure") {
+                                // Payment failed, navigate to the failure screen
+                                clearInterval(intervalId); // Stop the interval
+                                try{
+
+                                    const updateRes = await axios.post("https://cureofine-azff.onrender.com/updatePaymentTransactionFailure", {
+                                      
+                                        phone: userInfo,
+                                        transaction_id: tId,
+                                        service_name: route.params.name
+                                      
+                                    });
+
+                                    console.log(updateRes.data.message)
+                                      
+                                   }
+                                   catch(err){
+                                         console.log(err)
+                                   }
+                                navigation.navigate("Home");
+                                Alert.alert("Payment Status:", statusResponse.data.status)
+                              }
+                            } catch (error) {
+                              console.error("Error checking payment status:", error);
+                            }
+                          }, 5000); // Check every 5 
                           }
                      
     
@@ -138,28 +200,28 @@ const BookingScreen = ({ navigation }) => {
         
  
 
-    const handleRedirect = async (event) => {
-        const { url } = event;
-        console.log(url)
-        // Check if the URL matches your redirect URL pattern
-        if (url.startsWith('http://192.168.0.110:3000/api/status/')) {
-          // Extract transactionId from the URL (You may need to parse the URL accordingly)
-          const transactionId = url.split('/').pop();
-          console.log('Transaction ID:', transactionId);
-          // Call your backend to check the payment status
-          try {
-            const statusResponse = await axios.post(`http://192.168.0.110:3000/api/status/${transactionId}`);
-            // Handle the payment status (statusResponse.data.status)
-            console.log('Payment Status:', statusResponse.data.status);
-            navigation.navigate("PaymentStatusScreen",{status:statusResponse.data.status})
+    // const handleRedirect = async (event) => {
+    //     const { url } = event;
+    //     console.log(url)
+    //     // Check if the URL matches your redirect URL pattern
+    //     if (url.startsWith('http://192.168.0.110:3000/api/status/')) {
+    //       // Extract transactionId from the URL (You may need to parse the URL accordingly)
+    //       const transactionId = url.split('/').pop();
+    //       console.log('Transaction ID:', transactionId);
+    //       // Call your backend to check the payment status
+    //       try {
+    //         const statusResponse = await axios.post(`http://192.168.0.110:3000/api/status/${transactionId}`);
+    //         // Handle the payment status (statusResponse.data.status)
+    //         console.log('Payment Status:', statusResponse.data.status);
+    //         navigation.navigate("PaymentStatusScreen",{status:statusResponse.data.status})
 
-            // if(statusResponse.data.status){
-            // }
-          } catch (error) {
-            console.error('Error checking payment status:', error);
-          }
-        }
-      };
+    //         // if(statusResponse.data.status){
+    //         // }
+    //       } catch (error) {
+    //         console.error('Error checking payment status:', error);
+    //       }
+    //     }
+    //   };
 
 
   
@@ -178,7 +240,17 @@ const BookingScreen = ({ navigation }) => {
     const EMAIL_REGEX =
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-
+        const handleNavigationChange = (navState) => {
+            const { url } = navState;
+            console.log("242",url)
+            // Check if the URL indicates a successful payment
+            if (url.startsWith('https://cureofine-azff.onrender.com/api/status/')) {
+              // Close or navigate away from the WebView
+              // This can be done using navigation.goBack() or similar
+              // For example:
+              navigation.navigate('PaymentStatusScreen'); // Navigate to your home screen
+            }
+          };
     return (
         <SafeAreaView style={{ backgroundColor: "white", paddingBottom: 50 }}>
             <Header navigation={navigation}></Header>
@@ -501,12 +573,6 @@ const BookingScreen = ({ navigation }) => {
             </ScrollView>
 
 
-            {paymentResult && (
-        <WebView
-          source={{ uri: paymentResult }}
-          onNavigationStateChange={handleRedirect}
-        />
-      )}
         </SafeAreaView>
     );
 };
@@ -556,19 +622,3 @@ const styles = StyleSheet.create({
 });
 
 export default BookingScreen;
-{/* <View>
-<Button onPress={showTimepicker} title="Open Time Picker" />
-{showTimePicker && (
-  <DateTimePicker
-    value={time}
-    mode="time"
-    is24Hour={true}
-    display="default"
-    onChange={handleTimeChange}
-  />
-)}
-{Platform.OS === 'ios' && (
-  <Button onPress={() => setShowTimePicker(false)} title="Done" />
-)}
-<Text>Selected Time: {time.toLocaleTimeString()}</Text>
-</View> */}

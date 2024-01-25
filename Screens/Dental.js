@@ -151,8 +151,11 @@ const Dental = ({ navigation }) => {
 
                 </View>
 
-                <Contact></Contact>
-                <Footer></Footer>
+
+            {dentalList.length!= 0 && <Contact></Contact>}
+            {dentalList.length!= 0 && <Footer></Footer>}
+                
+                
 
             </ScrollView>
         </View>

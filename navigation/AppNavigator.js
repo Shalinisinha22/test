@@ -150,9 +150,9 @@ const AppNavigator = () => {
     // },
     {
       id: 7,
-      name: "Share",
-      url: "ShareScreen",
-      icon: <Entypo name="share" size={24} color="white" />,
+      name: "Logout",
+      url: "LogoutScreen",
+      icon: <MaterialCommunityIcons name="logout" size={24} color="white" />,
     }
   ];
 
@@ -463,10 +463,12 @@ const AppNavigator = () => {
                       gap: 12,
                     }}
                     onPress={() => {
-                      item.name == "Share"
-                        ? onShare(
-                          `https://expo.dev/artifacts/eas/5ua1tSJD4RS22HLuiVNHzJ.apk`
-                        )
+                      item.name == "Logout"
+                        ? handleLogout()
+                        
+                        // onShare(
+                        //   `https://expo.dev/artifacts/eas/5ua1tSJD4RS22HLuiVNHzJ.apk`
+                        // )
                         :
                         navigation.navigate(item.url);
                     }}

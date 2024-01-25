@@ -28,6 +28,17 @@ import { UseSelector, useSelector } from "react-redux";
 const ProfileScreen = ({ navigation }) => {
 
 
+
+const [editableFullName, setEditableFullName] = useState("");
+const [editableCity, setEditableCity] = useState("");
+const [editableState, setEditableState] = useState("");
+const [editableCountry, setEditableCountry] = useState("");
+const [editableEmail, setEditableEmail] = useState("");
+const [editablePincode, setEditablePincode] = useState("");
+const [editableGneder, setEditableGender] = useState("");
+const [editableProfileImage, setEditableProfileImage] = useState("");
+
+
     const [profileData,setProfile] = useState(null)
 
     const [photo, setPhoto] = useState(null);
@@ -57,7 +68,7 @@ const ProfileScreen = ({ navigation }) => {
             quality: 1,
         });
 
-        console.log(result);
+        // console.log(result);
 
         if (!result.canceled) {
             const uriParts = result.assets[0].uri.split('/');
@@ -84,7 +95,7 @@ const ProfileScreen = ({ navigation }) => {
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log("75", data, photo, gender);
+        // console.log("75", data, photo, gender);
 
         const res = await axios.post("https://cureofine-azff.onrender.com/updateProfile", {
       
@@ -98,7 +109,7 @@ const ProfileScreen = ({ navigation }) => {
         gender:gender,
         image:imageName
 
-      })
+        })
 
       if(res.data.message== "Updation successful"){
             
@@ -136,7 +147,7 @@ const ProfileScreen = ({ navigation }) => {
                     phone: userInfo,
                   },
                 });
-                console.log(res.data[0]);
+                // console.log("139",res.data[0].mobile);
                 setProfile(res.data[0]);
               } catch (error) {
                 console.error("Error fetching profile data:", error);
@@ -145,6 +156,22 @@ const ProfileScreen = ({ navigation }) => {
         useEffect(()=>{
             getProfileData()
         },[])
+
+
+        useEffect(() => {
+            if (profileData) {
+                // console.log(profileData)
+              setEditableFullName(profileData.name);
+              setEditableCity(profileData.city);
+              setEditableState(profileData.state);
+              setEditableCountry(profileData.country);
+              setEditableEmail(profileData.email);
+              setEditablePincode(profileData.pincode);
+              setEditableGender(profileData.gender)
+              setEditableProfileImage(profileData.image)
+              // ... set other editable fields
+            }
+          }, [profileData]);
     return (
         <SafeAreaView style={{ backgroundColor: "white", paddingBottom: 50 }}>
             <Header navigation={navigation}></Header>
@@ -172,7 +199,7 @@ const ProfileScreen = ({ navigation }) => {
                                     control={control}
                                     editable
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                           <Text  allowFontScaling={false}Input
+                                           <TextInput  allowFontScaling={false}
                                             autoFocus={true}
                                             style={{
                                                 color: "gray",
@@ -182,8 +209,11 @@ const ProfileScreen = ({ navigation }) => {
                                             }}
 
                                             onBlur={onBlur}
-                                            onChangeText={(value) => onChange(value)}
-                                            value={profileData!=null && profileData.name!="" ? profileData.name : value}
+                                            onChangeText={(value) => {
+                                                setEditableFullName(value);
+                                                onChange(value);
+                                              }}
+                                              value={editableFullName}
                                         />
                                     )}
                                     name="fullname"
@@ -198,7 +228,7 @@ const ProfileScreen = ({ navigation }) => {
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                           <Text  allowFontScaling={false}Input
+                                           <TextInput  allowFontScaling={false}
                                             autoFocus={true}
                                             style={{
                                                 color: "gray",
@@ -208,8 +238,11 @@ const ProfileScreen = ({ navigation }) => {
                                             }}
 
                                             onBlur={onBlur}
-                                            onChangeText={(value) => onChange(value)}
-                                            value={profileData!=null && profileData.city!="" ? profileData.city : value}
+                                            onChangeText={(value) => {
+                                                setEditableCity(value);
+                                                onChange(value);
+                                              }}
+                                              value={editableCity}
                                         />
                                     )}
                                     name="city"
@@ -224,7 +257,7 @@ const ProfileScreen = ({ navigation }) => {
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                           <Text  allowFontScaling={false}Input
+                                           <TextInput  allowFontScaling={false}
                                             autoFocus={true}
                                             style={{
                                                 color: "gray",
@@ -234,8 +267,11 @@ const ProfileScreen = ({ navigation }) => {
                                             }}
 
                                             onBlur={onBlur}
-                                            onChangeText={(value) => onChange(value)}
-                                            value={profileData!=null && profileData.state!="" ? profileData.state : value}
+                                            onChangeText={(value) => {
+                                                setEditableState(value);
+                                                onChange(value);
+                                              }}
+                                              value={editableState}
                                         />
                                     )}
                                     name="state"
@@ -250,7 +286,7 @@ const ProfileScreen = ({ navigation }) => {
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                           <Text  allowFontScaling={false}Input
+                                           <TextInput  allowFontScaling={false}
                                             autoFocus={true}
                                             style={{
                                                 color: "gray",
@@ -260,8 +296,11 @@ const ProfileScreen = ({ navigation }) => {
                                             }}
 
                                             onBlur={onBlur}
-                                            onChangeText={(value) => onChange(value)}
-                                            value={profileData!=null && profileData.country!="" ? profileData.country : value}
+                                            onChangeText={(value) => {
+                                                setEditableCountry(value);
+                                                onChange(value);
+                                              }}
+                                              value={editableCountry}
                                         />
                                     )}
                                     name="country"
@@ -276,7 +315,7 @@ const ProfileScreen = ({ navigation }) => {
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                           <Text  allowFontScaling={false}Input
+                                           <TextInput  allowFontScaling={false}
                                             style={{
                                                 color: "gray",
                                                 marginVertical: 5,
@@ -285,8 +324,11 @@ const ProfileScreen = ({ navigation }) => {
                                             }}
 
                                             onBlur={onBlur}
-                                            onChangeText={(value) => onChange(value)}
-                                            value={profileData!=null && profileData.email!="" ? profileData.email : value}
+                                            onChangeText={(value) => {
+                                                setEditableEmail(value);
+                                                onChange(value);
+                                              }}
+                                              value={editableEmail}
                                         />
                                     )}
                                     name="email"
@@ -302,7 +344,7 @@ const ProfileScreen = ({ navigation }) => {
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                           <Text  allowFontScaling={false}Input
+                                           <TextInput  allowFontScaling={false}
                                             keyboardType="numeric"
                                             autoFocus={true}
                                             style={{
@@ -314,7 +356,7 @@ const ProfileScreen = ({ navigation }) => {
                                             // placeholder="enter your Phone Number"
                                             onBlur={onBlur}
                                             onChangeText={(value) => onChange(value)}
-                                            value={profileData!=null && profileData.mobile!="" ? profileData.mobile : userInfo}
+                                            value={userInfo}
                                         />
                                     )}
                                     name="phone"
@@ -330,7 +372,7 @@ const ProfileScreen = ({ navigation }) => {
                                 <Controller
                                     control={control}
                                     render={({ field: { onChange, onBlur, value } }) => (
-                                           <Text  allowFontScaling={false}Input
+                                           <TextInput  allowFontScaling={false}
                                             keyboardType="numeric"
                                             autoFocus={true}
                                             style={{
@@ -341,8 +383,11 @@ const ProfileScreen = ({ navigation }) => {
                                             }}
 
                                             onBlur={onBlur}
-                                            onChangeText={(value) => onChange(value)}
-                                            value={profileData!=null && profileData.pincode!="" ? profileData.pincode : value}
+                                            onChangeText={(value) => {
+                                                setEditablePincode(value);
+                                                onChange(value);
+                                              }}
+                                              value={editablePincode}
                                         />
                                     )}
                                     name="pincode"
@@ -354,10 +399,15 @@ const ProfileScreen = ({ navigation }) => {
 
                         <View style={styles.inputCont}>
                                <Text  allowFontScaling={false} >Gender</Text>
-                            <Select style={{ backgroundColor: "#D0D0D0" }} selectedValue={profileData!=null && profileData.gender!="" ? profileData.gender : gender} minWidth="200" accessibilityLabel="Select Gender" placeholder="Select Gender" _selectedItem={{
+                            <Select style={{ backgroundColor: "#D0D0D0" }} selectedValue={editableGneder} minWidth="200" accessibilityLabel="Select Gender" placeholder="Select Gender" _selectedItem={{
                                 bg: "#D0D0D0"
                                 // endIcon: <CheckIcon size="5"/>
-                            }} mt={1} onValueChange={itemValue => setGender(itemValue)}>
+                            }} mt={1} onValueChange={(itemValue) => 
+                                {
+                                    setGender(itemValue)
+                                    setEditableGender(itemValue)
+                                }
+                           }>
                                 <Select.Item label="Male" value="male" />
                                 <Select.Item label="Female" value="female" />
 
@@ -365,7 +415,7 @@ const ProfileScreen = ({ navigation }) => {
                         </View>
 
 
-                        <View style={styles.inputCont}>
+                        {/* <View style={styles.inputCont}>
                                <Text  allowFontScaling={false} >Profile Image</Text>
 
                             <View style={styles.inputBoxCont}>
@@ -374,7 +424,7 @@ const ProfileScreen = ({ navigation }) => {
 
                             </View>
 
-                        </View>
+                        </View> */}
 
 
 

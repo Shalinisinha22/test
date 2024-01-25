@@ -149,9 +149,11 @@ renderItem={({ item, index }) => (
 
                 
                 </View>
+{ivfList.length!=0 && 
+<Contact></Contact>}
+{ivfList.length!=0 && <Footer></Footer>}
+               
 
-                <Contact></Contact>
-<Footer></Footer>
 
             </ScrollView>
         </View>

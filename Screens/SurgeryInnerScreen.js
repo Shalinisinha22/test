@@ -32,7 +32,7 @@ const SurgeryInnerScreen = ({ navigation }) => {
 
     const route = useRoute();
 
-    const [hospitals, setHospitals] = useState("")
+   
     const [surgery, setSurgery] = useState("")
     const [facility, setFacility] = useState("")
     const userInfo = useSelector(state => state.user.userInfo);
@@ -41,16 +41,17 @@ const SurgeryInnerScreen = ({ navigation }) => {
 
 
         const locationId = JSON.parse(await AsyncStorage.getItem("locationId"));
-        // console.log("locationId",locationId)
-        //  const res = await axios.get("https://cureofine-azff.onrender.com/hospitals")
-        //  const data= res.data;
+       
 
         const res = await axios.get("https://cureofine-azff.onrender.com/surgeryList")
         const data = res.data
         //  console.log(route.params.id)
-        let newArr = await data.filter((item) => { return item.category == route.params.id && item.location == locationId })
-        //  console.log("newarr",newArr)
+        let newArr = await data.filter((item) => { return item.category == route.params.id && item.surgery_location == locationId })
+         console.log("newarr",newArr)
         setSurgery(newArr)
+        let facArr = JSON.parse(newArr[0].facility_type)
+        // console.log("69",facArr.length)
+        getFacility(facArr)
 
 
         //  setHospitals(newArr)
@@ -63,22 +64,7 @@ const SurgeryInnerScreen = ({ navigation }) => {
 
 
 
-    const getSurgeryHospital = async (id) => {
-        const res = await axios.get("https://cureofine-azff.onrender.com/hospitals")
-        const data = res.data
-        let newArr = await data.filter((item) => { return item.hos_id == id })
-        let facArr = JSON.parse(newArr[0].facility_type)
-        // console.log("69",facArr.length)
-        getFacility(facArr)
 
-        // console.log("newarr",newArr)
-        setHospitals(newArr)
-    }
-    useEffect(() => {
-        surgery != "" && surgery.map((item) => {
-            getSurgeryHospital(item.hospital);
-        });
-    }, [surgery]);
 
     const getFacility = async (facArr) => {
         const res = await axios.get("https://cureofine-azff.onrender.com/facilityType")
@@ -120,7 +106,7 @@ const SurgeryInnerScreen = ({ navigation }) => {
 
 
                 <View style={{ marginTop: 20, paddingBottom: 50 }}>
-                    {
+                {
                         surgery == "" ?
                             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                                 {/* <ActivityIndicator color={"#f08080"} size={"large"} /> */}
@@ -134,7 +120,7 @@ const SurgeryInnerScreen = ({ navigation }) => {
                                 {surgery.map((item) => (
 
 
-                                    hospitals != "" &&
+                           
 
 
                                     <Card key={item.id} style={{ margin: 10, backgroundColor: "white" }}  >
@@ -142,7 +128,7 @@ const SurgeryInnerScreen = ({ navigation }) => {
                                         <View style={{ flexDirection: "row", width: "100%" }}>
 
 
-                                            <Image source={{ uri: `https://cureofine.com/upload/hospital/${hospitals[0].image}` }} style={{ height: 150, width: 150, resizeMode: "cover" }} />
+                                            <Image source={{ uri: `https://cureofine.com/upload/hospital/${item.hospital_image}` }} style={{ height: 150, width: 150, resizeMode: "cover" }} />
                                             {
                                                 // console.log(hospitals[0].image)
                                             }
@@ -152,7 +138,7 @@ const SurgeryInnerScreen = ({ navigation }) => {
                                             <View style={{ marginLeft: 5, flexWrap: "wrap", marginTop: 20 }}>
 
                                                 <Card.Content>
-                                                    <Text style={{ fontWeight: "bold" }}>{decode(hospitals[0].name)}</Text>
+                                                    <Text style={{ fontWeight: "bold" }}>{decode(item.hospital_name)}</Text>
 
                                                     <Text variant="bodyMedium" style={{ color: "gray", marginTop: 5 }}>Facilities </Text>
                                                     {facility != "" && facility.map(item => (
@@ -192,6 +178,8 @@ const SurgeryInnerScreen = ({ navigation }) => {
 
 
                     }
+
+ 
                 </View>
 
 
@@ -256,3 +244,7 @@ export default SurgeryInnerScreen
       
 }
 </View> */}
+
+
+// SELECT `id`, `ser_id`, `location`, `category`, `hospital`, `name`, `price`, `offer_price`, `details`, `tranding`, `status`, `cby`, `cdate` FROM `surgery`
+//  this is my surgery table details i have surgery id on the basis of this i got the surgery array in each surgery have hospital which store hospital id so i fetch hospital details for that surgery and i want to show each surgery with their hospital name 

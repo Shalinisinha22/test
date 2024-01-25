@@ -5,7 +5,7 @@ import {
     ScrollView,
     Pressable,
     TextInput,
-    ImageBackground,
+    Image,
     Dimensions,
     TouchableOpacity
 } from "react-native";
@@ -122,13 +122,13 @@ const DoctorInnerScreen = ({ navigation }) => {
 
                         <Text  allowFontScaling={false} style={{ color: "#103042", paddingLeft: 12, fontSize: 18 }}>{doctor[0].name}</Text>
 
-                        <ImageBackground
+                        <Image
                             style={{ width, height: 300, marginTop: 20, resizeMode: "contain", margin: 2 }}
                             source={{ uri: `https://cureofine.com/upload/profile/${doctor[0].profile_img}` }}
 
                         >
 
-                        </ImageBackground>
+                        </Image>
 
 
 

@@ -152,8 +152,10 @@ renderItem={({ item, index }) => (
                 
                 </View>
 
-                <Contact></Contact>
-<Footer></Footer>
+                {hairCosmetics.length!= 0 && <Contact></Contact>}
+                {hairCosmetics.length!= 0 && <Footer></Footer>}
+                  
+
 
             </ScrollView>
         </View>
