@@ -520,7 +520,7 @@ const BookingScreen = ({ navigation }) => {
                             <Text>Schedule Time</Text>
                             <View style={[styles.inputBoxCont, { padding: 20 }]}>
 
-                                <Text style={{ margin: 10 }}><EvilIcons name="calendar" size={24} color="black" onPress={() => showTimepicker()} /></Text>
+                                <Text style={{ margin: 10 }}><EvilIcons name="clock" size={24} color="black" onPress={() => showTimepicker()} /></Text>
                                 {showTimePicker && (
                                     <DateTimePicker
                                         value={time}
