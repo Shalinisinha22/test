@@ -82,7 +82,7 @@ const Home = ({ navigation }) => {
 
 
   const getText = async () => {
-    const res = await axios.get("https://cureofine-azff.onrender.com/staticText");
+    const res = await axios.get("https://cureofine.com:8080/staticText");
     const data = res.data;
     // console.log(data)
     // console.log(decode(data[0].content))
@@ -127,13 +127,13 @@ const Home = ({ navigation }) => {
 
 
   // const getState = async () => {
-  //   const res = await axios.get("https://cureofine-azff.onrender.com/state");
+  //   const res = await axios.get("https://cureofine.com:8080/state");
   //   const data = res.data;
   //   // console.log(data);
   //   setState(data);
   // };
   // const getCity = async () => {
-  //   const res = await axios.get("https://cureofine-azff.onrender.com/city");
+  //   const res = await axios.get("https://cureofine.com:8080/city");
   //   const data = res.data;
   //   // console.log(data);
   //   setCity(data);
@@ -144,7 +144,7 @@ const Home = ({ navigation }) => {
 
   const getLocation = async () => {
 
-    const res = await axios.get("https://cureofine-azff.onrender.com/presence");
+    const res = await axios.get("https://cureofine.com:8080/presence");
     const data = res.data;
     // console.log("147", data)
     // console.log("147", data)
@@ -171,7 +171,7 @@ const Home = ({ navigation }) => {
   }, []);
 
   const getImage = async () => {
-    const res = await axios.get("https://cureofine-azff.onrender.com/banner");
+    const res = await axios.get("https://cureofine.com:8080/banner");
     const data = res.data;
     let imgArr = []
     for (let i = 0; i < data.length; i++) {

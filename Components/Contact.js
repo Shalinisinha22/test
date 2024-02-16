@@ -24,7 +24,7 @@ const Contact = () => {
 
 
   const getInfo = async()=>{
-    const res= await axios.get("https://cureofine-azff.onrender.com/contactInfo");
+    const res= await axios.get("https://cureofine.com:8080/contactInfo");
     const data = res.data
     // console.log(data)
     setContact(data)

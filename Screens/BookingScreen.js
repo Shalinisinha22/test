@@ -87,7 +87,7 @@ const BookingScreen = ({ navigation }) => {
 
 
         try {
-            const res = await axios.post("https://cureofine-azff.onrender.com/bookSurgery", {
+            const res = await axios.post("https://cureofine.com:8080/bookSurgery", {
                 service_id: route.params.cat_id,
                 name: data.fullname,
                 gender: gender,
@@ -108,7 +108,7 @@ const BookingScreen = ({ navigation }) => {
                 // showToast();
     
                 try {
-                    const paymentResponse = await axios.post('https://cureofine-azff.onrender.com/api/payment', {
+                    const paymentResponse = await axios.post('https://cureofine.com:8080/api/payment', {
                         transactionId: transactionId,
                         MUID:MUID,
                         name: data.fullname,
@@ -132,7 +132,7 @@ const BookingScreen = ({ navigation }) => {
 
                          const intervalId = setInterval(async () => {
                             try {
-                              const statusResponse = await axios.post(`https://cureofine-azff.onrender.com/api/status/${tId}`);
+                              const statusResponse = await axios.post(`https://cureofine.com:8080/api/status/${tId}`);
                   
                               console.log("Payment Status:", statusResponse.data);
                   
@@ -142,7 +142,7 @@ const BookingScreen = ({ navigation }) => {
 
                                    try{
 
-                                    const updateRes = await axios.post("https://cureofine-azff.onrender.com/updatePaymentTransactionSuccess", {
+                                    const updateRes = await axios.post("https://cureofine.com:8080/updatePaymentTransactionSuccess", {
                                       
                                         phone: userInfo,
                                         transaction_id: tId,
@@ -163,7 +163,7 @@ const BookingScreen = ({ navigation }) => {
                                 clearInterval(intervalId); // Stop the interval
                                 try{
 
-                                    const updateRes = await axios.post("https://cureofine-azff.onrender.com/updatePaymentTransactionFailure", {
+                                    const updateRes = await axios.post("https://cureofine.com:8080/updatePaymentTransactionFailure", {
                                       
                                         phone: userInfo,
                                         transaction_id: tId,
@@ -244,7 +244,7 @@ const BookingScreen = ({ navigation }) => {
             const { url } = navState;
             console.log("242",url)
             // Check if the URL indicates a successful payment
-            if (url.startsWith('https://cureofine-azff.onrender.com/api/status/')) {
+            if (url.startsWith('https://cureofine.com:8080/api/status/')) {
               // Close or navigate away from the WebView
               // This can be done using navigation.goBack() or similar
               // For example:

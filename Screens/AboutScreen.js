@@ -30,6 +30,7 @@ import { useWindowDimensions } from "react-native";
 import RenderHTML from "react-native-render-html";
 import CallBanner from "../Components/CallBanner"
 import OfferBanner from "./OfferBanner";
+import fetchJsonp from "fetch-jsonp"
 SplashScreen.preventAutoHideAsync();
 
 const AboutScreen = ({ navigation }) => {
@@ -38,10 +39,16 @@ const AboutScreen = ({ navigation }) => {
   const [cont, setCont] = useState("");
 
   const getData = async () => {
-    const res = await axios.get("https://cureofine-azff.onrender.com/about");
-    const data = res.data;
-    // console.log(data[0]);
-    setCont(decode(data));
+    try {
+      const res = await fetchJsonp("https://cureofine.com:8080/about");
+      console.log("42", res);
+      const data = await res.json();
+      console.log(data[0]);
+      setCont(decode(data));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      
+    }
   };
 
   useEffect(() => {

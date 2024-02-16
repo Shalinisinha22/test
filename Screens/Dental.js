@@ -22,9 +22,9 @@ const Dental = ({ navigation }) => {
     const userInfo = useSelector(state => state.user.userInfo);
 
     const [dentalList, setDentalList] = useState([])
-    // https://cureofine-azff.onrender.com/surgeryList
+    // https://cureofine.com:8080/surgeryList
     const getDentalList = async () => {
-        const res = await axios.get("https://cureofine-azff.onrender.com/dental")
+        const res = await axios.get("https://cureofine.com:8080/dental")
         const data = res.data;
         setDentalList(data)
     }

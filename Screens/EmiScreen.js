@@ -98,7 +98,7 @@ const EmiScreen = ({ navigation }) => {
 
 const submitData = async(data,uploadedImages)=>{
     try {
-        const res = await axios.post("https://cureofine-azff.onrender.com/emiForm", {
+        const res = await axios.post("https://cureofine.com:8080/emiForm", {
 
             name: data.fullname,
             attendant_name: data.guardian,
@@ -153,7 +153,7 @@ const submitData = async(data,uploadedImages)=>{
                 name: 'aadhar.jpg',
             });
     
-            const response = await axios.post('https://cureofine-azff.onrender.com/upload', formData, {
+            const response = await axios.post('https://cureofine.com:8080/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

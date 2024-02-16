@@ -15,7 +15,7 @@ const Terms = ({navigation}) => {
   const { width } = useWindowDimensions();
 
   const getData = async () => {
-    const res = await axios.get("https://cureofine-azff.onrender.com/term");
+    const res = await axios.get("https://cureofine.com:8080/term");
     const data = res.data;
     // console.log(data[0]);
     setCont(decode(data));

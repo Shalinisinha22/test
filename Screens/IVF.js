@@ -21,9 +21,9 @@ import Footer from "../Components/Footer";
 const IVF = ({ navigation }) => {
 
     const [ivfList, setIvfList] = useState([])
-    // https://cureofine-azff.onrender.com/surgeryList
+    // https://cureofine.com:8080/surgeryList
     const getIvfList = async () => {
-        const res = await axios.get("https://cureofine-azff.onrender.com/ivf")
+        const res = await axios.get("https://cureofine.com:8080/ivf")
         const data = res.data;
         setIvfList(data)
     }

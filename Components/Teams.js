@@ -44,7 +44,7 @@ const Teams = ({ navigation }) => {
   const [doctorList, setDoctorList] = useState([])
 
   const getDoctorList = async () => {
-    const res = await axios.get("https://cureofine-azff.onrender.com/doctorsList")
+    const res = await axios.get("https://cureofine.com:8080/doctorsList")
     const data = res.data;
     setDoctorList(data)
   }

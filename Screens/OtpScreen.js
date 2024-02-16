@@ -35,7 +35,7 @@ const OtpScreen = ({ navigation }) => {
 
     if (code.length == 6) {
       try {
-        const res = await axios.post("https://cureofine-azff.onrender.com/verifyOTP", {
+        const res = await axios.post("https://cureofine.com:8080/verifyOTP", {
           phone: route.params.number,
           otp: code
         })
@@ -84,7 +84,7 @@ const OtpScreen = ({ navigation }) => {
 
     // if (code.length == 6) {
     //   try {
-    //     const response = await axios.post("https://cureofine-azff.onrender.com/verify", {
+    //     const response = await axios.post("https://cureofine.com:8080/verify", {
     //       otp: code,
     //     });
 

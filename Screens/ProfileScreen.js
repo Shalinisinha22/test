@@ -97,7 +97,7 @@ const [editableProfileImage, setEditableProfileImage] = useState("");
     const onSubmit = async (data) => {
         // console.log("75", data, photo, gender);
 
-        const res = await axios.post("https://cureofine-azff.onrender.com/updateProfile", {
+        const res = await axios.post("https://cureofine.com:8080/updateProfile", {
       
         phone: userInfo,
         name: data.fullname,
@@ -142,7 +142,7 @@ const [editableProfileImage, setEditableProfileImage] = useState("");
 
         const getProfileData= async()=>{
             try {
-                const res = await axios.get("https://cureofine-azff.onrender.com/userInfo", {
+                const res = await axios.get("https://cureofine.com:8080/userInfo", {
                   params: {
                     phone: userInfo,
                   },

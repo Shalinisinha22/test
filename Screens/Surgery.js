@@ -35,7 +35,7 @@ const Surgery = ({ navigation }) => {
   const [surgeryList, setSurgery]= useState([])
 
   const getSurgery = async()=>{
-    const res = await axios.get("https://cureofine-azff.onrender.com/surgery");
+    const res = await axios.get("https://cureofine.com:8080/surgery");
     const data = res.data;
     setSurgery(data)
   }

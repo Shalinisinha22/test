@@ -1,5 +1,8 @@
 {
   "expo": {
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
     "name": "CureOFine",
     "slug": "cureofine",
     "version": "1.0.0",
@@ -15,23 +18,40 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cureofine.health"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.shalinisinha2.CureFine"
+
+      "useNextNotificationsApi": true,
+      "config": {
+        "googleSignIn": {
+          "apiKey": "YOUR_API_KEY"
+        }
+      },
+      "networkSecurity": {
+        "noDomains": ["*"]
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION"
+      ],
+      "package": "com.cureofine.health"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "47aa9df6-6c38-4893-936b-fad69f30f084"
+        "projectId": "dc320490-e321-4793-a5c7-834e3dceefbc"
       }
     },
-    "owner": "shalini2"
+    "owner": "zenwebmaniasolutions"
   }
 }

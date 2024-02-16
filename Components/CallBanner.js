@@ -16,7 +16,7 @@ const CallBanner = () => {
 
 
   const getInfo = async()=>{
-    const res= await axios.get("https://cureofine-azff.onrender.com/contactInfo");
+    const res= await axios.get("https://cureofine.com:8080/contactInfo");
     const data = res.data
     // console.log(data)
    
@@ -37,7 +37,7 @@ const CallBanner = () => {
 
 
   const getText = async () => {
-    const res = await axios.get("https://cureofine-azff.onrender.com/staticText");
+    const res = await axios.get("https://cureofine.com:8080/staticText");
     const data = res.data;
     //  console.log(data[0].page_menu)
     setpageMenu(data[0].page_menu)

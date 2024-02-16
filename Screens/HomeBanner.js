@@ -10,7 +10,7 @@ const HomeBanner = () => {
 
 
     const getImage = async () => {
-        const res = await axios.get("https://cureofine-azff.onrender.com/banner");
+        const res = await axios.get("https://cureofine.com:8080/banner");
         const data = res.data;
        
         let imgArr = []

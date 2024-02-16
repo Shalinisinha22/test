@@ -22,10 +22,11 @@ import { useSelector } from "react-redux";
 const Ayurveda = ({ navigation }) => {
   const userInfo = useSelector(state => state.user.userInfo);
     const [ayurvedaList, setAyurvedaList] = useState([])
-    // https://cureofine-azff.onrender.com/surgeryList
+    // https://cureofine.com:8080/surgeryList
     const getAyurvedaList = async () => {
-        const res = await axios.get("https://cureofine-azff.onrender.com/ayurveda")
+        const res = await axios.get("https://cureofine.com:8080/ayurveda")
         const data = res.data;
+        
         setAyurvedaList(data)
     }
 

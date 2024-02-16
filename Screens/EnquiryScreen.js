@@ -52,7 +52,7 @@ const EnquiryScreen = ({ navigation }) => {
     reset()
 
 
-    const res = await axios.post("https://cureofine-azff.onrender.com/enquiry", {
+    const res = await axios.post("https://cureofine.com:8080/enquiry", {
       name: data.fullname,
       email: data.email,
       message: data.message,

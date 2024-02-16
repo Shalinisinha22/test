@@ -42,7 +42,7 @@ const LoginScreen = ({ navigation }) => {
 
     var phoneno = /^\d{10}$/;
     if ((data.phone.match(phoneno))) {
-      const res = await axios.post("https://cureofine-azff.onrender.com/generateOtp", {
+      const res = await axios.post("https://cureofine.com:8080/generateOtp", {
       
           phone: data.phone
         })
