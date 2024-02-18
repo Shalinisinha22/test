@@ -27,6 +27,7 @@ import { Entypo } from "@expo/vector-icons";
 import { EvilIcons } from '@expo/vector-icons';
 import { useSelector } from "react-redux";
 import { WebView } from 'react-native-webview';
+import { FontAwesome } from '@expo/vector-icons';
 const BookingScreen = ({ navigation }) => {
     const [paymentResult, setPaymentResult] = useState(null);
     const userInfo = useSelector(state => state.user.userInfo);

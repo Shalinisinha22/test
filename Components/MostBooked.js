@@ -102,10 +102,13 @@ const tagsStyles = {
               
               
             }}
+           
+
             onPress={() =>
               navigation.navigate(decode(item.name))
             }
           >
+             {console.log(decode(item.name))}
             <Image
               style={{ width: 100, height: 120, resizeMode: "contain" }}
               source={{

@@ -23,7 +23,7 @@ import Header from "../Components/Header";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import Toast from 'react-native-toast-message';
-
+import { FontAwesome } from '@expo/vector-icons';
 const EnquiryScreen = ({ navigation }) => {
   const {
     register,
@@ -136,12 +136,7 @@ const EnquiryScreen = ({ navigation }) => {
 
             <View style={{ marginTop: 8 }}>
               <View style={styles.inputBoxCont}>
-                <Ionicons
-                  name="ios-person"
-                  size={24}
-                  color="gray"
-                  style={{ marginLeft: 8 }}
-                />
+              <FontAwesome name="user" size={24} color="gray"   style={{ marginLeft: 8 }} />
 
                 <Controller
                   control={control}
